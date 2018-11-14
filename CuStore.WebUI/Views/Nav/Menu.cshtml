@@ -11,21 +11,26 @@
     if (!category.ParentCategoryId.HasValue)
     {
         @Html.RouteLink(category.Name, new
-   {
-       controller = "Product",
-       action = "List",
-       categoryId = category.Id,
-       pageNumber = 1
-   }, new { @class = "btn btn-block btn-primary  pull-right" })
+        {
+           controller = "Product",
+           action = "List",
+           categoryId = category.Id,
+           pageNumber = 1
+        }, new { @class = "btn btn-block " + 
+                          (Model.SelectedCategoryId.HasValue 
+                                  && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
+                          + " pull-right" })
     }
     else
     {
         @Html.RouteLink(category.Name, new
-   {
-       controller = "Product",
-       action = "List",
-       categoryId = category.Id,
-       pageNumber = 1
-   }, new { @class = "btn btn-block btn-default pull-right", style = "width:80%" })
-    }
+        {
+               controller = "Product",
+               action = "List",
+               categoryId = category.Id,
+               pageNumber = 1
+           }, new { @class = "btn btn-block " + (Model.SelectedCategoryId.HasValue 
+                                   && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
+                             + " btn-sm pull-right", style = "width:85%" })
+     }
 }

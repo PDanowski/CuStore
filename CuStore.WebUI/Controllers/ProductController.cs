@@ -12,7 +12,7 @@ namespace CuStore.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private IStoreRepository _repositiry;
+        private readonly IStoreRepository _repositiry;
         private int _pageSize = 5;
 
         public ProductController(IStoreRepository storeRepository)
@@ -23,17 +23,14 @@ namespace CuStore.WebUI.Controllers
         // GET: Product
         public ViewResult List(int? categoryId, int pageNumber = 1)
         {
-            var test = _repositiry.GetOrders();
-            test.Count();
-
             ProductsListViewModel viewModel = new ProductsListViewModel
             {
-                Products = _repositiry.GetProductsByCategory(categoryId, _pageSize, pageNumber),
+                Products = _repositiry.GetProductsByCategory(_pageSize, pageNumber, categoryId),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = pageNumber,
                     ItemsPerPage = _pageSize,
-                    TotalItems = _repositiry.GetProductsCount()
+                    TotalItems = _repositiry.GetProductsCount(categoryId)
                 },
                 CurrentCategory = _repositiry.GetCategoryById(categoryId.GetValueOrDefault())
             };

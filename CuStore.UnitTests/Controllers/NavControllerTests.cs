@@ -57,5 +57,28 @@ namespace CuStore.UnitTests.Controllers
 
             Assert.IsNotNull(result2);
         }
+
+        [TestMethod]
+        public void Indicates_Seletected_Category()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetCategories())
+                .Returns(new List<Category>
+                {
+                    new Category{Id = 1, Name = "Cat1", ParentCategoryId = null},
+                    new Category{Id = 2, Name = "Cat2", ParentCategoryId = 1},
+                    new Category{Id = 3, Name = "Cat3", ParentCategoryId = 1},
+                    new Category{Id = 4, Name = "Cat4", ParentCategoryId = 1}
+                });
+
+            NavController controller = new NavController(mock.Object);
+
+            int selectedCategoryId = 2;
+
+            int? result = ((CategoriesListViewModel)controller.Menu(selectedCategoryId).Model).SelectedCategoryId;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Value, selectedCategoryId);
+        }
     }
 }

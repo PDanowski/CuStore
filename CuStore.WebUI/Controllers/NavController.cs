@@ -10,18 +10,21 @@ namespace CuStore.WebUI.Controllers
 {
     public class NavController : Controller
     {
-        private IStoreRepository _repositiry;
+        private readonly IStoreRepository _repositiry;
 
         public NavController(IStoreRepository storeRepository)
         {
             this._repositiry = storeRepository;
         }
 
-        public PartialViewResult Menu()
+        public PartialViewResult Menu(int? selectedCategoryId = null)
         {
+            var categories = _repositiry.GetCategories().ToList();
+
             CategoriesListViewModel viewModel = new CategoriesListViewModel
             {
-                Categories = _repositiry.GetCategories()
+                Categories = categories,
+                SelectedCategoryId = categories.FirstOrDefault(c => c.Id.Equals(selectedCategoryId))?.Id
             };
 
             return PartialView(viewModel);

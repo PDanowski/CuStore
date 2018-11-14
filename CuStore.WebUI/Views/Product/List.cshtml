@@ -5,13 +5,20 @@
     ViewBag.Title = "Products";
 }
 
-@foreach (var product in Model.Products)
-{
-    @Html.Partial("ProductSummary", product);
-
-}
-
-<div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new {pageNumber = x, categoryId = Model.CurrentCategory?.Id}))
+<div id="categories" class="col-xs-3">
+     @Html.Action("Menu", "Nav", new { selectedCategoryId = Model.CurrentCategory?.Id})
 </div>
+<div class="col-xs-8">
+    @foreach (var product in Model.Products)
+    {
+        @Html.Partial("ProductSummary", product);
+
+    }
+
+    <div class="btn-group pull-right">
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new {pageNumber = x, categoryId = Model.CurrentCategory?.Id}))
+    </div>  
+</div>
+
+
 

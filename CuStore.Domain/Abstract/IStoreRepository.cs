@@ -14,8 +14,7 @@ namespace CuStore.Domain.Abstract
         IEnumerable<Product> GetProducts();
         IEnumerable<Category> GetCategories();
         Category GetCategoryById(int id);
-        IEnumerable<Product> GetProducts(int pageSize, int pageNumber);
-        IEnumerable<Product> GetProductsByCategory(int? categoryId, int pageSize, int pageNumber);
-        int GetProductsCount();
+        IEnumerable<Product> GetProductsByCategory(int pageSize, int pageNumber, int? categoryId = null);
+        int GetProductsCount(int? categoryId = null);
     }
 }
