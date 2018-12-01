@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CuStore.Domain.Entities;
 using CuStore.WebUI.Infrastructure;
+using CuStore.WebUI.Infrastructure.Binders;
 
 namespace CuStore.WebUI
 {
@@ -17,6 +19,7 @@ namespace CuStore.WebUI
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

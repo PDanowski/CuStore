@@ -37,5 +37,16 @@ namespace CuStore.WebUI.Controllers
 
             return View(viewModel);
         }
+
+        public ViewResult Details(int productId, string returnUrl)
+        {
+            var viewModel = new ProductDetailsViewModel
+            {
+                Product = _repositiry.GetProductById(productId),
+                ReturnUrl = returnUrl
+            };
+
+            return View(viewModel);
+        }
     }
 }

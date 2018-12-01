@@ -80,16 +80,15 @@
     <Compile Include="Abstract\IStoreRepository.cs" />
     <Compile Include="Concrete\StoreContext.cs" />
     <Compile Include="Concrete\StoreRepository.cs" />
+    <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Cart.cs" />
+    <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Order.cs" />
-    <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ShippingMethod.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
-    <Compile Include="Migrations\201811122250501_Initial.cs" />
-    <Compile Include="Migrations\201811122250501_Initial.Designer.cs">
-      <DependentUpon>201811122250501_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,11 +97,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811122250501_Initial.resx">
-      <DependentUpon>201811122250501_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

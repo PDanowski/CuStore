@@ -7,20 +7,12 @@ using System.Threading.Tasks;
 
 namespace CuStore.Domain.Entities
 {
-    public class Product
+    public class ShippingMethod
     {
-
         [Key]
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        public string Description { get; set; }
         public decimal Price { get; set; }
-        public int QuanityInStock { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+        public int MaximumPcs { get; set; }
     }
 }

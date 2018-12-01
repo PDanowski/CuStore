@@ -7,7 +7,7 @@
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    
     <title>@ViewBag.Title</title>
     <style>
         .navbar-right { float: right !important; margin-right: 15px; margin-left: 15px; }
@@ -17,20 +17,23 @@
 <body>
     <div class="navbar navbar-inverse" role="navigation">
         <a class="navbar-brand" href="#">CuStore</a>
-
         @Html.ActionLink("About", "About", "Home")
         @Html.ActionLink("Contact", "Contact", "Home")
 
-        @Html.Partial("_LoginPartial")
-
         @Html.Action("Summary", "Cart")
     </div>
-    <div class="row panel">
-            @RenderBody()
+<div class="row panel">
+    <div id="categories" class="col-xs-3">
+        @Html.Action("Menu", "Nav")
+    </div>
+    <div class="col-xs-8">
+        @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>

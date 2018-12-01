@@ -12,10 +12,6 @@ namespace CuStore.Domain.Entities
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-            this.Orders = new HashSet<Order>();
-        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
@@ -25,20 +21,23 @@ namespace CuStore.Domain.Entities
             return userIdentity;
         }
 
+        public int? AddressId { get; set; }
+
+        public Address Address { get; set; }
 
         #region Additional properties
+        [Required(ErrorMessage = "First name is mandatory")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is mandatory")]
         public string LastName { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string Street { get; set; }
-        public string PostalCode { get; set; }
+
         public string Phone { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         #endregion
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public ICollection<Cart> Carts { get; set; }
     }
 }

@@ -27,6 +27,10 @@ namespace CuStore.WebUI.Infrastructure
         public NinjectResolver(params NinjectModule[] modules)
         {
             Kernel = new StandardKernel(modules);
+            //
+            //https://stackoverflow.com/questions/8356811/how-to-stop-ninject-from-overriding-custom-dataannotationsmodelvalidatorprovider
+            //
+            Kernel.Unbind<ModelValidatorProvider>();
         }
 
         /// <summary>
@@ -37,6 +41,10 @@ namespace CuStore.WebUI.Infrastructure
         public NinjectResolver(Assembly assembly)
         {
             Kernel = new StandardKernel();
+            //
+            //https://stackoverflow.com/questions/8356811/how-to-stop-ninject-from-overriding-custom-dataannotationsmodelvalidatorprovider
+            //
+            Kernel.Unbind<ModelValidatorProvider>();
             Kernel.Load(assembly);
         }
 

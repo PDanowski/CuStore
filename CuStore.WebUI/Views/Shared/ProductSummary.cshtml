@@ -2,8 +2,17 @@
 
 <div class="well">
     <h3>
-        <strong>@Model.Name</strong>
+
+       @Html.RouteLink(@Model.Name, new
+       {
+           controller = "Product",
+           action = "Details",
+           productId = @Model.Id,
+           returnUrl = Request.Url.PathAndQuery
+       }, null)
+
         <span class="pull-right label label-primary">@Model.Price.ToString("C")</span>
+
     </h3>
     <span class="lead">@Model.Description</span>
 </div>

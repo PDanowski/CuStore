@@ -1,0 +1,112 @@
+﻿@model CuStore.WebUI.ViewModels.OrderDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCategorySelected.cshtml";
+    ViewBag.Title = "CuStore: Your order";
+}
+
+<h2>Order: shipping information</h2>
+<p>Please fill shipping method and delivery address</p>
+
+<h3>Contact data:</h3>
+<div class="well">
+    <div class="form-group">
+        <label>First name:</label>
+        @Html.DisplayFor(x => x.Order.Cart.User.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Last name:</label>
+        @Html.DisplayFor(x => x.Order.Cart.User.LastName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>E-mail:</label>
+        @Html.DisplayFor(x => x.Order.Cart.User.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Phone:</label>
+        @Html.DisplayFor(x => x.Order.Cart.User.Phone, new { @class = "form-control" })
+    </div>
+</div>
+
+<script type="text/javascript">
+    function EnableControl() {
+        var countryBox = document.getElementById('Country');
+        var cityBox = document.getElementById('City');
+        var streetBox = document.getElementById('Street');
+        var postalCodeBox = document.getElementById('PostalCode');
+
+        var checkbox = document.getElementById('UseUserAddress');
+
+        if (checkbox.checked) {
+            countryBox.disabled = true;
+            cityBox.disabled = true;
+            streetBox.disabled = true;
+            postalCodeBox.disabled = true;
+        } else {
+            countryBox.removeAttribute('disabled');
+            cityBox.removeAttribute('disabled');
+            streetBox.removeAttribute('disabled');
+            postalCodeBox.removeAttribute('disabled');
+        }
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    if (Model.Order?.Cart?.User?.Address != null)
+    {
+        <h3>User Address:</h3>
+        <div class="form-group">
+            <label>Use user address</label>
+            @Html.CheckBoxFor(x => x.Order.UseUserAddress, new { id = "UseUserAddress", onclick = "EnableControl()" })
+        </div>
+
+        <div class="well">
+            <div class="form-group">
+                @Html.DisplayFor(x => x.Order.Cart.User.Address.Street, new {  @class = "form-control" }) 
+            </div>
+            <div class="form-group">
+                @Html.DisplayFor(x => x.Order.Cart.User.Address.City, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DisplayFor(x => x.Order.Cart.User.Address.PostalCode, new {  @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DisplayFor(x => x.Order.Cart.User.Address.Country, new { @class = "form-control"})
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <label>Street:</label>
+        @Html.TextBoxFor(x => x.Order.Address.Street, new { id = "Street", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>City:</label>
+        @Html.TextBoxFor(x => x.Order.Address.City, new { id = "City", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Postal code:</label>
+        @Html.TextBoxFor(x => x.Order.Address.PostalCode, new { id = "PostalCode", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Country:</label>
+        @Html.TextBoxFor(x => x.Order.Address.Country, new { id = "Country", @class = "form-control" })
+    </div>
+
+    <h3>Shipping method:</h3>
+    @Html.DropDownListFor(x => x.SelectedShippingMethodId, Model.ShippingMethods)
+
+    <h3>Total:</h3>
+    <div class="form-group">
+        <h2><span class="label label-primary">@Model.OrderValue</span></h2>
+    </div>
+
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Confirm order"/>
+    </div>
+}
+
+
+
+

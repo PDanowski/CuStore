@@ -1,0 +1,33 @@
+﻿@model CuStore.WebUI.ViewModels.ProductDetailsViewModel
+
+<div id="categories" class="col-xs-3">
+     @Html.Action("Menu", "Nav", new { selectedCategoryId = Model.Product.CategoryId})
+</div>
+<div class="col-xs-8">
+    <h2>@Model.Product.Name</h2>
+    <div class="well">
+        <h3>
+            <span class="pull-right label label-primary">@Model.Product.Price.ToString("C")</span>
+
+            @Model.Product.Description
+        </h3>
+
+        <hr />
+        <hr />
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="pull-right">
+                @Html.Hidden("productId", @Model.Product.Id)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Add to cart" />
+            </div>
+        }
+        <hr />
+        <hr />
+    </div>
+    <div class="text-center">
+        <a class="btn btn-primary" href="@Model.ReturnUrl">Go back</a>
+    </div>
+</div>
+
+
