@@ -1,0 +1,65 @@
+﻿@model CuStore.WebUI.ViewModels.EditProductViewModel
+
+@{
+    ViewBag.Title = "Edit product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Create new product</h3>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label>Name:</label>
+            @Html.TextBoxFor(x => x.Product.Name, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(x => x.Product.Name)
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            @Html.TextBoxFor(x => x.Product.Description, new { @class = "form-control", rows = 5 })
+        </div>
+        <div class="form-group">
+            <label>Price:</label>
+            @Html.TextBoxFor(x => x.Product.Price, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(x => x.Product.Price)
+        </div>
+        <div class="form-group">
+            <label>Quantity in stock:</label>
+            @Html.TextBoxFor(x => x.Product.QuanityInStock, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(x => x.Product.QuanityInStock)
+        </div>
+
+        <div class="form-group">
+            <label>Category:</label>
+            @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories)
+
+            @Html.ValidationMessageFor(x => x.Product.CategoryId)
+        </div>
+
+        <div class="form-group">
+            <div style="position: relative;">
+                <label>Photo:</label>
+                <a class="btn" href="javascript:;">
+                    Select file...
+                    <input type="file" name="Image" size="50"
+                           style="position: absolute; z-index: 2; top: 0; left: 0;
+                                                                                                   filter: alpha(opacity=0); opacity: 0; background-color: transparent;"
+                           onchange='$("#upload-file-info").html($(this).val());' />
+                </a>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Cancel and go back to list", "ManageProducts", null, new { @class = "btn btn-default" })
+        </div>
+
+    }
+
+</div>

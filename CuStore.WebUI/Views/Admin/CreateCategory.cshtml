@@ -1,0 +1,33 @@
+﻿@model CuStore.WebUI.ViewModels.EditCategoryViewModel
+
+@{
+    ViewBag.Title = "Edit category";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Create new category</h3>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label>Name:</label>
+            @Html.TextBoxFor(x => x.Category.Name, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(x => x.Category.Name)
+        </div>
+        <div class="form-group">
+            <label>Parent category:</label>
+            @Html.DropDownListFor(x => x.Category.ParentCategoryId, Model.ParentCategories)
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Cancel and go back to list", "ManageCategories", null, new { @class = "btn btn-default" })
+        </div>
+
+    }
+
+</div>

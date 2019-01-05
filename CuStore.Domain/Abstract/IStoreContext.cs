@@ -17,7 +17,8 @@ namespace CuStore.Domain.Abstract
         DbSet<Order> Orders { get; }
         DbSet<Cart> Carts { get; }
         DbSet<User> Users { get; }
-        DbSet<Address> Addresses { get; }
+        DbSet<UserAddress> UserAddresses { get; }
+        DbSet<ShippingAddress> ShippingAddresses { get; }
         DbSet<CartItem> CartItems { get; }
         DbSet<ShippingMethod> ShippingMethods { get; }
 

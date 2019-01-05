@@ -2,14 +2,22 @@
 
 <div class="well">
     <h3>
-
-       @Html.RouteLink(@Model.Name, new
-       {
-           controller = "Product",
-           action = "Details",
-           productId = @Model.Id,
-           returnUrl = Request.Url.PathAndQuery
-       }, null)
+        
+        @if (Model.ImageData != null)
+        {
+            <div class="pull-right" style="margin-right: 10px">
+                <img class="img-thumbnail" width="100" height="75"
+                     src="@Url.Action("GetImage", "Product", new { Model.Id })"/>
+            </div>
+        }
+                 
+        @Html.RouteLink(@Model.Name, new
+        {
+            controller = "Product",
+            action = "Details",
+            productId = @Model.Id,
+            returnUrl = Request.Url.PathAndQuery
+        }, null)
 
         <span class="pull-right label label-primary">@Model.Price.ToString("C")</span>
 

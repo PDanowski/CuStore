@@ -1,14 +1,21 @@
 ﻿@using Castle.Core.Internal
 @model CuStore.Domain.Entities.Cart
 
+
 @if (!@Model.CartItems.IsNullOrEmpty())
 {
     <div class="navbar-right">
-        @Html.ActionLink("Order", "Index", "Cart",
+        @*@Html.ActionLink("Order", "Index", "Cart",
             new { returnUrl = Request.Url.PathAndQuery },
-            new { @class = "btn btn-default navbar-btn" })
+            new { @class = "btn btn-default navbar-btn" })*@
+        <a href=@Url.Action("Index", "Cart", new {returnUrl = Request.Url.PathAndQuery})
+           class="btn btn-default navbar-btn">
+            <b class="hidden-xs">Order</b>
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+        </a>
     </div>
-    <div class="navbar-text navbar-right">
+
+    <div class="navbar-text navbar-right hidden-xs">
         <b>Your cart:</b>
         @Model.CartItems.Count items,
         @Model.GetValue().ToString("C")

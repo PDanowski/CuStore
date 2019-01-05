@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
@@ -22,7 +25,17 @@ namespace CuStore.UnitTests.Controllers
 
             Cart cart = new Cart();
 
-            CartController controller = new CartController(mock.Object);
+            var fakeHttpContext = new Mock<HttpContextBase>();
+            var fakeIdentity = new GenericIdentity("User");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            fakeHttpContext.Setup(t => t.User).Returns(principal);
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.Setup(t => t.HttpContext).Returns(fakeHttpContext.Object);
+
+            //Set your controller ControllerContext with fake context
+            CartController controller =
+                new CartController(mock.Object, null) { ControllerContext = controllerContext.Object };
 
             controller.AddToCart(cart, 1, null);
 
@@ -39,7 +52,17 @@ namespace CuStore.UnitTests.Controllers
 
             Cart cart = new Cart();
 
-            CartController controller = new CartController(mock.Object);
+            var fakeHttpContext = new Mock<HttpContextBase>();
+            var fakeIdentity = new GenericIdentity("User");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            fakeHttpContext.Setup(t => t.User).Returns(principal);
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.Setup(t => t.HttpContext).Returns(fakeHttpContext.Object);
+
+            //Set your controller ControllerContext with fake context
+            CartController controller =
+                new CartController(mock.Object, null) {ControllerContext = controllerContext.Object};   
 
             RedirectToRouteResult result = controller.RemoveFromCart(cart, 1, "returnUrl");
 
@@ -52,7 +75,7 @@ namespace CuStore.UnitTests.Controllers
         {
             Cart cart = new Cart();
 
-            CartController controller = new CartController(null);
+            CartController controller = new CartController(null, null);
 
             CartIndexViewModel result = (CartIndexViewModel)controller.Index(cart, "returnUrl").Model;
 
@@ -60,5 +83,103 @@ namespace CuStore.UnitTests.Controllers
             Assert.AreEqual(result.ReturnUrl, "returnUrl");
         }
 
+        [TestMethod]
+        public void Cannot_Checkout_Empty_Cart()
+        {
+            Mock<IEmailSender> mock = new Mock<IEmailSender>();
+            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+            mockRepo.Setup(m => m.GetShippingMethods())
+                .Returns(new List<ShippingMethod>{});
+
+            Cart cart = new Cart();
+
+            CheckoutViewModel viewModel = new CheckoutViewModel
+            {
+                Cart = cart,
+                OrderValue = 0.00M,
+                SelectedShippingMethodId = 0,
+                ShippingMethods = null
+            };
+
+            CartController controller = new CartController(mockRepo.Object, mock.Object);
+
+            ViewResult result = controller.Checkout(viewModel, cart);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Order>()), Times.Never);
+
+            Assert.AreEqual("", result.ViewName);
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Cannot_Checkout_Invalid_Address()
+        {
+            Mock<IEmailSender> mock = new Mock<IEmailSender>();
+            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+            mockRepo.Setup(m => m.GetShippingMethods())
+                .Returns(new List<ShippingMethod> { });
+
+            Cart cart = new Cart();
+            cart.AddProduct(new Product
+            {
+                CategoryId = 1,
+                Id = 1,
+                Name = "test",
+                Price = 1.89M
+            }, 1);
+
+            CheckoutViewModel viewModel = new CheckoutViewModel
+            {
+                Cart = cart,
+                OrderValue = 0.00M,
+                SelectedShippingMethodId = 0,
+                ShippingMethods = null
+            };
+
+            CartController controller = new CartController(mockRepo.Object, mock.Object);
+            controller.ModelState.AddModelError("error", @"error");
+
+            ViewResult result = controller.Checkout(viewModel, cart);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Order>()), Times.Never);
+
+            Assert.AreEqual("", result.ViewName);
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Can_Checkout_And_Submit_Order()
+        {
+            Mock<IEmailSender> mock = new Mock<IEmailSender>();
+            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+
+            mockRepo.Setup(m => m.AddOrder(It.IsAny<Order>())).Returns(true);
+
+            Cart cart = new Cart();
+            cart.AddProduct(new Product
+            {
+                CategoryId = 1,
+                Id = 1,
+                Name = "test",
+                Price = 1.89M
+            }, 1);
+
+            CheckoutViewModel viewModel = new CheckoutViewModel
+            {
+                Cart = cart,
+                OrderValue = 0.00M,
+                SelectedShippingMethodId = 0,
+                ShippingMethods = null
+            };
+
+            CartController controller = new CartController(mockRepo.Object, mock.Object);
+
+            ViewResult result = controller.Checkout(viewModel, cart);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Order>()), Times.Once);
+
+            Assert.AreEqual("Completed", result.ViewName);
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
+        }
     }
 }

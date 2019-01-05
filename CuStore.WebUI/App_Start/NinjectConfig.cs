@@ -1,6 +1,8 @@
 ﻿using CuStore.Domain.Abstract;
 using CuStore.Domain.Concrete;
+using CuStore.Domain.Constants;
 using Ninject.Modules;
+using Ninject.Web.Common;
 
 namespace CuStore.WebUI
 {
@@ -8,24 +10,18 @@ namespace CuStore.WebUI
     {
         public override void Load()
         {
-            //Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            //mock.Setup(m => m.Products).Returns(new List<Product>
-            //{
-            //    new Product {Id = 1, Name = "Product1", Price = 10, CategoryId = 1},
-            //    new Product {Id = 2, Name = "Product2", Price = 20, CategoryId = 2},
-            //    new Product {Id = 3, Name = "Product3", Price = 30, CategoryId = 3}
-            //});
-            //mock.Setup(m => m.Categories).Returns(new List<Category>
-            //{
-            //    new Category {Id = 1, Name = "Category1"},
-            //    new Category {Id = 2, Name = "Category2"},
-            //    new Category {Id = 3, Name = "Category3"}
-            //});
+            Bind<IStoreContext>().To<StoreContext>().InRequestScope();
+            Bind<IStoreRepository>().To<StoreRepository>().InRequestScope();
 
-            //_kernel.Bind<IStoreRepository>().ToConstant(mock.Object);
+            //Because we are using OnePerRequestHttpModule, the default behaviour is to create a new instance of the EmployeeContext 
+            //for each Http request. That means different requests will never share an instance of a context. 
+            //It will also ensure that no more than one StoreContext is created, 
+            //even if the request ends up hitting 3 controllers that all require an StoreContext. 
+            //In other words, the lifetime of the context is tied to the life of the request. 
+            //This is a good thing and is definitely the recommended approach for Entity Framework. 
 
-            Bind<IStoreContext>().To<StoreContext>();
-            Bind<IStoreRepository>().To<StoreRepository>();
+            EmailServerConfiguration config = new EmailServerConfiguration();
+            Bind<IEmailSender>().To<EmailSender>().WithConstructorArgument("configuration", config);
         }
     }
 }

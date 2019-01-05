@@ -10,27 +10,29 @@ namespace CuStore.Domain.Entities
 {
     public class Order
     {
-        public Order(Cart cart)
+
+        public Order(Cart cart, bool useUserAddress, int shippingMethodId, ShippingAddress shippingAddress = null)
         {
             CartId = cart.Id;
             Cart = cart;
             OrderDate = DateTime.Now;
-            Address = new Address();
+            ShippingAddress = shippingAddress;
+            ShippingMethodId = shippingMethodId;
+            UseUserAddress = useUserAddress;
         }
 
         [Key]
         public int Id { get; set; }
 
+        public DateTime OrderDate { get; set; }
+        public bool UseUserAddress { get; set; }
+
         public int CartId { get; set; }
         public int ShippingMethodId { get; set; }
-        public DateTime OrderDate { get; set; }
-
-        public bool UseUserAddress { get; set; }
-        public int? AddressId { get; set; }
-        public Address Address { get; set; }
-
-        public Cart Cart { get; set; }
-        public ShippingMethod ShippingMethod { get; set; }
+        public int? ShippingAddressId { get; set; }
+        public virtual ShippingAddress ShippingAddress { get; set; }
+        public virtual Cart Cart { get; set; }
+        public virtual ShippingMethod ShippingMethod { get; set; }
 
 
     }

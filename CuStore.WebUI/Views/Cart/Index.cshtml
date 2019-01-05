@@ -1,7 +1,6 @@
 ﻿@model CuStore.WebUI.ViewModels.CartIndexViewModel
 
 @{
-    Layout = "~/Views/Shared/_LayoutCategorySelected.cshtml";
     ViewBag.Title = "CuStore: Your cart";
 }
 
@@ -48,8 +47,16 @@
     </tfoot>
 </table>
 
+@if (Model.Cart.CartItems.Count == 0)
+{
+    <h3>Your cart is empty, please add products to order.</h3>
+}
+
 <div class="text-center">
     <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
-    @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-primary"})
+    @if (Model.Cart.CartItems.Count > 0)
+    {
+        @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-primary" })
+    }
 </div>
 

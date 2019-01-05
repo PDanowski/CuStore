@@ -19,21 +19,21 @@ namespace CuStore.Domain.Migrations
             ContextKey = "CuStore.Domain.Concrete.StoreContext";
         }
 
-        protected override void Seed(CuStore.Domain.Concrete.StoreContext context)
+        protected override void Seed(StoreContext context)
         {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-            SeedRoles();
+            SeedRoles(context);
             SeedUsers(context);
             SeedCategories(context);
             SeedShippingMethods(context);
             SeedProducts(context);
         }
 
-        private void SeedRoles()
+        private void SeedRoles(StoreContext context)
         {
             var rolesManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
 
@@ -48,6 +48,8 @@ namespace CuStore.Domain.Migrations
                 var role = new IdentityRole { Name = "User" };
                 rolesManager.Create(role);
             }
+
+            context.SaveChanges();
         }
 
         private void SeedUsers(StoreContext context)

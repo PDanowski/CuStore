@@ -205,5 +205,52 @@ namespace CuStore.UnitTests.Controllers
             + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">2</a>"
             + @"<a class=""btn btn-default"" href=""Page3"">3</a>", result.ToString());
         }
+
+
+        [TestMethod]
+        public void Manage_Products_Retrive_Image_Data()
+        {
+            Product product = new Product
+            {
+                Id = 1,
+                Name = "test",
+                ImageData = new byte[] { },
+                ImageMimeType = "image/png"
+            };
+
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetProductById(1))
+                .Returns(product);
+
+            ProductController controller = new ProductController(mock.Object);
+
+            ActionResult result = controller.GetImage(1);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(FileResult));
+            Assert.AreEqual(product.ImageMimeType, ((FileResult)result).ContentType);
+        }
+
+        [TestMethod]
+        public void Manage_Products_Retrive_Image_Data_For_Invalid_Id()
+        {
+            Product product = new Product
+            {
+                Id = 1,
+                Name = "test",
+                ImageData = new byte[] { },
+                ImageMimeType = "image/png"
+            };
+
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetProductById(1))
+                .Returns(product);
+
+            ProductController controller = new ProductController(mock.Object);
+
+            ActionResult result = controller.GetImage(10);
+
+            Assert.IsNull(result);
+        }
     }
 }

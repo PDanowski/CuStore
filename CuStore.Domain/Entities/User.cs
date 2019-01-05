@@ -21,9 +21,8 @@ namespace CuStore.Domain.Entities
             return userIdentity;
         }
 
-        public int? AddressId { get; set; }
-
-        public Address Address { get; set; }
+        public int UserAddressId { get; set; }
+        public virtual UserAddress UserAddress { get; set; }
 
         #region Additional properties
         [Required(ErrorMessage = "First name is mandatory")]
@@ -31,8 +30,6 @@ namespace CuStore.Domain.Entities
 
         [Required(ErrorMessage = "Last name is mandatory")]
         public string LastName { get; set; }
-
-        public string Phone { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }

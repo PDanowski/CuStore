@@ -9,10 +9,20 @@ namespace CuStore.Domain.Abstract
 {
     public interface IStoreRepository
     {
-        IEnumerable<Product> GetProducts();
+        IEnumerable<Product> GetProducts(bool includeCategry = true);
         IEnumerable<Category> GetCategories();
-        IEnumerable<Cart> GetCartWithItemsForUser(string userId);
+        IEnumerable<Category> GetParentCategories();
+        Cart GetActiveCartWithItemsForUser(string userId);
         Product GetProductById(int productId);
+        bool SaveProduct(Product product);
+        bool AddProduct(Product product);
+        bool RemoveProduct(int productId);
+        bool SaveCategory(Category category);
+        bool AddCategory(Category category);
+        bool RemoveCategory(int categoryId);
+        bool SaveShippingMethod(ShippingMethod shippingMethod);
+        bool AddShippingMethod(ShippingMethod shippingMethod);
+        bool RemoveShippingMethod(int shippingMethodId);
         Category GetCategoryById(int id);
         IEnumerable<Product> GetProductsByCategory(int pageSize, int pageNumber, int? categoryId = null);
         int GetProductsCount(int? categoryId = null);
@@ -22,5 +32,7 @@ namespace CuStore.Domain.Abstract
         User GetUserById(string userId);
         bool RemoveCart(Cart cart);
         IEnumerable<ShippingMethod> GetShippingMethods();
+        bool AddOrder(Order order);
+        ShippingMethod GetShippingMethodById(int id);
     }
 }

@@ -38,12 +38,20 @@ namespace CuStore.WebUI.Controllers
             return View(viewModel);
         }
 
+        public FileContentResult GetImage(int productId)
+        {
+            Product product = _repositiry.GetProductById(productId);
+
+            return product == null ? null : File(product.ImageData, product.ImageMimeType);
+        }
+
         public ViewResult Details(int productId, string returnUrl)
         {
             var viewModel = new ProductDetailsViewModel
             {
                 Product = _repositiry.GetProductById(productId),
-                ReturnUrl = returnUrl
+                ReturnUrl = returnUrl,
+                Image = GetImage(productId)
             };
 
             return View(viewModel);

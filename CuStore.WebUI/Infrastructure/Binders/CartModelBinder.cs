@@ -34,6 +34,7 @@ namespace CuStore.WebUI.Infrastructure.Binders
                 else
                 {
                     controllerContext.HttpContext.Session[SessionKey] = userCart;
+                    return userCart;
                 }
             }
             else if (cart == null)

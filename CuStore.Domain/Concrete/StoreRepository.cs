@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.WebPages;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.Domain.Extensions;
@@ -21,16 +18,33 @@ namespace CuStore.Domain.Concrete
             _context = context;
         }
 
-        public IEnumerable<Cart> GetCartWithItemsForUser(string userId)
+        public Cart GetActiveCartWithItemsForUser(string userId)
         {
             return _context.Carts
-                .Where(c => c.UserId.Equals(userId))
-                .Include(c => c.CartItems);
+                .Where(c => c.UserId.Equals(userId) && !c.OrderId.HasValue)
+                .Include(c => c.CartItems)
+                .Include(c => c.User)
+                .FirstOrDefault();
+        }
+
+        public UserAddress GetUserAddress(string userId)
+        {
+            return _context.UserAddresses.FirstOrDefault(u => u.UserId.Equals(userId));
+        }
+
+        public ShippingMethod GetShippingMethodById(int id)
+        {
+            return _context.ShippingMethods.FirstOrDefault(s => s.Id.Equals(id));
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            return _context.Categories;
+            return _context.Categories.Include(c => c.ParentCategory).ToList();
+        }
+
+        public IEnumerable<Category> GetParentCategories()
+        {
+            return _context.Categories.Where(c => !c.ParentCategoryId.HasValue).ToList();
         }
 
         public bool AddCart(Cart cart)
@@ -58,7 +72,7 @@ namespace CuStore.Domain.Concrete
                         existingParent.CartItems.Add(newChild);
                     }
                 }
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -70,11 +84,11 @@ namespace CuStore.Domain.Concrete
 
         public bool SaveCart(Cart cart)
         {
-            //_context.Carts.Attach(cart);
-            //_context.Entry(cart).State = EntityState.Modified;
-
             try
             {
+                //_context.Carts.Attach(cart);
+                //_context.Entry(cart).State = EntityState.Modified;
+
                 var existingCart = _context.Carts
                     .Where(c => c.Id == cart.Id)
                     .Include(c => c.CartItems)
@@ -96,7 +110,7 @@ namespace CuStore.Domain.Concrete
                     foreach (var cartItem in cart.CartItems)
                     {
                         var existingCartItem = existingCart.CartItems
-                            .SingleOrDefault(c => c.Id == cartItem.Id);
+                            .SingleOrDefault(c => c.Id == cartItem.Id && c.Id != default(int));
 
                         if (existingCartItem != null)
                             // Update child
@@ -115,11 +129,35 @@ namespace CuStore.Domain.Concrete
                     }
 
                     _context.SaveChanges();
-                    
+                    return true;
                 }
-                return true;
-                //_context.SaveChanges();
 
+                return false;
+                //_context.SaveChanges();
+                //return true;
+
+
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddOrder(Order order)
+        {
+            try
+            {                   
+                var existingCart = _context.Carts
+                    .Where(c => c.Id == order.Cart.Id)
+                    .Include(c => c.CartItems)
+                    .SingleOrDefault();
+                order.Cart.OrderId = order.Id;
+                _context.Entry(existingCart).CurrentValues.SetValues(order.Cart);
+                _context.SaveChanges();
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -152,17 +190,172 @@ namespace CuStore.Domain.Concrete
 
         public Cart GetCartByUserId(string userId)
         {
-            return _context.Carts.FirstOrDefault(c => c.UserId.Equals(userId));
+            return _context.Carts
+                .Include(c => c.CartItems.Select(ci => ci.Product))
+                .FirstOrDefault(c => c.UserId.Equals(userId));
         }
 
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetProducts(bool includeCategry = true)
         {
-            return _context.Products;
+            return _context.Products.Include(p => p.Category).ToList();
+        }
+
+        public bool SaveProduct(Product product)
+        {
+            try
+            {
+                var existingProduct = _context.Products
+                    .SingleOrDefault(p => p.Id == product.Id);
+
+                // Update 
+                _context.Entry(existingProduct).CurrentValues.SetValues(product);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddProduct(Product product)
+        {
+            try
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool RemoveProduct(int productId)
+        {
+            try
+            {
+                Product product = new Product {Id = productId};
+                _context.Entry(product).State = EntityState.Deleted;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool SaveCategory(Category category)
+        {
+            try
+            {
+                var existingCategory = _context.Categories
+                    .SingleOrDefault(c => c.Id == category.Id);
+
+                // Update 
+                _context.Entry(existingCategory).CurrentValues.SetValues(category);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddCategory(Category category)
+        {
+            try
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool RemoveCategory(int categoryId)
+        {
+            try
+            {
+                Category category = new Category { Id = categoryId };
+                _context.Entry(category).State = EntityState.Deleted;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool SaveShippingMethod(ShippingMethod shippingMethod)
+        {
+            try
+            {
+                var existingShippingMethod = _context.ShippingMethods
+                    .SingleOrDefault(s => s.Id == shippingMethod.Id);
+
+                // Update 
+                _context.Entry(existingShippingMethod).CurrentValues.SetValues(shippingMethod);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddShippingMethod(ShippingMethod shippingMethod)
+        {
+            try
+            {
+                _context.ShippingMethods.Add(shippingMethod);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
+
+        public bool RemoveShippingMethod(int shippingMethodId)
+        {
+            try
+            {
+                ShippingMethod shippingMethod = new ShippingMethod {Id = shippingMethodId};
+                _context.Entry(shippingMethod).State = EntityState.Deleted;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
         }
 
         public IEnumerable<ShippingMethod> GetShippingMethods()
         {
-            return _context.ShippingMethods;
+            return _context.ShippingMethods.ToList();
         }
 
         public Product GetProductById(int productId)
@@ -172,7 +365,7 @@ namespace CuStore.Domain.Concrete
 
         public Category GetCategoryById(int id)
         {
-            return _context.Categories.FirstOrDefault(c => c.Id.Equals(id));
+            return _context.Categories.Include(c => c.ParentCategory).FirstOrDefault(c => c.Id.Equals(id));
         }
 
         public int GetProductsCount(int? categoryId = null)
@@ -214,15 +407,15 @@ namespace CuStore.Domain.Concrete
                     var categoriesToFilter = childCategories.Select(c => c.Id).ToList();
                     categoriesToFilter.Add(category.Id);
 
-                    return _context.Products
+                    return _context.Products                       
+                        .OrderBy(p => p.Id).ToList()
                         .Where(p => p.CategoryId.In(categoriesToFilter))
-                        .OrderBy(p => p.Id)
                         .Skip((pageNumber - 1) * pageSize).Take(pageSize);
                 }
             }
             return _context.Products
                 .OrderBy(p => p.Id)
-                .Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

@@ -14,8 +14,10 @@ namespace CuStore.Domain.Entities
         public int? ParentCategoryId { get; set; }
 
         [ForeignKey("ParentCategoryId")]
-        public Category ParentCategory { get; set; }
+        public virtual Category ParentCategory { get; set; }
 
         //to make implementation easier, group hierarchy is limited to 2 levels
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -76,19 +76,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IEmailSender.cs" />
     <Compile Include="Abstract\IStoreContext.cs" />
     <Compile Include="Abstract\IStoreRepository.cs" />
+    <Compile Include="Concrete\EmailSender.cs" />
     <Compile Include="Concrete\StoreContext.cs" />
     <Compile Include="Concrete\StoreRepository.cs" />
+    <Compile Include="Constants\EmailServerConfiguration.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ShippingAddress.cs" />
     <Compile Include="Entities\ShippingMethod.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserAddress.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
+    <Compile Include="Migrations\201812032043453_Initial.cs" />
+    <Compile Include="Migrations\201812032043453_Initial.Designer.cs">
+      <DependentUpon>201812032043453_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232023127_Migration1.cs" />
+    <Compile Include="Migrations\201812232023127_Migration1.Designer.cs">
+      <DependentUpon>201812232023127_Migration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +110,14 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812032043453_Initial.resx">
+      <DependentUpon>201812032043453_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232023127_Migration1.resx">
+      <DependentUpon>201812232023127_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

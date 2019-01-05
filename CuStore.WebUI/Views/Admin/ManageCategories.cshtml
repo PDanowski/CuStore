@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CuStore.Domain.Entities.Category>
+
+@{
+    ViewBag.Title = "Manage categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Manage all products</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Parent category</th>
+                <th>Actions</th>
+            </tr>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@Html.ActionLink(item.Name, "EditCategory", new { categoryId = item.Id })</td>
+                    <td>@item.ParentCategory?.Name</td>
+                    <td>
+                        @using (Html.BeginForm("DeleteCategory", "Admin"))
+                        {
+                            @Html.Hidden("Id", item.Id)
+                            <input type="submit" value="Remove"/>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Add new category", "CreateCategory", null, new { @class = "btn btn-default" })
+    </div>
+</div>
+
