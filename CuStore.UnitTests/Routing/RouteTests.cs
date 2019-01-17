@@ -69,12 +69,12 @@ namespace CuStore.UnitTests.Routing
             return result;
         }
 
-        private void TestRouteFail(string url)
+        private void TestRouteFail(string url, string httpMehtod)
         {
             RouteCollection routes = new RouteCollection();
             RouteConfig.RegisterRoutes(routes);
 
-            RouteData result = routes.GetRouteData(CreateHttpContext("GET", url));
+            RouteData result = routes.GetRouteData(CreateHttpContext(httpMehtod, url));
 
             Assert.IsTrue(result == null || result.Route == null);
         }
@@ -84,9 +84,13 @@ namespace CuStore.UnitTests.Routing
         {
             TestRouteMatch("~/Admin/Index", "Admin", "Index", "GET");
             TestRouteMatch("~/One/Two", "One", "Two", "GET");
+            TestRouteMatch("~/Product/List", "Product", "List", "GET", new { categoryId = "1"});
+            TestRouteMatch("~/Page_test", "Product", "List", "GET");
+            TestRouteMatch("~/Page_1", "Product", "List", "POST");
 
-            TestRouteFail("~/Admin/Index/Index/Index");
-            TestRouteFail("~/Admin/Index/Index/Index/Index");
+            TestRouteFail("~/Admin/Index/Index/Index", "GET");
+            TestRouteFail("~/Admin/Index/Index/Index/Index", "GET");
+
         }
     }
 

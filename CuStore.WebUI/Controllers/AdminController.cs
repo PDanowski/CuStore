@@ -20,12 +20,15 @@ namespace CuStore.WebUI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [Route("Admin")]
+        [Route("Admin/Index")]
         public ViewResult Index()
         {
             return View();
         }
 
         [Authorize(Roles = "Admin")]
+        [Route("Admin/Products")]
         public ViewResult ManageProducts()
         {
             return View(_repository.GetProducts());
@@ -126,6 +129,7 @@ namespace CuStore.WebUI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [Route("Admin/Categories")]
         public ViewResult ManageCategories()
         {
             return View(_repository.GetCategories());
