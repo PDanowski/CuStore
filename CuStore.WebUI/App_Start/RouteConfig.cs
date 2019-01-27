@@ -21,7 +21,7 @@ namespace CuStore.WebUI
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.Add(new Route("DebugRoute", new CustomRouteHandler()));
+            //routes.Add(new Route("DebugRoute", new CustomRouteHandler()));
 
             routes.MapRoute(
                 name: "",
@@ -81,14 +81,6 @@ namespace CuStore.WebUI
                 //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
                 defaults: new { controller = "Product", action = "List", categoryId = UrlParameter.Optional },
                 constraints: new { controller = "Product" },
-                namespaces: new[] { "CuStore.WebUI.Controllers" }
-            );
-
-            routes.MapRoute(
-                name: "Admin",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Admin", action = "Index" },
-                constraints: new { controller = "Admin" },
                 namespaces: new[] { "CuStore.WebUI.Controllers" }
             );
 

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Areas.Admin.Controllers;
+using CuStore.WebUI.Areas.Admin.ViewModels;
 using CuStore.WebUI.Controllers;
 using CuStore.WebUI.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,7 +31,7 @@ namespace CuStore.UnitTests.Controllers
                 new Product {Id = 5, Name = "Product5", Price = 20, CategoryId = 2}
             });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Product[] result = ((IEnumerable<Product>) controller.ManageProducts().ViewData.Model).ToArray();
 
@@ -51,7 +53,7 @@ namespace CuStore.UnitTests.Controllers
                 new Category {Id = 5, Name = "Category5", ParentCategoryId = 1}
             });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Category[] result = ((IEnumerable<Category>)controller.ManageCategories().ViewData.Model).ToArray();
 
@@ -71,7 +73,7 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.GetCategoryById(3))
                 .Returns(new Category { Id = 3, Name = "Category3", ParentCategoryId = 1 });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Category c1 = (controller.EditCategory(1).ViewData.Model as EditCategoryViewModel)?.Category;
             Category c2 = (controller.EditCategory(2).ViewData.Model as EditCategoryViewModel)?.Category;
@@ -93,7 +95,7 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.GetProductById(3))
                 .Returns(new Product { Id = 3, Name = "Product3", Price = 30, CategoryId = 3 });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Product p1 = (controller.EditProduct(1).ViewData.Model as EditProductViewModel)?.Product;
             Product p2 = (controller.EditProduct(2).ViewData.Model as EditProductViewModel)?.Product;
@@ -115,7 +117,7 @@ namespace CuStore.UnitTests.Controllers
                 new Category {Id = 3, Name = "Product3", ParentCategoryId = 1}
             });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Category c1 = controller.EditCategory(8).ViewData.Model as Category;
 
@@ -133,7 +135,7 @@ namespace CuStore.UnitTests.Controllers
                 new Product {Id = 3, Name = "Product3", Price = 30, CategoryId = 3}
             });
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Product p1 = controller.EditProduct(8).ViewData.Model as Product;
 
@@ -146,7 +148,7 @@ namespace CuStore.UnitTests.Controllers
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
             mock.Setup(m => m.SaveProduct(It.IsAny<Product>())).Returns(true);
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Product p1 = new Product
             {
@@ -170,7 +172,7 @@ namespace CuStore.UnitTests.Controllers
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
             mock.Setup(m => m.SaveCategory(It.IsAny<Category>())).Returns(true);
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Category c1 = new Category
             {
@@ -193,7 +195,7 @@ namespace CuStore.UnitTests.Controllers
         {
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Product p1 = new Product
             {
@@ -218,7 +220,7 @@ namespace CuStore.UnitTests.Controllers
         {
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             Category c1 = new Category
             {
@@ -244,7 +246,7 @@ namespace CuStore.UnitTests.Controllers
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
             mock.Setup(m => m.RemoveProduct(It.IsAny<int>())).Returns(true);
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             controller.ModelState.AddModelError("error", "error");
 
@@ -259,7 +261,7 @@ namespace CuStore.UnitTests.Controllers
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
             mock.Setup(m => m.RemoveCategory(It.IsAny<int>())).Returns(true);
 
-            AdminController controller = new AdminController(mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
             controller.ModelState.AddModelError("error", "error");
 

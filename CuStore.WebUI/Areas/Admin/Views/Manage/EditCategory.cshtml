@@ -1,33 +1,43 @@
-﻿@model CuStore.WebUI.ViewModels.EditCategoryViewModel
+﻿@model CuStore.WebUI.Areas.Admin.ViewModels.EditCategoryViewModel
 
 @{
     ViewBag.Title = "Edit category";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="panel">
     <div class="panel-heading">
-        <h3>Create new category</h3>
+        <h3>Editing product: @Model.Category.Name</h3>
     </div>
 
     @using (Html.BeginForm())
     {
+        <div class="form-group">
+            <label>Category ID:</label>
+            @Html.DisplayFor(x => x.Category.Id, new { @class = "form-control" })
+        </div>
         <div class="form-group">
             <label>Name:</label>
             @Html.TextBoxFor(x => x.Category.Name, new { @class = "form-control" })
 
             @Html.ValidationMessageFor(x => x.Category.Name)
         </div>
+
         <div class="form-group">
             <label>Parent category:</label>
-            @Html.DropDownListFor(x => x.Category.ParentCategoryId, Model.ParentCategories)
+            @Html.DropDownListFor(x => x.Category.ParentCategoryId, Model.ParentCategories, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(x => x.Category.ParentCategoryId)
         </div>
 
         <div class="panel-footer">
             <input type="submit" value="Save" class="btn btn-primary" />
             @Html.ActionLink("Cancel and go back to list", "ManageCategories", null, new { @class = "btn btn-default" })
         </div>
-
+  
     }
 
 </div>
+
+
+

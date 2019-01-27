@@ -204,8 +204,9 @@
     <Compile Include="App_Start\NinjectConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -227,8 +228,8 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\CartIndexViewModel.cs" />
     <Compile Include="ViewModels\CategoriesListViewModel.cs" />
-    <Compile Include="ViewModels\EditCategoryViewModel.cs" />
-    <Compile Include="ViewModels\EditProductViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EditCategoryViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EditProductViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
@@ -265,6 +266,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -333,17 +335,18 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Cart\Completed.cshtml" />
     <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\ManageProducts.cshtml" />
-    <Content Include="Views\Admin\EditProduct.cshtml" />
-    <Content Include="Views\Admin\CreateProduct.cshtml" />
-    <Content Include="Views\Admin\CreateCategory.cshtml" />
-    <Content Include="Views\Admin\ManageCategories.cshtml" />
-    <Content Include="Views\Admin\EditCategory.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\ManageProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\EditProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\CreateProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\CreateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\ManageCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\EditCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Infrastructure\Extensions\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using CuStore.Domain.Entities;
 
-namespace CuStore.WebUI.ViewModels
+namespace CuStore.WebUI.Areas.Admin.ViewModels
 {
     public class EditCategoryViewModel
     {

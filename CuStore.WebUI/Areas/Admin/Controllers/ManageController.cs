@@ -1,34 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Areas.Admin.ViewModels;
 using CuStore.WebUI.Infrastructure.Helpers;
-using CuStore.WebUI.ViewModels;
 
-namespace CuStore.WebUI.Controllers
+namespace CuStore.WebUI.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    //[RouteArea(areaName: "Admin")]
+    public class ManageController : Controller
     {
         private readonly IStoreRepository _repository;
 
-        public AdminController(IStoreRepository repository)
+        public ManageController(IStoreRepository repository)
         {
             this._repository = repository;
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("Admin")]
-        [Route("Admin/Index")]
+        //[Route("~/Admin")]
+        //[Route("Manage")]
         public ViewResult Index()
         {
             return View();
         }
 
         [Authorize(Roles = "Admin")]
-        [Route("Admin/Products")]
+        //[Route("Admin/Products")]
         public ViewResult ManageProducts()
         {
             return View(_repository.GetProducts());

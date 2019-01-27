@@ -1,8 +1,8 @@
-﻿@model IEnumerable<CuStore.Domain.Entities.Category>
+﻿@model IEnumerable<CuStore.Domain.Entities.Product>
 
 @{
-    ViewBag.Title = "Manage categories";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Manage products";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="panel panel-default">
@@ -14,16 +14,20 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Parent category</th>
+                <th>Price</th>
+                <th>Quantity in stock</th>
+                <th>Category</th>
                 <th>Actions</th>
             </tr>
             @foreach (var item in Model) {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@Html.ActionLink(item.Name, "EditCategory", new { categoryId = item.Id })</td>
-                    <td>@item.ParentCategory?.Name</td>
+                    <td>@Html.ActionLink(item.Name, "EditProduct", new { productId = item.Id })</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.QuanityInStock</td>
+                    <td>@item.Category.Name</td>
                     <td>
-                        @using (Html.BeginForm("DeleteCategory", "Admin"))
+                        @using (Html.BeginForm("DeleteProduct", "Admin"))
                         {
                             @Html.Hidden("Id", item.Id)
                             <input type="submit" value="Remove"/>
@@ -34,7 +38,7 @@
         </table>
     </div>
     <div class="panel-footer">
-        @Html.ActionLink("Add new category", "CreateCategory", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Add new product", "CreateProduct", null, new { @class = "btn btn-default" })
     </div>
 </div>
 
