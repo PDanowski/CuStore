@@ -216,6 +216,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Binders\CartModelBinder.cs" />
+    <Compile Include="Infrastructure\CustomRouteHandler.cs" />
     <Compile Include="Infrastructure\Helpers\CategroriesProvider.cs" />
     <Compile Include="Infrastructure\Helpers\ShippingMethodsProvider.cs" />
     <Compile Include="Infrastructure\NinjectContainer.cs" />

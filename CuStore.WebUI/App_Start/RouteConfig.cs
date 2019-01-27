@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Routing.Constraints;
 using System.Web.Routing;
+using CuStore.WebUI.Infrastructure;
 
 namespace CuStore.WebUI
 {
@@ -19,6 +20,8 @@ namespace CuStore.WebUI
             routes.MapMvcAttributeRoutes();
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.Add(new Route("DebugRoute", new CustomRouteHandler()));
 
             routes.MapRoute(
                 name: "",
