@@ -35,6 +35,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         }
 
 
+        [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult EditProduct(int productId)
         {
             Product product = _repository.GetProductById(productId);
@@ -74,12 +75,13 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult CreateProduct()
         {
             EditProductViewModel viewModel = new EditProductViewModel
             {
                 Product = new Product(),
-            Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList())
+                Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList())
             };
             return View(viewModel);
         }
@@ -135,6 +137,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             return View(_repository.GetCategories());
         }
 
+        [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult EditCategory(int categoryId)
         {
             Category category = _repository.GetCategoryById(categoryId);
@@ -167,6 +170,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult CreateCategory()
         {
             EditCategoryViewModel viewModel = new EditCategoryViewModel

@@ -16,7 +16,7 @@ namespace CuStore.WebUI
             //route.DataTokens["UseNamespaceFallback"] = false;
             //To disable default namespaces searching fallback
 
-            //Enable routing attributes in controllers (MVC 5)
+            //Enable routing attributes in controllers (MVC 5) - could have impact on unit tests
             routes.MapMvcAttributeRoutes();
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

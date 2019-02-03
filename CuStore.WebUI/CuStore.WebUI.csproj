@@ -218,6 +218,8 @@
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Binders\CartModelBinder.cs" />
     <Compile Include="Infrastructure\CustomRouteHandler.cs" />
+    <Compile Include="Infrastructure\Filters\LocalRequestAuthAttribute.cs" />
+    <Compile Include="Infrastructure\Filters\UnhadledExceptionAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\CategroriesProvider.cs" />
     <Compile Include="Infrastructure\Helpers\ShippingMethodsProvider.cs" />
     <Compile Include="Infrastructure\NinjectContainer.cs" />
@@ -343,6 +345,7 @@
     <Content Include="Areas\Admin\Views\Manage\ManageCategories.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\EditCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Index.cshtml" />
+    <Content Include="Views\Shared\ErrorDetailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
