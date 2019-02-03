@@ -8,6 +8,7 @@ using System.Web.Routing;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Infrastructure;
 using CuStore.WebUI.Infrastructure.Binders;
+using Filters;
 
 namespace CuStore.WebUI
 {
