@@ -5,27 +5,30 @@
     ViewBag.Title = "CuStore: Your order";
 }
 
+@helper DisplayProperty(string value)
+{
+    <div class="form-group">
+        @Html.DisplayFor(v => value, new { @class = "form-control" })
+    </div>
+}
+
+@helper DisplayPropertyWithLabel(string value, string label)
+{
+    <div class="form-group">
+        <label>@label</label>
+        @Html.DisplayFor(v => value, new { @class = "form-control" })
+    </div>
+}
+
 <h2>Order: shipping information</h2>
 <p>Please fill shipping method and delivery address</p>
 
 <h4>Contact data:</h4>
 <div class="well">
-    <div class="form-group">
-        <label>First name:</label>
-        @Html.DisplayFor(x => x.Cart.User.FirstName, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label>Last name:</label>
-        @Html.DisplayFor(x => x.Cart.User.LastName, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label>E-mail:</label>
-        @Html.DisplayFor(x => x.Cart.User.Email, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label>Phone:</label>
-        @Html.DisplayFor(x => x.Cart.User.PhoneNumber, new { @class = "form-control" })
-    </div>
+    @DisplayPropertyWithLabel(@Model.Cart.User.FirstName, "First name:")
+    @DisplayPropertyWithLabel(@Model.Cart.User.LastName, "Last name:")
+    @DisplayPropertyWithLabel(@Model.Cart.User.Email, "E-mail:")
+    @DisplayPropertyWithLabel(@Model.Cart.User.PhoneNumber, "Phone:")
 </div>
 
 <script type="text/javascript">
@@ -60,6 +63,7 @@
     }
 </script>
 
+
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(m => m.OrderValue)
@@ -73,18 +77,10 @@
         </div>
 
         <div class="well">
-            <div class="form-group">
-                @Html.DisplayFor(x => x.Cart.User.UserAddress.Street, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.DisplayFor(x => x.Cart.User.UserAddress.City, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.DisplayFor(x => x.Cart.User.UserAddress.PostalCode, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.DisplayFor(x => x.Cart.User.UserAddress.Country, new { @class = "form-control" })
-            </div>
+            DisplayProperty(x.Cart.User.UserAddress.Street)
+            DisplayProperty(x.Cart.User.UserAddress.City)
+            DisplayProperty(x.Cart.User.UserAddress.PostalCode)
+            DisplayProperty(x.Cart.User.UserAddress.Country)
         </div>
     }
 
