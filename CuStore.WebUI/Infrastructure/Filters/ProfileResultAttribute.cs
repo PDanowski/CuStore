@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CuStore.WebUI.Infrastructure.Filters
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class ProfileResultAttribute : FilterAttribute, IResultFilter
     {
         private Stopwatch _timer;

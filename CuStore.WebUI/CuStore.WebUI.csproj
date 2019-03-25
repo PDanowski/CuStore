@@ -348,6 +348,7 @@
     <Content Include="Areas\Admin\Views\Manage\EditCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Index.cshtml" />
     <Content Include="Views\Shared\ErrorDetailed.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
