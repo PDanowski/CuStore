@@ -24,6 +24,8 @@ namespace CuStore.Domain.Entities
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Order date")]
+        [DataType(DataType.DateTime)]
         public DateTime OrderDate { get; set; }
         public bool UseUserAddress { get; set; }
 

@@ -11,15 +11,16 @@ namespace CuStore.Domain.Entities
     {
 
         [Required(ErrorMessage = "First name is mandatory")]
-        [Display(Name = "First Name")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name is mandatory")]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Last name is mandatory")]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Phone")]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
         public int OrderId { get; set; }

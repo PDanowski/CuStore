@@ -17,6 +17,7 @@ namespace CuStore.Domain.Entities
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Name")]
         public string Description { get; set; }
 
         [Required]
@@ -25,6 +26,7 @@ namespace CuStore.Domain.Entities
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Product quanity in stock is required")]
+        [Display(Name = "Quanity in stock")]
         public int QuanityInStock { get; set; }
 
         public byte[] ImageData { get; set; }

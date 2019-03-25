@@ -21,6 +21,7 @@ namespace CuStore.Domain.Entities
 
         [Required(ErrorMessage = "Postal code is mandatory")]
         [Display(Name = "Postal code")]
+        [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
 
     }

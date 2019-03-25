@@ -26,9 +26,11 @@ namespace CuStore.Domain.Entities
 
         #region Additional properties
         [Required(ErrorMessage = "First name is mandatory")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name is mandatory")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [DataType(DataType.Date)]
