@@ -9,13 +9,14 @@
     @Html.Action("Menu", "Nav", new { selectedCategoryId = Model.Product.CategoryId })
 </div>
 <div class="col-xs-12 col-sm-9">
-    <h2>@Model.Product.Name</h2>
+    <h2>@Model.Product.Name</h2>  
+
     @if (Model.Image != null)
     {
-        <div class="well">
-            <img class="img-thumbnail" width="500" height="375"
-                 src="@Model.Image" />
-        </div>         
+        <div class="well" align="center">
+            <img class="img-thumbnail" width="500" height="300" 
+                 src="data:image;base64,@Convert.ToBase64String(Model.Image.FileContents)" />
+        </div> 
     }
 
     <div class="well">
@@ -31,7 +32,7 @@
         {
             <div class="pull-right">
                 @Html.Hidden("productId", @Model.Product.Id)
-                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                @Html.Hidden("returnUrl", Request.Url?.PathAndQuery)
                 <input type="submit" class="btn btn-success" value="Add to cart" />
             </div>
         }

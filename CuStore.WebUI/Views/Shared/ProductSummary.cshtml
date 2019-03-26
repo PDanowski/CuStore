@@ -2,12 +2,13 @@
 
 <div class="well">
     <h3>
-        
+        <span class="pull-right label label-primary">@Model.Price.ToString("C")</span>
+
         @if (Model.ImageData != null)
         {
-            <div class="pull-right" style="margin-right: 10px">
-                <img class="img-thumbnail" width="100" height="75"
-                     src="@Url.Action("GetImage", "Product", new { Model.Id })"/>
+            <div class="pull-right" style="margin-right: 10px; margin-top: -25px; margin-left:10px;">
+                <img class="img-thumbnail" width="75" height="50"
+                     src="@Url.Action("GetImage", "Product", new { productId = Model.Id })"/>
             </div>
         }
                  
@@ -19,7 +20,7 @@
             returnUrl = Request.Url.PathAndQuery
         }, null)
 
-        <span class="pull-right label label-primary">@Model.Price.ToString("C")</span>
+        
 
     </h3>
     <span class="lead">@Model.Description</span>
