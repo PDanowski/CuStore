@@ -123,5 +123,21 @@ namespace CuStore.WebUI.Controllers
 
             return View(viewModel);
         }
+
+        public PartialViewResult TotalValue(decimal value, int? shippingMethodId)
+        {
+            decimal totalValue = value;
+
+            if (shippingMethodId.HasValue && shippingMethodId != 0)
+            {
+                var method = _repository.GetShippingMethodById(shippingMethodId.Value);
+                if (method != null)
+                {
+                    totalValue += method.Price;
+                }
+            }
+
+            return PartialView(totalValue);
+        }
     }
 }

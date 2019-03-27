@@ -115,19 +115,17 @@
         @Html.TextBoxFor(x => x.ShippingAddress.Country, new { id = "Country", @class = "form-control" })
     </div>
 
-    <h3>Shipping method:</h3>
-    @Html.DropDownListFor(x => x.SelectedShippingMethodId, Model.ShippingMethods, new { @class = "form-control" })
-
-    <h3>Total:</h3>
     <div class="form-group">
-        <h2><span class="label label-primary">@Model.OrderValue</span></h2>
+        <h3>Shipping method:</h3>
+        @Html.DropDownListFor(x => x.SelectedShippingMethodId, Model.ShippingMethods, new { @class = "form-control" })
+    </div>
+
+    <div id="totalValue">
+        @Html.Action("TotalValue", new { value = Model.OrderValue, shippingMethodId = Model.SelectedShippingMethodId })
     </div>
 
     <div class="text-center">
         <input class="btn btn-primary" type="submit" value="Confirm order" />
     </div>
 }
-
-
-
 

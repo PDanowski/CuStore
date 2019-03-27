@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Areas.Admin.ViewModels;
 using CuStore.WebUI.Infrastructure.Helpers;
+using CuStore.WebUI.Models;
 
 namespace CuStore.WebUI.Areas.Admin.Controllers
 {
@@ -13,6 +15,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
     public class ManageController : Controller
     {
         private readonly IStoreRepository _repository;
+        private int _pageSize = 10;
 
         public ManageController(IStoreRepository repository)
         {
@@ -29,9 +32,20 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin")]
         //[Route("Admin/Products")]
-        public ViewResult ManageProducts()
+        public ViewResult ManageProducts(int pageNumber = 1)
         {
-            return View(_repository.GetProducts());
+            return View(new PagingInfo
+            {
+                CurrentPage = pageNumber,
+                ItemsPerPage = _pageSize,
+                TotalItems = _repository.GetProductsCount()
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public PartialViewResult GetProducts(int pageNumber = 1)
+        {
+            return PartialView(_repository.GetProductsByCategory(_pageSize, pageNumber));
         }
 
 
@@ -65,7 +79,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
                 {
                     //TempData is removed at end of request
                     //used because of redirection
-                    TempData["message"] = String.Format("Saved {0}", viewModel.Product.Name);
+                    TempData["message"] = $"Saved {viewModel.Product.Name}";
                     return RedirectToAction("ManageProducts");
                 }           
             }

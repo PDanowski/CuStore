@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CuStore.Domain.Entities.Product>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Id</td>
+        <td>@Html.ActionLink(item.Name, "EditProduct", "Manage", null, new { productId = item.Id })</td>
+        <td>@item.Price.ToString("C")</td>
+        <td>@item.QuanityInStock</td>
+        <td>@item.Category.Name</td>
+        <td>
+            @using (Html.BeginForm("DeleteProduct", "Manage"))
+            {
+                @Html.Hidden("Id", item.Id)
+                <input type="submit" value="Remove" />
+            }
+        </td>
+    </tr>
+}

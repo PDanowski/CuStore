@@ -48,8 +48,8 @@ namespace CuStore.UnitTests.Routing
                 return StringComparer.InvariantCultureIgnoreCase.Compare(v1, v2) == 0;
             };
 
-            bool result = valCompare = (routeResult.Values["controller"], controller) &&
-                          valCompare = (routeResult.Values["action"], action);
+            bool result = valCompare(routeResult.Values["controller"], controller) &&
+                          valCompare(routeResult.Values["action"], action);
 
             if (propertySet != null)
             {
@@ -57,8 +57,8 @@ namespace CuStore.UnitTests.Routing
 
                 foreach (var prop in propInfo)
                 {
-                    if (!(routeResult.Values.ContainsKey(prop.Name)) 
-                        && valCompare = (routeResult.Values[prop.Name], prop.GetValue(propertySet, null)))
+                    if (!(routeResult.Values.ContainsKey(prop.Name))
+                        && valCompare(routeResult.Values[prop.Name], prop.GetValue(propertySet, null)))
                     {
                         result = false;
                         break;

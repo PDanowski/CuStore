@@ -37,5 +37,22 @@ namespace CuStore.Domain.Entities
         public virtual ShippingMethod ShippingMethod { get; set; }
 
 
+        public decimal GetTotalValue()
+        {
+            decimal totalValue = 0;
+
+            if (Cart != null)
+            {
+                totalValue += Cart.GetValue();
+            }
+            if (ShippingMethod != null)
+            {
+                totalValue += ShippingMethod.Price;
+            }
+
+            return totalValue;
+        }
+
+
     }
 }
