@@ -272,6 +272,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\GetProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\ManageOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\GetOrders.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

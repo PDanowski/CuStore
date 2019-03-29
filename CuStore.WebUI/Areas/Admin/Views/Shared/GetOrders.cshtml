@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CuStore.Domain.Entities.Order>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Cart.User.Email</td>
+        <td>@item.OrderDate</td>
+        <td>@item.GetTotalValue().ToString("C")</td>
+        <td>Status</td>
+        <td>
+            @using (Html.BeginForm("DeleteOrder", "Manage"))
+            {
+                @Html.Hidden("Id", item.Id)
+                <input type="submit" value="Remove" />
+            }
+            @Html.ActionLink("Edit", "EditOrder", "Manage", null, new { productId = item.Id })
+        </td>
+    </tr>
+}

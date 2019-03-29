@@ -26,6 +26,7 @@ namespace CuStore.Domain.Abstract
         Category GetCategoryById(int id);
         IEnumerable<Product> GetProductsByCategory(int pageSize, int pageNumber, int? categoryId = null);
         int GetProductsCount(int? categoryId = null);
+        int GetOrdersCount();
         bool AddCart(Cart cart);
         bool SaveCart(Cart cart);
         Cart GetCartByUserId(string userId);
@@ -34,5 +35,6 @@ namespace CuStore.Domain.Abstract
         IEnumerable<ShippingMethod> GetShippingMethods();
         bool AddOrder(Order order);
         ShippingMethod GetShippingMethodById(int id);
+        IEnumerable<Order> GetOrders(int pageSize, int pageNumber);
     }
 }

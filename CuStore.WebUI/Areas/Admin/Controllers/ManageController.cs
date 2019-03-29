@@ -43,6 +43,23 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public ViewResult ManageOrders(int pageNumber = 1)
+        {
+            return View(new PagingInfo
+            {
+                CurrentPage = pageNumber,
+                ItemsPerPage = _pageSize,
+                TotalItems = _repository.GetOrdersCount()
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public PartialViewResult GetOrders(int pageNumber = 1)
+        {
+            return PartialView(_repository.GetOrders(_pageSize, pageNumber));
+        }
+
+        [Authorize(Roles = "Admin")]
         public PartialViewResult GetProducts(int pageNumber = 1)
         {
             return PartialView(_repository.GetProductsByCategory(_pageSize, pageNumber));

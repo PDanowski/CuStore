@@ -378,6 +378,11 @@ namespace CuStore.Domain.Concrete
             return _context.Products.Count();
         }
 
+        public int GetOrdersCount()
+        {
+            return _context.Orders.Count();
+        }
+
         public IEnumerable<Product> GetProductsByCategory(int pageSize, int pageNumber, int? categoryId = null)
         {
             //var test = new List<Product>
@@ -416,6 +421,18 @@ namespace CuStore.Domain.Concrete
             return _context.Products
                 .OrderBy(p => p.Id)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public IEnumerable<Order> GetOrders(int pageSize, int pageNumber)
+        {
+            return _context.Orders
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Include(o => o.Cart)
+                .Include(o => o.ShippingAddress)
+                .Include(o => o.ShippingMethod)
+                .Include(o => o.Cart.User)
+                .ToList();
         }
     }
 }
