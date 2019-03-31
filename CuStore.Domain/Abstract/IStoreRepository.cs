@@ -34,7 +34,10 @@ namespace CuStore.Domain.Abstract
         bool RemoveCart(Cart cart);
         IEnumerable<ShippingMethod> GetShippingMethods();
         bool AddOrder(Order order);
+        bool RemoveOrder(int orderId);
+        Order GetOrderById(int orderId);
         ShippingMethod GetShippingMethodById(int id);
         IEnumerable<Order> GetOrders(int pageSize, int pageNumber);
+        bool SaveOrder(Order order);
     }
 }

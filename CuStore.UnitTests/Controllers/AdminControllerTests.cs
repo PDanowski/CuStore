@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.Domain.Entities.Enums;
 using CuStore.WebUI.Areas.Admin.Controllers;
 using CuStore.WebUI.Areas.Admin.ViewModels;
 using CuStore.WebUI.Controllers;
@@ -19,10 +20,10 @@ namespace CuStore.UnitTests.Controllers
     public class AdminControllerTests
     {
         [TestMethod]
-        public void Manage_Products_Contains_All_Products()
+        public void Get_Products_Contains_All_Products()
         {
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            mock.Setup(m => m.GetProducts(true)).Returns(new Product[]
+            mock.Setup(m => m.GetProductsByCategory(It.IsAny<int>(), It.IsAny<int>(), null)).Returns(new Product[]
             {
                 new Product {Id = 1, Name = "Product1", Price = 10, CategoryId = 1},
                 new Product {Id = 2, Name = "Product2", Price = 20, CategoryId = 2},
@@ -33,7 +34,7 @@ namespace CuStore.UnitTests.Controllers
 
             WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
 
-            Product[] result = ((IEnumerable<Product>) controller.ManageProducts().ViewData.Model).ToArray();
+            Product[] result = ((IEnumerable<Product>) controller.GetProducts().ViewData.Model).ToArray();
 
             Assert.AreEqual(result.Length, 5);
             Assert.AreEqual("Product1", result[0].Name);
@@ -60,6 +61,28 @@ namespace CuStore.UnitTests.Controllers
             Assert.AreEqual(result.Length, 5);
             Assert.AreEqual("Category1", result[0].Name);
             Assert.AreEqual("Category5", result[4].Name);
+        }
+
+        [TestMethod]
+        public void Get_Orders_Contains_All_Orders()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetOrders(It.IsAny<int>(), It.IsAny<int>())).Returns(new Order[]
+            {
+                new Order {Id = 1, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted},
+                new Order {Id = 2, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted},
+                new Order {Id = 3, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted},
+                new Order {Id = 4, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted},
+                new Order {Id = 5, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted}
+            });
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            Order[] result = ((IEnumerable<Order>)controller.GetOrders().ViewData.Model).ToArray();
+
+            Assert.AreEqual(result.Length, 5);
+            Assert.AreEqual(1, result[0].Id);
+            Assert.AreEqual(5, result[4].Id);
         }
 
         [TestMethod]
@@ -107,6 +130,28 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
+        public void Manage_Orders_Can_Edit()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetOrderById(1))
+                .Returns(new Order { Id = 1, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted });
+            mock.Setup(m => m.GetOrderById(2))
+                .Returns(new Order { Id = 2, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Archived });
+            mock.Setup(m => m.GetOrderById(3))
+                .Returns(new Order { Id = 3, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Realized });
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            Order o1 = (controller.EditOrder(1).ViewData.Model as Order);
+            Order o2 = (controller.EditOrder(2).ViewData.Model as Order);
+            Order o3 = (controller.EditOrder(3).ViewData.Model as Order);
+
+            Assert.AreEqual(1, o1?.Id);
+            Assert.AreEqual(2, o2?.Id);
+            Assert.AreEqual(3, o3?.Id);
+        }
+
+        [TestMethod]
         public void Manage_Categories_Edit_Not_Existing()
         {
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
@@ -140,6 +185,21 @@ namespace CuStore.UnitTests.Controllers
             Product p1 = controller.EditProduct(8).ViewData.Model as Product;
 
             Assert.IsNull(p1);
+        }
+
+        [TestMethod]
+        public void Manage_Orders_Edit_Not_Existing()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.GetOrderById(1)).Returns( 
+                new Order {Id = 1, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted}
+            );
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            Order o1 = controller.EditOrder(8).ViewData.Model as Order;
+
+            Assert.IsNull(o1);
         }
 
         [TestMethod]
@@ -186,6 +246,28 @@ namespace CuStore.UnitTests.Controllers
             ActionResult result = controller.EditCategory(viewModel);
 
             mock.Verify(m => m.SaveCategory(viewModel.Category));
+
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Manage_Orders_Save_Valid_Changes()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.SaveOrder(It.IsAny<Order>())).Returns(true);
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            Order o1 = new Order
+            {
+                Id = 1,
+                OrderDate = DateTime.Today,
+                Status = OrderStatus.Accepted
+            };
+
+            ActionResult result = controller.EditOrder(o1);
+
+            mock.Verify(m => m.SaveOrder(o1));
 
             Assert.IsNotInstanceOfType(result, typeof(ViewResult));
         }
@@ -241,6 +323,29 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
+        public void Manage_Orders_Save_Invalid_Changes()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            Order o1 = new Order
+            {
+                Id = 1,
+                OrderDate = DateTime.Today,
+                Status = OrderStatus.Accepted
+            };
+
+            controller.ModelState.AddModelError("error", "error");
+
+            ActionResult result = controller.EditOrder(o1);
+
+            mock.Verify(m => m.SaveOrder(It.IsAny<Order>()), Times.Never);
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
         public void Manage_Products_Delete_Valid()
         {
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
@@ -268,6 +373,21 @@ namespace CuStore.UnitTests.Controllers
             controller.DeleteCategory(categoryId: 1);
 
             mock.Verify(m => m.RemoveCategory(1));
+        }
+
+        [TestMethod]
+        public void Manage_Orders_Delete_Valid()
+        {
+            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.RemoveOrder(It.IsAny<int>())).Returns(true);
+
+            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object);
+
+            controller.ModelState.AddModelError("error", "error");
+
+            controller.DeleteOrder(orderId: 1);
+
+            mock.Verify(m => m.RemoveOrder(1));
         }
 
     }

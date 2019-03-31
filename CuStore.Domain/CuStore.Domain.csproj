@@ -87,6 +87,7 @@
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Enums\OrderStatus.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingAddress.cs" />
@@ -101,6 +102,10 @@
     <Compile Include="Migrations\201812232023127_Migration1.cs" />
     <Compile Include="Migrations\201812232023127_Migration1.Designer.cs">
       <DependentUpon>201812232023127_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903301449056_Migration2.cs" />
+    <Compile Include="Migrations\201903301449056_Migration2.Designer.cs">
+      <DependentUpon>201903301449056_Migration2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,6 +123,10 @@
     <EmbeddedResource Include="Migrations\201812232023127_Migration1.resx">
       <DependentUpon>201812232023127_Migration1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903301449056_Migration2.resx">
+      <DependentUpon>201903301449056_Migration2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

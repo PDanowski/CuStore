@@ -205,6 +205,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EditProductViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -233,7 +234,6 @@
     <Compile Include="ViewModels\CartIndexViewModel.cs" />
     <Compile Include="ViewModels\CategoriesListViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EditCategoryViewModel.cs" />
-    <Compile Include="Areas\Admin\ViewModels\EditProductViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
@@ -274,6 +274,7 @@
     <Content Include="Areas\Admin\Views\Shared\GetProducts.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\ManageOrders.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\GetOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\EditOrder.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

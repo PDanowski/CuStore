@@ -166,6 +166,21 @@ namespace CuStore.Domain.Concrete
             }
         }
 
+        public bool RemoveOrder(int orderId)
+        {
+            try
+            {
+                Order order = new Order { Id = orderId };
+                _context.Entry(order).State = EntityState.Deleted;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+        }
         public bool RemoveCart(Cart cart)
         {
             _context.Carts.Attach(cart);
@@ -429,10 +444,50 @@ namespace CuStore.Domain.Concrete
                 .OrderBy(p => p.Id)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Include(o => o.Cart)
-                .Include(o => o.ShippingAddress)
-                .Include(o => o.ShippingMethod)
                 .Include(o => o.Cart.User)
                 .ToList();
+        }
+
+        public Order GetOrderById(int orderId)
+        {
+            var order = _context.Orders
+                .Where(o => o.Id.Equals(orderId))
+                .Include(o => o.Cart)
+                .Include(o => o.Cart.CartItems)
+                .Include(o => o.Cart.User)
+                .Include(o => o.Cart.User.UserAddress)
+                .Include(o => o.ShippingMethod)
+                .Include(o => o.ShippingAddress)
+                .FirstOrDefault();
+
+            if (order != null)
+            {
+                foreach (var item in order.Cart.CartItems)
+                {
+                    item.Product = GetProductById(item.ProductId);
+                }  
+            }
+            return order;
+        }
+
+        public bool SaveOrder(Order order)
+        {
+            try
+            {
+                var existingProduct = _context.Orders
+                    .SingleOrDefault(o => o.Id == order.Id);
+
+                // Update 
+                _context.Entry(existingProduct).CurrentValues.SetValues(order);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
         }
     }
 }

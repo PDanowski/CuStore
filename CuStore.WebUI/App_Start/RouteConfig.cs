@@ -22,6 +22,22 @@ namespace CuStore.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             //routes.Add(new Route("DebugRoute", new CustomRouteHandler()));
+            routes.MapRoute(
+                name: "Area",
+                url: "Admin/{controller}/{action}",
+                defaults: new { area = "Admin", controller = "Manage", action = "Index" },
+                constraints: new { area = "Admin", controller = "Manage" },
+                namespaces: new[] { "CuStore.WebUI.Areas.Admin.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "AreaWithId",
+                url: "Admin/{controller}/{action}/{id}",
+                defaults: new { area = "Admin", controller = "Manage", action = "Index", categoryId = UrlParameter.Optional },
+                constraints: new { area = "Admin", controller = "Manage" },
+                namespaces: new[] { "CuStore.WebUI.Areas.Admin.Controllers" }
+            );
+
 
             routes.MapRoute(
                 name: "",

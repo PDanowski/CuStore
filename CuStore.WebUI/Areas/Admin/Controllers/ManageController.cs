@@ -54,12 +54,14 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [ChildActionOnly]
         public PartialViewResult GetOrders(int pageNumber = 1)
         {
             return PartialView(_repository.GetOrders(_pageSize, pageNumber));
         }
 
         [Authorize(Roles = "Admin")]
+        [ChildActionOnly]
         public PartialViewResult GetProducts(int pageNumber = 1)
         {
             return PartialView(_repository.GetProductsByCategory(_pageSize, pageNumber));
@@ -148,7 +150,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteProduct(int productId)
         {
-                bool isDeleted = _repository.RemoveProduct(productId);
+             bool isDeleted = _repository.RemoveProduct(productId);
 
                 if (isDeleted)
                 {
@@ -159,6 +161,50 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
                     TempData["message"] = "Error during deletion";
                 }
                 return RedirectToAction("ManageProducts");
+        }
+
+
+        [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
+        public ViewResult EditOrder(int orderId)
+        {
+            Order order = _repository.GetOrderById(orderId);
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult EditOrder(Order order, HttpPostedFileBase image = null)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isSaved = _repository.SaveOrder(order);
+
+                if (isSaved)
+                {
+                    //TempData is removed at end of request
+                    //used because of redirection
+                    TempData["message"] = $"Saved {order.Id}";
+                    return RedirectToAction("ManageOrders");
+                }
+            }
+
+            TempData["message"] = "Error during saving order";
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOrder(int orderId)
+        {
+            bool isDeleted = _repository.RemoveOrder(orderId);
+
+            if (isDeleted)
+            {
+                TempData["message"] = "Deleted";
+            }
+            else
+            {
+                TempData["message"] = "Error during deletion";
+            }
+            return RedirectToAction("ManageOrders");
         }
 
         [Authorize(Roles = "Admin")]

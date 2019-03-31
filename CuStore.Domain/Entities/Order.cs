@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CuStore.Domain.Entities.Enums;
 
 namespace CuStore.Domain.Entities
 {
@@ -21,6 +22,11 @@ namespace CuStore.Domain.Entities
             UseUserAddress = useUserAddress;
         }
 
+        public Order()
+        {
+            
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -28,6 +34,7 @@ namespace CuStore.Domain.Entities
         [DataType(DataType.DateTime)]
         public DateTime OrderDate { get; set; }
         public bool UseUserAddress { get; set; }
+        public OrderStatus Status { get; set; }
 
         public int CartId { get; set; }
         public int ShippingMethodId { get; set; }
