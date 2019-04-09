@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <label>Value:</label>
-            @Html.DisplayFor(x => x.GetTotalValue().ToString("c"), new { @class = "form-control" })
+            @Html.Display("totalValue", new { @class = "form-control" })
         </div>
         <div class="form-group">
             <label>Elements:</label>
@@ -56,21 +56,28 @@
 
         <div class="form-group">
             <label>Shipping method:</label>
-            @Html.DisplayFor(x => x.ShippingMethod.Name + " " + x.ShippingMethod.Price.ToString("c"), new { @class = "form-control" })
+            @{
+                var shippingMethodText = Model.ShippingMethod.Name + " " + Model.ShippingMethod.Price.ToString("c");
+                @Html.DisplayFor(x => shippingMethodText, new {@class = "form-control"})
+            }
         </div>
         <div class="form-group">
             <label>Shipping address:</label>
             @if (Model.UseUserAddress)
             {
                 @Html.DisplayFor(x => x.Cart.User.UserAddress.Street, new { @class = "form-control" })
-                @Html.DisplayFor(x => x.Cart.User.UserAddress.PostalCode + " " + x.Cart.User.UserAddress.City, new { @class = "form-control" })
+                var shippingAddressText = Model.Cart.User.UserAddress.PostalCode + " " + Model.Cart.User.UserAddress.City;
+                @Html.DisplayFor(x => shippingAddressText, new { @class = "form-control" })
                 @Html.DisplayFor(x => x.Cart.User.UserAddress.Country, new { @class = "form-control" })
             }
             else
             {
-                @Html.DisplayFor(x => x.ShippingAddress.Street, new { @class = "form-control" })
-                @Html.DisplayFor(x => x.ShippingAddress.PostalCode + " " + x.ShippingAddress.City, new { @class = "form-control" })
-                @Html.DisplayFor(x => x.ShippingAddress.Country, new { @class = "form-control" })
+                @Html.DisplayFor(x => x.ShippingAddress.Street, new { @class = "form-control" });
+
+                var shippingAddressText = Model.ShippingAddress.PostalCode + " " + Model.ShippingAddress.City;
+                @Html.DisplayFor(x => shippingAddressText, new { @class = "form-control" });
+
+                @Html.DisplayFor(x => x.ShippingAddress.Country, new {@class = "form-control"})
             }
         </div>
 

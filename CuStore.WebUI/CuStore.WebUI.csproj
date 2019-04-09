@@ -217,6 +217,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
+    <Compile Include="Infrastructure\Attributes\FutureDateAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\PastDateAttribute.cs" />
     <Compile Include="Infrastructure\Binders\CartModelBinder.cs" />
     <Compile Include="Infrastructure\CustomRouteHandler.cs" />
     <Compile Include="Infrastructure\Filters\LocalRequestAuthAttribute.cs" />
@@ -235,7 +237,7 @@
     <Compile Include="ViewModels\CategoriesListViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EditCategoryViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
-    <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
   </ItemGroup>

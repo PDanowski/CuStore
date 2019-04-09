@@ -4,6 +4,14 @@
 @{
     ViewBag.Title = "ManageOrders";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "tableBody",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading",
+        LoadingElementDuration = 750,
+        Url = Url.Action("GetOrders", new { pageNumber = Model.CurrentPage })
+    };
 }
 
 <div class="panel panel-default">
@@ -13,18 +21,24 @@
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>User name</th>
-                <th>Date</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>User name</th>
+                    <th>Date</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
 
-            <tbody id="tableBodyId">
-            @Html.Action("GetOrders", new { pageNumber = Model.CurrentPage })
+            <tbody id="tableBody">
+                <div id="loading" style="display: none">Loading...</div>
+                @Html.Action("GetOrders", new {pageNumber = Model.CurrentPage})
+            
+                @using (Ajax.BeginForm(ajaxOptions))
+                {
+                    <button type="submit" class="btn btn-default">Refresh</button>
+                }
             </tbody>
 
             <div class="btn-group pull-right">

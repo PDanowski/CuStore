@@ -54,7 +54,6 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [ChildActionOnly]
         public PartialViewResult GetOrders(int pageNumber = 1)
         {
             return PartialView(_repository.GetOrders(_pageSize, pageNumber));
@@ -168,6 +167,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         public ViewResult EditOrder(int orderId)
         {
             Order order = _repository.GetOrderById(orderId);
+            ViewData["totalValue"] = order.GetTotalValue();
             return View(order);
         }
 
@@ -187,6 +187,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
                 }
             }
 
+            ViewData["totalValue"] = order.GetTotalValue();
             TempData["message"] = "Error during saving order";
             return View(order);
         }
