@@ -489,5 +489,18 @@ namespace CuStore.Domain.Concrete
                 return false;
             }
         }
+
+        public bool IsProductCodeUnique(string code)
+        {
+            var products =
+                _context.Products.Where(p => p.Code.Equals(code, StringComparison.InvariantCultureIgnoreCase));
+
+            if (products.Any())
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

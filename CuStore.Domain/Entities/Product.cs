@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CuStore.Domain.Entities
 {
@@ -19,6 +22,14 @@ namespace CuStore.Domain.Entities
         [DataType(DataType.MultilineText)]
         [Display(Name = "Name")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Product code is required")]
+        [Display(Name = "Code")]
+        [Remote("CheckProductCodeUniquness", "Manage", areaName: "Admin")]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(200)]
+        [Index]
+        public string Code { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Product price is required")]

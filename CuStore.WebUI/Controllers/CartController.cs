@@ -83,6 +83,7 @@ namespace CuStore.WebUI.Controllers
                 Cart = cart,
                 ShippingMethods = ShippingMethodsProvider.CreateSelectList(_repository.GetShippingMethods().ToList()),
                 OrderValue = cart.GetValue(),
+                SelectedShippingMethodId = -1
             };
 
             return View(viewModel);
@@ -120,6 +121,7 @@ namespace CuStore.WebUI.Controllers
             viewModel.ShippingMethods =
                 ShippingMethodsProvider.CreateSelectList(_repository.GetShippingMethods().ToList());
             viewModel.OrderValue = cart.GetValue();
+            viewModel.SelectedShippingMethodId = -1;
 
             return View(viewModel);
         }
@@ -138,6 +140,23 @@ namespace CuStore.WebUI.Controllers
             }
 
             return PartialView(totalValue);
+        }
+
+        [HttpPost] 
+        public JsonResult GetTotalValue(decimal value, int? shippingMethodId)
+        {
+            decimal totalValue = value;
+
+            if (shippingMethodId.HasValue && shippingMethodId != 0)
+            {
+                var method = _repository.GetShippingMethodById(shippingMethodId.Value);
+                if (method != null)
+                {
+                    totalValue += method.Price;
+                }
+            }
+
+            return Json(totalValue.ToString("C"));
         }
     }
 }

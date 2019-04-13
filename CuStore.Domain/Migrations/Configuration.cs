@@ -247,6 +247,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 1,
                     Name = "Samsung Galaxy A8",
+                    Code = "SamsungGalaxyA8",
                     CategoryId = 2,
                     Price = 1599.00M,
                     QuanityInStock = 10
@@ -258,6 +259,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 2,
                     Name = "Samsung Galaxy S9",
+                    Code = "SamsungGalaxyS9",
                     CategoryId = 2,
                     Price = 2299.00M,
                     QuanityInStock = 35
@@ -269,6 +271,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 3,
                     Name = "Samsung Galaxy S9+",
+                    Code = "SamsungGalaxyS9+",
                     CategoryId = 2,
                     Price = 2799.00M,
                     QuanityInStock = 15
@@ -280,6 +283,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 4,
                     Name = "Apple iPhone X",
+                    Code = "AppleiPhoneX",
                     CategoryId = 3,
                     Price = 4599.00M,
                     QuanityInStock = 30
@@ -291,6 +295,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 5,
                     Name = "Apple iPhone Xs",
+                    Code = "AppleiPhoneXs",
                     CategoryId = 3,
                     Price = 5399.00M,
                     QuanityInStock = 10
@@ -302,6 +307,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 6,
                     Name = "Huawei P20",
+                    Code = "HuaweiP20",
                     CategoryId = 4,
                     Price = 1999.00M,
                     QuanityInStock = 20
@@ -313,6 +319,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 7,
                     Name = "Huawei P20 Pro",
+                    Code = "HuaweiP20Pro",
                     CategoryId = 4,
                     Price = 2699.00M,
                     QuanityInStock = 10
@@ -324,6 +331,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 8,
                     Name = "Huawei Mate 20",
+                    Code = "HuaweiMate20",
                     CategoryId = 4,
                     Price = 2899.00M,
                     QuanityInStock = 50
@@ -335,6 +343,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 9,
                     Name = "Huawei Mate 20 Pro",
+                    Code = "HuaweiMate20Pro",
                     CategoryId = 4,
                     Price = 4199.00M,
                     QuanityInStock = 20
@@ -346,6 +355,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 10,
                     Name = "Huawei Mate 20 Lite",
+                    Code = "HuaweiMate20Lite",
                     CategoryId = 4,
                     Price = 1199.00M,
                     QuanityInStock = 100
@@ -357,6 +367,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 11,
                     Name = "Sony Xperia XZ2",
+                    Code = "SonyXperiaXZ2",
                     CategoryId = 5,
                     Price = 2050.00M,
                     QuanityInStock = 15
@@ -368,6 +379,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 12,
                     Name = "Sony Xperia XZ3",
+                    Code = "SonyXperiaXZ3",
                     CategoryId = 5,
                     Price = 2750.00M,
                     QuanityInStock = 25
@@ -379,6 +391,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 13,
                     Name = "Xiaomi Mi8",
+                    Code = "XiaomiMi8",
                     CategoryId = 6,
                     Price = 1990.00M,
                     QuanityInStock = 45
@@ -390,6 +403,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 14,
                     Name = "Xiaomi Mi8 Lite",
+                    Code = "XiaomiMi8Lite",
                     CategoryId = 6,
                     Price = 1290.00M,
                     QuanityInStock = 30
@@ -401,6 +415,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 15,
                     Name = "Xiaomi Mi Mix 3",
+                    Code = "XiaomiMiMix3",
                     CategoryId = 6,
                     Price = 1790.00M,
                     QuanityInStock = 30
@@ -412,6 +427,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 16,
                     Name = "OnePlus 6",
+                    Code = "OnePlus6",
                     CategoryId = 7,
                     Price = 1999.00M,
                     QuanityInStock = 20
@@ -423,6 +439,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 17,
                     Name = "OnePlus 6T",
+                    Code = "OnePlus6T",
                     CategoryId = 7,
                     Price = 2499.00M,
                     QuanityInStock = 50
@@ -434,6 +451,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 18,
                     Name = "Apple iPad 32GB",
+                    Code = "AppleiPad32GB",
                     CategoryId = 9,
                     Price = 1399.00M,
                     QuanityInStock = 10
@@ -445,6 +463,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 19,
                     Name = "Apple iPad 64GB",
+                    Code = "AppleiPad64GB",
                     CategoryId = 9,
                     Price = 1529.00M,
                     QuanityInStock = 10
@@ -457,6 +476,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 20,
                     Name = "Samsung Galaxy Tab A 10.1",
+                    Code = "SamsungGalaxyTabA10_1",
                     CategoryId = 10,
                     Price = 799.00M,
                     QuanityInStock = 10
@@ -468,6 +488,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 21,
                     Name = "Samsung Galaxy Tab S4 10.5",
+                    Code = "SamsungGalaxyTabS410_5",
                     CategoryId = 10,
                     Price = 2799.00M,
                     QuanityInStock = 10
@@ -479,6 +500,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 22,
                     Name = "Huawei MediaPad M3 10",
+                    Code = "HuaweiMediaPadM310",
                     CategoryId = 11,
                     Price = 999.00M,
                     QuanityInStock = 60
@@ -490,6 +512,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 23,
                     Name = "Huawei MediaPad M5 10",
+                    Code = "HuaweiMediaPadM510",
                     CategoryId = 11,
                     Price = 1299.00M,
                     QuanityInStock = 100
@@ -501,6 +524,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 24,
                     Name = "Huawei MediaPad T3 10",
+                    Code = "HuaweiMediaPadT310",
                     CategoryId = 11,
                     Price = 499.00M,
                     QuanityInStock = 50
@@ -512,6 +536,7 @@ namespace CuStore.Domain.Migrations
                 {
                     Id = 25,
                     Name = "Lenovo TAB 4 10",
+                    Code = "LenovoTAB410",
                     CategoryId = 11,
                     Price = 510.00M,
                     QuanityInStock = 10

@@ -91,6 +91,9 @@ namespace CuStore.Domain.Concrete
                 .HasOptional(o => o.ShippingAddress) // Mark ShippingAddress property optional in Order entity
                 .WithRequired(sa => sa.Order); // mark Order property as required in ShippingAddress entity. Cannot save ShippingAddress without User
 
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.Code)
+                .IsUnique();
         }
     }
 }

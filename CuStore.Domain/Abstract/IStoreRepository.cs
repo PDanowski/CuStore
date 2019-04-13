@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using CuStore.Domain.Entities;
 
 namespace CuStore.Domain.Abstract
@@ -39,5 +40,6 @@ namespace CuStore.Domain.Abstract
         ShippingMethod GetShippingMethodById(int id);
         IEnumerable<Order> GetOrders(int pageSize, int pageNumber);
         bool SaveOrder(Order order);
+        bool IsProductCodeUnique(string code);
     }
 }

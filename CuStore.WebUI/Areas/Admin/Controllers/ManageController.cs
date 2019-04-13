@@ -295,5 +295,12 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             }
             return RedirectToAction("ManageCategories");
         }
+
+        public JsonResult CheckProductCodeUniquness(string code)
+        {
+            bool isUnique = _repository.IsProductCodeUnique(code);
+
+            return Json(isUnique, JsonRequestBehavior.AllowGet);
+        }
     }
 }

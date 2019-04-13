@@ -13,9 +13,13 @@
     @using (Html.BeginForm())
     {
         <div class="form-group">
+            <label>Code:</label>
+            @Html.TextBoxFor(x => x.Product.Code, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Product.Code)
+        </div>
+        <div class="form-group">
             <label>Name:</label>
             @Html.TextBoxFor(x => x.Product.Name, new { @class = "form-control" })
-
             @Html.ValidationMessageFor(x => x.Product.Name)
         </div>
         <div class="form-group">
@@ -25,13 +29,11 @@
         <div class="form-group">
             <label>Price:</label>
             @Html.TextBoxFor(x => x.Product.Price, new { @class = "form-control" })
-
             @Html.ValidationMessageFor(x => x.Product.Price)
         </div>
         <div class="form-group">
             <label>Quantity in stock:</label>
             @Html.TextBoxFor(x => x.Product.QuanityInStock, new { @class = "form-control" })
-
             @Html.ValidationMessageFor(x => x.Product.QuanityInStock)
         </div>
 
@@ -49,7 +51,7 @@
                     Select file...
                     <input type="file" name="Image" size="50"
                            style="position: absolute; z-index: 2; top: 0; left: 0;
-                                                                                                   filter: alpha(opacity=0); opacity: 0; background-color: transparent;"
+                           filter: alpha(opacity=0); opacity: 0; background-color: transparent;"
                            onchange='$("#upload-file-info").html($(this).val());' />
                 </a>
             </div>

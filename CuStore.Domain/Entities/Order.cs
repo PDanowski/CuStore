@@ -37,6 +37,7 @@ namespace CuStore.Domain.Entities
         public OrderStatus Status { get; set; }
 
         public int CartId { get; set; }
+
         public int ShippingMethodId { get; set; }
         public int? ShippingAddressId { get; set; }
         public virtual ShippingAddress ShippingAddress { get; set; }

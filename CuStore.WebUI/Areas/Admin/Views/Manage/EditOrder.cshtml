@@ -9,7 +9,7 @@
         <h3>Editing order: @Model.Id</h3>
     </div>
 
-    @using (Html.BeginForm("EditOrder", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditOrder", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", area = "Admin" }))
     {
         @Html.HiddenFor(m => m.Id)
 

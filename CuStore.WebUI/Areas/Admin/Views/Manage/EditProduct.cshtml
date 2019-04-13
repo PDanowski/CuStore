@@ -5,12 +5,21 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+@helper TextBoxPropertyWithLabelAndValidation(string value, string label)
+{
+<div class="form-group">
+    <label>@label</label>
+    @Html.TextBoxFor(v => value, new { @class = "form-control" })
+    @Html.ValidationMessageFor(v => value)
+</div>
+}
+
 <div class="panel">
     <div class="panel-heading">
         <h3>Editing product: @Model.Product.Name</h3>
     </div>
 
-    @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditProduct", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", area = "Admin" }))
     {
         @Html.HiddenFor(m => m.Product.Id)
 
@@ -18,20 +27,21 @@
             <label>Product ID:</label>
             @Html.DisplayFor(x => x.Product.Id, new { @class = "form-control" })
         </div>
-        <div class="form-group">
-            <label>Name:</label>
-            @Html.TextBoxFor(x => x.Product.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.Product.Name)
-        </div>
+
+        @TextBoxPropertyWithLabelAndValidation(Model.Product.Code, "Code:")
+        @TextBoxPropertyWithLabelAndValidation(Model.Product.Name, "Name:")
+
         <div class="form-group">
             <label>Description:</label>
             @Html.TextBoxFor(x => x.Product.Description, new { @class = "form-control", rows = 5 })
         </div>
+
         <div class="form-group">
             <label>Price:</label>
             @Html.TextBoxFor(x => x.Product.Price, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Product.Price)
         </div>
+
         <div class="form-group">
             <label>Quantity in stock:</label>
             @Html.TextBoxFor(x => x.Product.QuanityInStock, new { @class = "form-control" })
