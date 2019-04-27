@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CuStore.Domain.Abstract;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,15 +18,18 @@ namespace CuStore.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IOrderRepository _orderRepository;
 
-        public ManageController()
+        public ManageController(IOrderRepository orderRepository)
         {
+            _orderRepository = orderRepository;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IOrderRepository orderRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _orderRepository = orderRepository;
         }
 
         public ApplicationSignInManager SignInManager
@@ -53,11 +57,13 @@ namespace CuStore.WebUI.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            var model = new ManageViewModel
             {
                 HasPassword = HasPassword(),
                 Logins = await UserManager.GetLoginsAsync(userId)
             };
+            model.Orders = _orderRepository.GetOrdersByUser(User.Identity.GetUserId());
+
             return View(model);
         }
 
@@ -193,6 +199,7 @@ namespace CuStore.WebUI.Controllers
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
+
 
         protected override void Dispose(bool disposing)
         {

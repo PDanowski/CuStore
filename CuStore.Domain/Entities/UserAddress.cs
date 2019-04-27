@@ -8,7 +8,7 @@ namespace CuStore.Domain.Entities
 {
     public class UserAddress : Address
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual User User { get; set; }
     }
 }

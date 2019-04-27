@@ -14,12 +14,16 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
     //[RouteArea(areaName: "Admin")]
     public class ManageController : Controller
     {
-        private readonly IStoreRepository _repository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IOrderRepository _orderRepository;
         private int _pageSize = 10;
 
-        public ManageController(IStoreRepository repository)
+        public ManageController(IProductRepository productRepository, ICategoryRepository categoryRepository, IOrderRepository orderRepository)
         {
-            this._repository = repository;
+            this._productRepository = productRepository;
+            this._categoryRepository = categoryRepository;
+            this._orderRepository = orderRepository;
         }
 
         [Authorize(Roles = "Admin")]
@@ -38,7 +42,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             {
                 CurrentPage = pageNumber,
                 ItemsPerPage = _pageSize,
-                TotalItems = _repository.GetProductsCount()
+                TotalItems = _productRepository.GetProductsCount()
             });
         }
 
@@ -49,32 +53,32 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             {
                 CurrentPage = pageNumber,
                 ItemsPerPage = _pageSize,
-                TotalItems = _repository.GetOrdersCount()
+                TotalItems = _orderRepository.GetOrdersCount()
             });
         }
 
         [Authorize(Roles = "Admin")]
         public PartialViewResult GetOrders(int pageNumber = 1)
         {
-            return PartialView(_repository.GetOrders(_pageSize, pageNumber));
+            return PartialView(_orderRepository.GetOrders(_pageSize, pageNumber));
         }
 
         [Authorize(Roles = "Admin")]
         [ChildActionOnly]
         public PartialViewResult GetProducts(int pageNumber = 1)
         {
-            return PartialView(_repository.GetProductsByCategory(_pageSize, pageNumber));
+            return PartialView(_productRepository.GetProductsByCategory(_pageSize, pageNumber));
         }
 
 
         [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult EditProduct(int productId)
         {
-            Product product = _repository.GetProductById(productId);
+            Product product = _productRepository.GetProductById(productId);
             EditProductViewModel viewModel = new EditProductViewModel
             {
                 Product = product,
-                Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList())
+                Categories = CategroriesProvider.CreateSelectList(_categoryRepository.GetCategories().ToList())
             };
             return View(viewModel);
         }
@@ -91,7 +95,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
                     image.InputStream.Read(viewModel.Product.ImageData, 0, image.ContentLength);
                 }
 
-                bool isSaved = _repository.SaveProduct(viewModel.Product);
+                bool isSaved = _productRepository.SaveProduct(viewModel.Product);
 
                 if (isSaved)
                 {
@@ -103,7 +107,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             }
 
             TempData["message"] = "Error during saving product";
-            viewModel.Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList());
+            viewModel.Categories = CategroriesProvider.CreateSelectList(_categoryRepository.GetCategories().ToList());
             return View(viewModel);
         }
 
@@ -113,7 +117,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             EditProductViewModel viewModel = new EditProductViewModel
             {
                 Product = new Product(),
-                Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList())
+                Categories = CategroriesProvider.CreateSelectList(_categoryRepository.GetCategories().ToList())
             };
             return View(viewModel);
         }
@@ -130,7 +134,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
                     image.InputStream.Read(viewModel.Product.ImageData, 0, image.ContentLength);
                 }
 
-                bool isCreated = _repository.AddProduct(viewModel.Product);
+                bool isCreated = _productRepository.AddProduct(viewModel.Product);
 
                 if (isCreated)
                 {
@@ -142,14 +146,14 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             }
 
             TempData["message"] = "Error during creating product";
-            viewModel.Categories = CategroriesProvider.CreateSelectList(_repository.GetCategories().ToList());
+            viewModel.Categories = CategroriesProvider.CreateSelectList(_categoryRepository.GetCategories().ToList());
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult DeleteProduct(int productId)
         {
-             bool isDeleted = _repository.RemoveProduct(productId);
+             bool isDeleted = _productRepository.RemoveProduct(productId);
 
                 if (isDeleted)
                 {
@@ -166,8 +170,15 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult EditOrder(int orderId)
         {
-            Order order = _repository.GetOrderById(orderId);
-            ViewData["totalValue"] = order.GetTotalValue();
+            Order order = _orderRepository.GetOrderById(orderId);
+            if (order != null)
+            {
+                ViewData["totalValue"] = order.GetTotalValue();
+            }
+            else
+            {
+                TempData["message"] = "Error during saving order";
+            }
             return View(order);
         }
 
@@ -176,7 +187,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isSaved = _repository.SaveOrder(order);
+                bool isSaved = _orderRepository.SaveOrder(order);
 
                 if (isSaved)
                 {
@@ -195,7 +206,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteOrder(int orderId)
         {
-            bool isDeleted = _repository.RemoveOrder(orderId);
+            bool isDeleted = _orderRepository.RemoveOrder(orderId);
 
             if (isDeleted)
             {
@@ -212,17 +223,17 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         [Route("Admin/Categories")]
         public ViewResult ManageCategories()
         {
-            return View(_repository.GetCategories());
+            return View(_categoryRepository.GetCategories());
         }
 
         [HandleError(ExceptionType = typeof(Exception), View = "ErrorDetailed")]
         public ViewResult EditCategory(int categoryId)
         {
-            Category category = _repository.GetCategoryById(categoryId);
+            Category category = _categoryRepository.GetCategoryById(categoryId);
             EditCategoryViewModel viewModel = new EditCategoryViewModel
             {
                 Category = category,
-                ParentCategories = CategroriesProvider.CreateSelectList(_repository.GetParentCategories().ToList())
+                ParentCategories = CategroriesProvider.CreateSelectList(_categoryRepository.GetParentCategories().ToList())
             };
             return View(viewModel);
         }
@@ -232,7 +243,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isSaved = _repository.SaveCategory(viewModel.Category);
+                bool isSaved = _categoryRepository.SaveCategory(viewModel.Category);
 
                 if (isSaved)
                 {
@@ -244,7 +255,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             }
 
             TempData["message"] = "Error during saving category";
-            viewModel.ParentCategories = CategroriesProvider.CreateFlatSelectList(_repository.GetParentCategories().ToList());
+            viewModel.ParentCategories = CategroriesProvider.CreateFlatSelectList(_categoryRepository.GetParentCategories().ToList());
             return View(viewModel);
         }
 
@@ -254,7 +265,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             EditCategoryViewModel viewModel = new EditCategoryViewModel
             {
                 Category = new Category(),
-                ParentCategories = CategroriesProvider.CreateFlatSelectList(_repository.GetParentCategories().ToList())
+                ParentCategories = CategroriesProvider.CreateFlatSelectList(_categoryRepository.GetParentCategories().ToList())
             };
             return View(viewModel);
         }
@@ -264,7 +275,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isCreated = _repository.AddCategory(viewModel.Category);
+                bool isCreated = _categoryRepository.AddCategory(viewModel.Category);
 
                 if (isCreated)
                 {
@@ -276,14 +287,14 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             }
 
             TempData["message"] = "Error during creating category";
-            viewModel.ParentCategories = CategroriesProvider.CreateFlatSelectList(_repository.GetParentCategories().ToList());
+            viewModel.ParentCategories = CategroriesProvider.CreateFlatSelectList(_categoryRepository.GetParentCategories().ToList());
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult DeleteCategory(int categoryId)
         {
-            bool isDeleted = _repository.RemoveCategory(categoryId);
+            bool isDeleted = _categoryRepository.RemoveCategory(categoryId);
 
             if (isDeleted)
             {
@@ -298,7 +309,7 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
 
         public JsonResult CheckProductCodeUniquness(string code)
         {
-            bool isUnique = _repository.IsProductCodeUnique(code);
+            bool isUnique = _productRepository.IsProductCodeUnique(code);
 
             return Json(isUnique, JsonRequestBehavior.AllowGet);
         }

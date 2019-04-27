@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Concrete;
 using CuStore.Domain.Entities;
+using CuStore.Domain.Repositories;
 using Microsoft.AspNet.Identity;
 using Ninject;
 
@@ -21,7 +22,7 @@ namespace CuStore.WebUI.Infrastructure.Binders
 
             if (controllerContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                var repository = NinjectContainer.Resolve<StoreRepository>();
+                var repository = NinjectContainer.Resolve<CartRepository>();
                 string userId = controllerContext.HttpContext.User.Identity.GetUserId();
 
                 var userCart = repository.GetCartByUserId(userId);

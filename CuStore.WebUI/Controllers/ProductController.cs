@@ -12,12 +12,14 @@ namespace CuStore.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IStoreRepository _repositiry;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private int _pageSize = 5;
 
-        public ProductController(IStoreRepository storeRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            this._repositiry = storeRepository;
+            this._productRepository = productRepository;
+            this._categoryRepository = categoryRepository;
         }
 
         // GET: Product
@@ -25,14 +27,14 @@ namespace CuStore.WebUI.Controllers
         {
             ProductsListViewModel viewModel = new ProductsListViewModel
             {
-                Products = _repositiry.GetProductsByCategory(_pageSize, pageNumber, categoryId),
+                Products = _productRepository.GetProductsByCategory(_pageSize, pageNumber, categoryId),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = pageNumber,
                     ItemsPerPage = _pageSize,
-                    TotalItems = _repositiry.GetProductsCount(categoryId)
+                    TotalItems = _productRepository.GetProductsCount(categoryId)
                 },
-                CurrentCategory = _repositiry.GetCategoryById(categoryId.GetValueOrDefault())
+                CurrentCategory = _categoryRepository.GetCategoryById(categoryId.GetValueOrDefault())
             };
 
             return View(viewModel);
@@ -40,7 +42,7 @@ namespace CuStore.WebUI.Controllers
 
         public FileContentResult GetImage(int productId)
         {
-            Product product = _repositiry.GetProductById(productId);
+            Product product = _productRepository.GetProductById(productId);
 
             return product == null ? null : File(product.ImageData, product.ImageMimeType);
         }
@@ -49,7 +51,7 @@ namespace CuStore.WebUI.Controllers
         {
             var viewModel = new ProductDetailsViewModel
             {
-                Product = _repositiry.GetProductById(productId),
+                Product = _productRepository.GetProductById(productId),
                 ReturnUrl = returnUrl,
                 Image = GetImage(productId)
             };

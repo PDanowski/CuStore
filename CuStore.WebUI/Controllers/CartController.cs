@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.Domain.Repositories;
 using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -13,12 +14,25 @@ namespace CuStore.WebUI.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IStoreRepository _repository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICartRepository _cartRepository;
+        private readonly IShippingMethodRepository _shippingMethodRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
 
-        public CartController(IStoreRepository repository, IEmailSender emailSender)
+        public CartController(IProductRepository productRepository, 
+            ICartRepository cartRepository,
+            IShippingMethodRepository shippingMethodRepository, 
+            IOrderRepository orderRepository,
+            IUserRepository userRepository,
+            IEmailSender emailSender)
         {
-            this._repository = repository;
+            this._productRepository = productRepository;
+            this._cartRepository = cartRepository;
+            this._shippingMethodRepository = shippingMethodRepository;
+            this._orderRepository = orderRepository;
+            this._userRepository = userRepository;
             this._emailSender = emailSender;
         }
 
@@ -33,7 +47,7 @@ namespace CuStore.WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
         {
-            var product = _repository.GetProductById(productId);
+            var product = _productRepository.GetProductById(productId);
 
             if (product != null)
             {
@@ -41,7 +55,7 @@ namespace CuStore.WebUI.Controllers
 
                 if (User.Identity.IsAuthenticated)
                 {
-                    _repository.SaveCart(cart);
+                    _cartRepository.SaveCart(cart);
                 }
             }
 
@@ -56,11 +70,11 @@ namespace CuStore.WebUI.Controllers
             {
                 if (!cart.CartItems.Any())
                 {
-                    _repository.RemoveCart(cart);
+                    _cartRepository.RemoveCart(cart);
                     //return RedirectToAction("List", "Product");
                 }
 
-                _repository.SaveCart(cart);
+                _cartRepository.SaveCart(cart);
             }
 
             return RedirectToAction("Index", new { returnUrl });
@@ -74,14 +88,14 @@ namespace CuStore.WebUI.Controllers
         [Authorize]
         public ViewResult Checkout(Cart cart)
         {
-            var user = _repository.GetUserById(User.Identity.GetUserId());
+            var user = _userRepository.GetUserById(User.Identity.GetUserId());
             cart.UserId = user.Id;
             cart.User = user;
 
             var viewModel = new CheckoutViewModel
             {
                 Cart = cart,
-                ShippingMethods = ShippingMethodsProvider.CreateSelectList(_repository.GetShippingMethods().ToList()),
+                ShippingMethods = ShippingMethodsProvider.CreateSelectList(_shippingMethodRepository.GetShippingMethods().ToList()),
                 OrderValue = cart.GetValue(),
                 SelectedShippingMethodId = -1
             };
@@ -108,9 +122,9 @@ namespace CuStore.WebUI.Controllers
                     viewModel.SelectedShippingMethodId,
                     !viewModel.UseUserAddress ? viewModel.ShippingAddress : null);
 
-                order.ShippingMethod = _repository.GetShippingMethodById(order.ShippingMethodId);
+                order.ShippingMethod = _shippingMethodRepository.GetShippingMethodById(order.ShippingMethodId);
 
-                _repository.AddOrder(order);
+                _orderRepository.AddOrder(order);
 
                 _emailSender.ProcessOrder(order);
 
@@ -119,7 +133,7 @@ namespace CuStore.WebUI.Controllers
 
             viewModel.Cart = cart;
             viewModel.ShippingMethods =
-                ShippingMethodsProvider.CreateSelectList(_repository.GetShippingMethods().ToList());
+                ShippingMethodsProvider.CreateSelectList(_shippingMethodRepository.GetShippingMethods().ToList());
             viewModel.OrderValue = cart.GetValue();
             viewModel.SelectedShippingMethodId = -1;
 
@@ -132,7 +146,7 @@ namespace CuStore.WebUI.Controllers
 
             if (shippingMethodId.HasValue && shippingMethodId != 0)
             {
-                var method = _repository.GetShippingMethodById(shippingMethodId.Value);
+                var method = _shippingMethodRepository.GetShippingMethodById(shippingMethodId.Value);
                 if (method != null)
                 {
                     totalValue += method.Price;
@@ -149,7 +163,7 @@ namespace CuStore.WebUI.Controllers
 
             if (shippingMethodId.HasValue && shippingMethodId != 0)
             {
-                var method = _repository.GetShippingMethodById(shippingMethodId.Value);
+                var method = _shippingMethodRepository.GetShippingMethodById(shippingMethodId.Value);
                 if (method != null)
                 {
                     totalValue += method.Price;

@@ -1,6 +1,6 @@
-﻿@model CuStore.WebUI.ViewModels.IndexViewModel
+﻿@model CuStore.WebUI.ViewModels.ManageViewModel
 @{
-    Layout = "~/Views/Shared/_LayoutCategorySelected.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Manage account";
 }
 
@@ -8,6 +8,9 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
+    <h4>Your orders:</h4>
+    @Html.Partial("OrdersList", Model.Orders)
+
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">

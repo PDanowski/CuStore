@@ -19,8 +19,9 @@ namespace CuStore.UnitTests.Controllers
         [TestMethod]
         public void Can_Add_To_Cart()
         {
-            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            mock.Setup(m => m.GetProductById(It.IsAny<int>()))
+            Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
+            Mock<ICartRepository> mockCart = new Mock<ICartRepository>();
+            mockProd.Setup(m => m.GetProductById(It.IsAny<int>()))
                 .Returns(new Product { Id = 1, Name = "Product1", Price = 20, CategoryId = 1 });
 
             Cart cart = new Cart();
@@ -35,7 +36,8 @@ namespace CuStore.UnitTests.Controllers
 
             //Set your controller ControllerContext with fake context
             CartController controller =
-                new CartController(mock.Object, null) { ControllerContext = controllerContext.Object };
+                new CartController(mockProd.Object, mockCart.Object, null, null, null, null)
+                    { ControllerContext = controllerContext.Object };
 
             controller.AddToCart(cart, 1, null);
 
@@ -46,8 +48,9 @@ namespace CuStore.UnitTests.Controllers
         [TestMethod]
         public void Adding_Product_To_Cart_Goes_Index()
         {
-            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
-            mock.Setup(m => m.GetProductById(It.IsAny<int>()))
+            Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
+            Mock<ICartRepository> mockCart = new Mock<ICartRepository>();
+            mockProd.Setup(m => m.GetProductById(It.IsAny<int>()))
                 .Returns(new Product { Id = 1, Name = "Product1", Price = 20, CategoryId = 1 });
 
             Cart cart = new Cart();
@@ -62,7 +65,8 @@ namespace CuStore.UnitTests.Controllers
 
             //Set your controller ControllerContext with fake context
             CartController controller =
-                new CartController(mock.Object, null) {ControllerContext = controllerContext.Object};   
+                new CartController(mockProd.Object, mockCart.Object, null, null, null, null)
+                    { ControllerContext = controllerContext.Object};   
 
             RedirectToRouteResult result = controller.RemoveFromCart(cart, 1, "returnUrl");
 
@@ -75,7 +79,7 @@ namespace CuStore.UnitTests.Controllers
         {
             Cart cart = new Cart();
 
-            CartController controller = new CartController(null, null);
+            CartController controller = new CartController(null, null, null, null, null, null);
 
             CartIndexViewModel result = (CartIndexViewModel)controller.Index(cart, "returnUrl").Model;
 
@@ -87,7 +91,7 @@ namespace CuStore.UnitTests.Controllers
         public void Cannot_Checkout_Empty_Cart()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
-            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+            Mock<IShippingMethodRepository> mockRepo = new Mock<IShippingMethodRepository>();
             mockRepo.Setup(m => m.GetShippingMethods())
                 .Returns(new List<ShippingMethod>{});
 
@@ -101,7 +105,7 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(mockRepo.Object, mock.Object);
+            CartController controller = new CartController(null, null, mockRepo.Object, null, null, mock.Object);
 
             ViewResult result = controller.Checkout(viewModel, cart);
 
@@ -115,7 +119,7 @@ namespace CuStore.UnitTests.Controllers
         public void Cannot_Checkout_Invalid_Address()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
-            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+            Mock<IShippingMethodRepository> mockRepo = new Mock<IShippingMethodRepository>();
             mockRepo.Setup(m => m.GetShippingMethods())
                 .Returns(new List<ShippingMethod> { });
 
@@ -136,7 +140,7 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(mockRepo.Object, mock.Object);
+            CartController controller = new CartController(null, null, mockRepo.Object, null, null, mock.Object);
             controller.ModelState.AddModelError("error", @"error");
 
             ViewResult result = controller.Checkout(viewModel, cart);
@@ -151,9 +155,10 @@ namespace CuStore.UnitTests.Controllers
         public void Can_Checkout_And_Submit_Order()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
-            Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+            Mock<IOrderRepository> mockOrder = new Mock<IOrderRepository>();
+            Mock<IShippingMethodRepository> mockShip = new Mock<IShippingMethodRepository>();
 
-            mockRepo.Setup(m => m.AddOrder(It.IsAny<Order>())).Returns(true);
+            mockOrder.Setup(m => m.AddOrder(It.IsAny<Order>())).Returns(true);
 
             Cart cart = new Cart();
             cart.AddProduct(new Product
@@ -172,7 +177,7 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(mockRepo.Object, mock.Object);
+            CartController controller = new CartController(null, null, mockShip.Object, mockOrder.Object, null, mock.Object);
 
             ViewResult result = controller.Checkout(viewModel, cart);
 

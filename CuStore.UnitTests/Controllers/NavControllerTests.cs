@@ -16,7 +16,7 @@ namespace CuStore.UnitTests.Controllers
         [TestMethod]
         public void Can_Create_Categories()
         {
-            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories())
                 .Returns(new List<Category>
                     {
@@ -61,7 +61,7 @@ namespace CuStore.UnitTests.Controllers
         [TestMethod]
         public void Indicates_Seletected_Category()
         {
-            Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
+            Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories())
                 .Returns(new List<Category>
                 {

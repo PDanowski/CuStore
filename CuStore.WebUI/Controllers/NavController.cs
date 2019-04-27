@@ -12,16 +12,16 @@ namespace CuStore.WebUI.Controllers
     [SessionState(SessionStateBehavior.Disabled)]
     public class NavController : Controller
     {
-        private readonly IStoreRepository _repositiry;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public NavController(IStoreRepository storeRepository)
+        public NavController(ICategoryRepository categoryRepository)
         {
-            this._repositiry = storeRepository;
+            this._categoryRepository = categoryRepository;
         }
 
         public PartialViewResult Menu(int? selectedCategoryId = null)
         {
-            var categories = _repositiry.GetCategories().ToList();
+            var categories = _categoryRepository.GetCategories().ToList();
 
             CategoriesListViewModel viewModel = new CategoriesListViewModel
             {

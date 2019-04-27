@@ -358,6 +358,7 @@
     <Content Include="Views\Shared\ErrorDetailed.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
     <Content Include="Views\Shared\TotalValue.cshtml" />
+    <Content Include="Views\Shared\OrdersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

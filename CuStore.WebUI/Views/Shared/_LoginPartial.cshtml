@@ -11,6 +11,9 @@
             </li>
         </ul>
     }
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("My account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+    </ul>
 }
 else
 {

@@ -1,14 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CuStore.Domain.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
 namespace CuStore.WebUI.ViewModels
 {
-    public class IndexViewModel
+
+    public class ManageViewModel
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
+
+        public IEnumerable<Order> Orders { get; set; }
+
+        public ManageViewModel()
+        {
+            Orders = new List<Order>();
+        }
     }
 
     public class ManageLoginsViewModel

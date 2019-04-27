@@ -36,6 +36,7 @@ namespace CuStore.Domain.Concrete
         {
             base.OnModelCreating(modelBuilder);
 
+            Database.SetInitializer<StoreContext>(null);
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

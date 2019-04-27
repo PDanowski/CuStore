@@ -76,12 +76,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ICartRepository.cs" />
+    <Compile Include="Abstract\ICategoryRepository.cs" />
     <Compile Include="Abstract\IEmailSender.cs" />
+    <Compile Include="Abstract\IOrderRepository.cs" />
+    <Compile Include="Abstract\IProductRepository.cs" />
+    <Compile Include="Abstract\IShippingMethodRepository.cs" />
     <Compile Include="Abstract\IStoreContext.cs" />
-    <Compile Include="Abstract\IStoreRepository.cs" />
+    <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Concrete\EmailSender.cs" />
     <Compile Include="Concrete\StoreContext.cs" />
-    <Compile Include="Concrete\StoreRepository.cs" />
+    <Compile Include="Migrations\201904252002186_Migration4.cs" />
+    <Compile Include="Migrations\201904252002186_Migration4.Designer.cs">
+      <DependentUpon>201904252002186_Migration4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\CartRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ShippingMethodRepository.cs" />
     <Compile Include="Constants\EmailServerConfiguration.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Cart.cs" />
@@ -113,6 +126,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -132,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904102101451_Migration3.resx">
       <DependentUpon>201904102101451_Migration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904252002186_Migration4.resx">
+      <DependentUpon>201904252002186_Migration4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
