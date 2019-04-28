@@ -4,21 +4,38 @@
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_LayoutWithoutCategories.cshtml";
+    var isSearchingResult = (bool?)ViewData["isSearchingResult"];
+    var searchingPhrase = ViewData["searchingPhrase"];
 }
 
 <div id="categories" class="col-sm-3 hidden-xs">
     @Html.Action("Menu", "Nav", new { selectedCategoryId = Model.CurrentCategory?.Id })
 </div>
 <div class="col-xs-12 col-sm-9">
-    @foreach (var product in Model.Products)
-    {
-        @Html.Partial("ProductSummary", product);
+    
+    @{
+        if (isSearchingResult.HasValue && isSearchingResult.Value)
+        {
+            <h4>Searching result for phrase: @searchingPhrase</h4>
+        }
 
+         foreach (var product in Model.Products)
+         {
+             @Html.Partial("ProductSummary", product)
+         }
     }
 
-    <div class="btn-group pull-right">
-        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { pageNumber = x, categoryId = Model.CurrentCategory?.Id }))
-    </div>
+            <div class="btn-group pull-right">
+                @if (isSearchingResult.HasValue && isSearchingResult.Value)
+                {
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("SearchingResultsList", new { pageNumber = x, categoryId = Model.CurrentCategory?.Id }))
+                }
+                else
+                {
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { phrase = searchingPhrase, pageNumber = x, categoryId = Model.CurrentCategory?.Id}))
+                }
+
+            </div>
 </div>
 
 

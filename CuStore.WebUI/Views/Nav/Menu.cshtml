@@ -4,6 +4,13 @@
 @Html.ActionLink("Home", "List", "Product", null,
     new { @class="btn btn-block btn-default btn-lg"})
 
+@using (Html.BeginForm("SearchingResultsList", "Product", FormMethod.Post))
+{
+    @Html.TextBox("phrase")  
+    <input type="submit" name="btn btn-default" value="Search" />
+}
+
+
 <h3>Categories</h3>
 
 @foreach (var category in Model.Categories)
@@ -11,26 +18,33 @@
     if (!category.ParentCategoryId.HasValue)
     {
         @Html.RouteLink(category.Name, new
-        {
-           controller = "Product",
-           action = "List",
-           categoryId = category.Id,
-           pageNumber = 1
-        }, new { @class = "btn btn-block " + 
-                          (Model.SelectedCategoryId.HasValue 
-                                  && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
-                          + " pull-right" })
+   {
+       controller = "Product",
+       action = "List",
+       categoryId = category.Id,
+       pageNumber = 1
+   }, new
+   {
+       @class = "btn btn-block " +
+                               (Model.SelectedCategoryId.HasValue
+                                       && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
+                               + " pull-right"
+   })
     }
     else
     {
         @Html.RouteLink(category.Name, new
-        {
-               controller = "Product",
-               action = "List",
-               categoryId = category.Id,
-               pageNumber = 1
-           }, new { @class = "btn btn-block " + (Model.SelectedCategoryId.HasValue 
-                                   && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
-                             + " btn-sm pull-right", style = "width:85%" })
-     }
+   {
+       controller = "Product",
+       action = "List",
+       categoryId = category.Id,
+       pageNumber = 1
+   }, new
+   {
+       @class = "btn btn-block " + (Model.SelectedCategoryId.HasValue
+                                        && category.Id.Equals(Model.SelectedCategoryId.Value) ? " btn-primary" : " btn-default")
+                                  + " btn-sm pull-right",
+       style = "width:85%"
+   })
+    }
 }

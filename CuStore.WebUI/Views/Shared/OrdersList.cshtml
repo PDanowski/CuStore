@@ -23,7 +23,7 @@
                 <td>@item.GetTotalValue().ToString("C")</td>
                 <td>@item.Status</td>
                 <td>           
-                    @Html.ActionLink("Details", "EditOrder", "Manage", new { orderId = item.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Details", "OrderDetails", "Order", new { orderId = item.Id }, new { @class = "btn btn-default" })
                 </td>
             </tr>
         }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.WebPages;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.Domain.Extensions;
@@ -23,6 +24,22 @@ namespace CuStore.Domain.Repositories
         public IEnumerable<Product> GetProducts(bool includeCategry = true)
         {
             return _context.Products.Include(p => p.Category).ToList();
+        }
+
+        public int GetProductsCountByPhrase(string phrase, int? categoryId = null)
+        {
+            if (phrase == null || phrase.IsEmpty())
+            {
+                throw new ArgumentException("Searching phrase can not be empty");
+            }
+
+            if (categoryId.HasValue)
+            {
+                return _context.Products
+                    .Where(p => p.Name.Contains(phrase))
+                    .Count(p => p.Category.Id.Equals(categoryId.Value));
+            }
+            return _context.Products.Count(p => p.Name.Contains(phrase));
         }
 
         public bool IsProductCodeUnique(string code)
@@ -74,6 +91,37 @@ namespace CuStore.Domain.Repositories
                 }
             }
             return _context.Products
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public IEnumerable<Product> GetProductsByPhrase(string phrase, int pageSize, int pageNumber, int? categoryId = null)
+        {
+            if (phrase == null || phrase.IsEmpty())
+            {
+                throw new ArgumentException("Searching phrase can not be empty");
+            }
+
+            if (categoryId.HasValue)
+            {
+                var category = _context.Categories.FirstOrDefault(c => c.Id.Equals(categoryId.Value));
+                if (category != null)
+                {
+                    var childCategories = _context.Categories.Where(c => c.ParentCategoryId.HasValue
+                                                                         && c.ParentCategoryId.Value.Equals(categoryId.Value));
+
+                    var categoriesToFilter = childCategories.Select(c => c.Id).ToList();
+                    categoriesToFilter.Add(category.Id);
+
+                    return _context.Products
+                        .Where(p => p.Name.Contains(phrase))
+                        .OrderBy(p => p.Id).ToList()
+                        .Where(p => p.CategoryId.In(categoriesToFilter))
+                        .Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                }
+            }
+            return _context.Products
+                .Where(p => p.Name.Contains(phrase))
                 .OrderBy(p => p.Id)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }

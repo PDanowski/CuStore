@@ -40,6 +40,27 @@ namespace CuStore.WebUI.Controllers
             return View(viewModel);
         }
 
+        // GET: Product
+        public ViewResult SearchingResultsList(string phrase, int? categoryId, int pageNumber = 1)
+        {
+            ProductsListViewModel viewModel = new ProductsListViewModel
+            {
+                Products = _productRepository.GetProductsByPhrase(phrase, _pageSize, pageNumber, categoryId),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = pageNumber,
+                    ItemsPerPage = _pageSize,
+                    TotalItems = _productRepository.GetProductsCountByPhrase(phrase, categoryId)
+                },
+                CurrentCategory = _categoryRepository.GetCategoryById(categoryId.GetValueOrDefault())
+            };
+
+            ViewData["isSearchingResult"] = true;
+            ViewData["searchingPhrase"] = phrase;
+
+            return View("List", viewModel);
+        }
+
         public FileContentResult GetImage(int productId)
         {
             Product product = _productRepository.GetProductById(productId);

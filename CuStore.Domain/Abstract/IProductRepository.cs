@@ -15,7 +15,9 @@ namespace CuStore.Domain.Abstract
         bool AddProduct(Product product);
         bool RemoveProduct(int productId);
         IEnumerable<Product> GetProductsByCategory(int pageSize, int pageNumber, int? categoryId = null);
+        IEnumerable<Product> GetProductsByPhrase(string phrase, int pageSize, int pageNumber, int? categoryId = null);
         int GetProductsCount(int? categoryId = null);
+        int GetProductsCountByPhrase(string phrase, int? categoryId = null);
         bool IsProductCodeUnique(string code);
     }
 }

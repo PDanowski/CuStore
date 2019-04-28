@@ -6,20 +6,12 @@
 
 <div class="panel">
     <div class="panel-heading">
-        <h3>Editing order: @Model.Id</h3>
+        <h3>Order No. @Model.Id</h3>
     </div>
 
-    @using (Html.BeginForm("EditOrder", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", area = "Admin" }))
-    {
-        @Html.HiddenFor(m => m.Id)
-
-        <div class="form-group">
-            <label>Order ID:</label>
-            @Html.DisplayFor(x => x.Id, new { @class = "form-control" })
-        </div>
         <div class="form-group">
             <label>Status:</label>
-            @Html.EditorFor(x => x.Status, new { @class = "form-control" })
+            @Html.DisplayFor(x => x.Status, new { @class = "form-control" })
         </div>
         <div class="form-group">
             <label>Date:</label>
@@ -31,10 +23,10 @@
         </div>
         <div class="form-group">
             <label>Elements:</label>
-            
+
             <table class="table table-striped table-condensed table-bordered">
                 <tr>
-                    <th>Product code</th>
+                    <th>Product name</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Value</th>
@@ -43,7 +35,7 @@
                 @foreach (var item in Model.Cart.CartItems)
                 {
                     <tr>
-                        <td>@item.Product.Code</td>
+                        <td>@item.Product.Name</td>
                         <td>@item.Product.Price.ToString("c")</td>
                         <td>@item.Quantity</td>
                         <td>@(item.Quantity * item.Product.Price)</td>
@@ -57,7 +49,7 @@
             <label>Shipping method:</label>
             @{
                 var shippingMethodText = Model.ShippingMethod.Name + " " + Model.ShippingMethod.Price.ToString("c");
-                @Html.DisplayFor(x => shippingMethodText, new {@class = "form-control"})
+                @Html.DisplayFor(x => shippingMethodText, new { @class = "form-control" })
             }
         </div>
         <div class="form-group">
@@ -76,16 +68,13 @@
                 var shippingAddressText = Model.ShippingAddress.PostalCode + " " + Model.ShippingAddress.City;
                 @Html.DisplayFor(x => shippingAddressText, new { @class = "form-control" });
 
-                @Html.DisplayFor(x => x.ShippingAddress.Country, new {@class = "form-control"})
+                @Html.DisplayFor(x => x.ShippingAddress.Country, new { @class = "form-control" })
             }
         </div>
 
         <div class="panel-footer">
             <input type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Cancel and go back to list", "ManageOrders", null, new { @class = "btn btn-default" })
+            @Html.ActionLink("Cancel and go back", "Index", "Manage", null, new { @class = "btn btn-default" })
         </div>
 
-    }
-
 </div>
-
