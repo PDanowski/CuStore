@@ -34,5 +34,14 @@ namespace CuStore.UnitTests.Models
             Assert.AreEqual(result[3].Text, "--> Category4");
             Assert.AreEqual(result[4].Text, "--> Category5");
         }
+
+        [TestMethod]
+        public void CantCreate_Categories_SelectList()
+        {
+            var result = CategroriesProvider.CreateSelectList(new List<Category>());
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Count, 0);
+        }
     }
 }

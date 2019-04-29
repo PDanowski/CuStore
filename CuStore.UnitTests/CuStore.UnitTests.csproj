@@ -129,6 +129,8 @@
     <Compile Include="Controllers\NavControllerTests.cs" />
     <Compile Include="Controllers\CartControllerTests.cs" />
     <Compile Include="Controllers\OrderControllerTests.cs" />
+    <Compile Include="DbSetHelper.cs" />
+    <Compile Include="Repositories\ProductRepositoryTests.cs" />
     <Compile Include="Routing\RouteTests.cs" />
     <Compile Include="Models\CartTests.cs" />
     <Compile Include="Models\CategoryProviderTests.cs" />

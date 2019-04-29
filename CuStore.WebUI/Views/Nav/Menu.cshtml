@@ -6,8 +6,8 @@
 
 @using (Html.BeginForm("SearchingResultsList", "Product", FormMethod.Post))
 {
-    @Html.TextBox("phrase")  
-    <input type="submit" name="btn btn-default" value="Search" />
+    @Html.TextBox("phrase", null, new { @class = "form-control", style = "margin-top: 15px" })  
+    <input type="submit" name="search" value="Search" style="margin-top: 5px" class="form-control btn btn-default"/>
 }
 
 

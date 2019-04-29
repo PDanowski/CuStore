@@ -36,8 +36,7 @@ namespace CuStore.Domain.Repositories
             if (categoryId.HasValue)
             {
                 return _context.Products
-                    .Where(p => p.Name.Contains(phrase))
-                    .Count(p => p.Category.Id.Equals(categoryId.Value));
+                    .Count(p => p.Name.Contains(phrase) && p.CategoryId.Equals(categoryId.Value));
             }
             return _context.Products.Count(p => p.Name.Contains(phrase));
         }
@@ -114,9 +113,8 @@ namespace CuStore.Domain.Repositories
                     categoriesToFilter.Add(category.Id);
 
                     return _context.Products
-                        .Where(p => p.Name.Contains(phrase))
+                        .Where(p => p.Name.Contains(phrase) && p.CategoryId.In(categoriesToFilter))
                         .OrderBy(p => p.Id).ToList()
-                        .Where(p => p.CategoryId.In(categoriesToFilter))
                         .Skip((pageNumber - 1) * pageSize).Take(pageSize);
                 }
             }

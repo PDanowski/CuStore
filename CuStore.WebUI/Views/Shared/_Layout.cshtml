@@ -14,71 +14,77 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     <title>@ViewBag.Title</title>
-
+    <style>
+        .glyphicon-ok-circle:before {
+            color: #d1d1e0;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                CuStore
-            </a>
-            <div class="visible-xs">
-                @Html.Partial("_LoginPartial")
-                @Html.Action("Summary", "Cart")
 
-                @if (User.IsInRole("Admin"))
-                {
-                    <a href=@Url.Action("Index", "Manage", new { area = "Admin"})
-                       class="btn btn-default navbar-btn">
-                        <b class="hidden-xs">Administrator panel</b>
-                        <span class="glyphicon glyphicon-cog"></span>
-                    </a>
-                }
-            </div>
-            <div class="navbar-btn">
-                <a class="dropdown-toggle btn btn-default navbar-btn visible-xs" 
-                   data-toggle="dropdown" href="#">
-                    Categories
-                    <span class="glyphicon glyphicon glyphicon-list"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    @Html.Action("Menu", "Nav")
-                </ul>
-            </div>
-        </div>
-        
-        <div class="hidden-xs">
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+            <span class="glyphicon glyphicon-ok-circle"></span>
+            CuStore
+        </a>
+        <div class="visible-xs">
             @Html.Partial("_LoginPartial")
             @Html.Action("Summary", "Cart")
+
             @if (User.IsInRole("Admin"))
             {
-                <a href=@Url.Action("Index", "Manage", new { area = "Admin"})
+                <a href=@Url.Action("Index", "Manage", new {area = "Admin"})
                    class="btn btn-default navbar-btn">
                     <b class="hidden-xs">Administrator panel</b>
                     <span class="glyphicon glyphicon-cog"></span>
                 </a>
             }
         </div>
-
-    </div>
-        <div class="row_content">
-            <div id="categories" class="col-sm-3 hidden-xs">
+        <div class="navbar-btn">
+            <a class="dropdown-toggle btn btn-default navbar-btn visible-xs"
+               data-toggle="dropdown" href="#">
+                Categories
+                <span class="glyphicon glyphicon glyphicon-list"></span>
+            </a>
+            <ul class="dropdown-menu">
                 @Html.Action("Menu", "Nav")
-            </div>
-            <div class="col-xs-12 col-sm-9">
-                @RenderBody()
-            </div>
-
+            </ul>
         </div>
+    </div>
 
-        <div class="row_footer">
-            <div class="page_footer">
-                <span class="text-muted">
-                    @Html.ActionLink("About", "About", "Home", null, new { @class = "btn navbar-btn" })
-                    @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "btn navbar-btn" })
-                </span>
-            </div>
-        </div>
+    <div class="hidden-xs">
+        @Html.Partial("_LoginPartial")
+        @Html.Action("Summary", "Cart")
+        @if (User.IsInRole("Admin"))
+        {
+            <a href=@Url.Action("Index", "Manage", new {area = "Admin"})
+               class="btn btn-default navbar-btn">
+                <b class="hidden-xs">Administrator panel</b>
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+        }
+    </div>
+
+</div>
+<div class="row_content">
+    <div id="categories" class="col-sm-3 hidden-xs">
+        @Html.Action("Menu", "Nav")
+    </div>
+    <div class="col-xs-12 col-sm-9">
+        @RenderBody()
+    </div>
+
+</div>
+
+<div class="row_footer">
+    <div class="page_footer">
+        <span class="text-muted">
+            @Html.ActionLink("About", "About", "Home", null, new {@class = "btn navbar-btn"})
+            @Html.ActionLink("Contact", "Contact", "Home", null, new {@class = "btn navbar-btn"})
+        </span>
+    </div>
+</div>
 
 
 @Scripts.Render("~/bundles/jquery")
