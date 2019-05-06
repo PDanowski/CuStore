@@ -20,7 +20,7 @@ namespace CuStore.UnitTests.Controllers
     public class AdminControllerTests
     {
         [TestMethod]
-        public void Get_Products_Contains_All_Products()
+        public void GetProducts_ValidCollection_ContainsAll()
         {
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.GetProductsByCategory(It.IsAny<int>(), It.IsAny<int>(), null)).Returns(new Product[]
@@ -42,7 +42,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Contains_All_Categories()
+        public void ManageCategories_ValidCollection_ContainsAll()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories()).Returns(new Category[]
@@ -64,7 +64,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Get_Orders_Contains_All_Orders()
+        public void GetOrders_ValidCollection_ContainsAll()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.GetOrders(It.IsAny<int>(), It.IsAny<int>())).Returns(new Order[]
@@ -86,7 +86,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Can_Edit()
+        public void EditCategory_ValidData_ReturnsView()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategoryById(1))
@@ -108,7 +108,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Can_Edit()
+        public void EditProduct_ValidData_ReturnsView()
         {
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICategoryRepository> mockCat = new Mock<ICategoryRepository>();
@@ -132,7 +132,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Orders_Can_Edit()
+        public void EditOrder_ValidData_ReturnsView()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.GetOrderById(1))
@@ -154,7 +154,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Edit_Not_Existing()
+        public void EditCategory_InvalidId_ReturnsNull()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories()).Returns(new Category[]
@@ -172,7 +172,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Edit_Not_Existing()
+        public void EditProduct_InvalidId_ReturnsNull()
         {
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICategoryRepository> mockCat = new Mock<ICategoryRepository>();
@@ -192,7 +192,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Orders_Edit_Not_Existing()
+        public void EditOrder_InvalidId_ReturnsNull()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.GetOrderById(1)).Returns( 
@@ -207,7 +207,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Save_Valid_Changes()
+        public void EditProduct_ValidData_SaveChanges()
         {
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.SaveProduct(It.IsAny<Product>())).Returns(true);
@@ -231,7 +231,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Save_Valid_Changes()
+        public void EditCategory_ValidData_SaveChanges()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.SaveCategory(It.IsAny<Category>())).Returns(true);
@@ -255,7 +255,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Orders_Save_Valid_Changes()
+        public void EditOrder_ValidData_SaveChanges()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.SaveOrder(It.IsAny<Order>())).Returns(true);
@@ -277,7 +277,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Save_Invalid_Changes()
+        public void EditProduct_InvalidData_RejectChanges()
         {
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICategoryRepository> mockCat = new Mock<ICategoryRepository>();
@@ -303,7 +303,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Save_Invalid_Changes()
+        public void EditCategory_InvalidData_RejectChanges()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
 
@@ -328,7 +328,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Orders_Save_Invalid_Changes()
+        public void EditOrder_InvalidData_RejectChanges()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
 
@@ -351,7 +351,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Delete_Valid()
+        public void DeleteProduct_ValidId_Deleted()
         {
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.RemoveProduct(It.IsAny<int>())).Returns(true);
@@ -366,7 +366,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Categories_Delete_Valid()
+        public void DeleteCategory_ValidId_Deleted()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.RemoveCategory(It.IsAny<int>())).Returns(true);
@@ -381,7 +381,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Orders_Delete_Valid()
+        public void DeleteOrder_ValidId_Deleted()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.RemoveOrder(It.IsAny<int>())).Returns(true);

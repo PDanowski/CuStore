@@ -13,7 +13,7 @@ namespace CuStore.UnitTests.Controllers
     public class OrderControllerTests
     {
         [TestMethod]
-        public void GetOrderById_ReturnsOrder()
+        public void GetOrderById_ValidId_ReturnsOrder()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
 
@@ -45,7 +45,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void GetOrderById_ReturnsNull()
+        public void GetOrderById_InvalidId_ReturnsNull()
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
 

@@ -16,7 +16,7 @@ namespace CuStore.UnitTests.Controllers
     public class ProductControllerTest
     {
         [TestMethod]
-        public void ProductList_Can_Paginate()
+        public void ProductList_ValidCollection_CanPaginate()
         {
             int pageSize = 5;
             int pageNumber = 1;
@@ -41,7 +41,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void ProductList_Can_Send_Paginatation_ViewModel()
+        public void ProductList_ValidCollection_PaginatationViewModelCorrect()
         {
             int pageSize = 5;
             int pageNumber = 2;
@@ -72,7 +72,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void ProductList_Can_Filter_Products()
+        public void ProductList_PageNumberSet_ProductsFiltered()
         {
             int pageSize = 5;
             int pageNumber = 1;
@@ -139,7 +139,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void ProductList_Category_Products_Count()
+        public void ProductList_ManyProductsPages_CountPerCategory()
         {
             int pageSize = 5;
             int pageNumber = 1;
@@ -192,7 +192,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void ProductList_Can_Generate_Page_Links()
+        public void ProductList_ManyProductsPages_PageLinksGenerated()
         {
             HtmlHelper helper = null;
 
@@ -214,7 +214,7 @@ namespace CuStore.UnitTests.Controllers
 
 
         [TestMethod]
-        public void Manage_Products_Retrive_Image_Data()
+        public void GetImage_ValidProductId_RetriveImageData()
         {
             Product product = new Product
             {
@@ -238,7 +238,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Manage_Products_Retrive_Image_Data_For_Invalid_Id()
+        public void GetImage_InvalidProductId_ReturnsNull()
         {
             Product product = new Product
             {

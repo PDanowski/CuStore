@@ -11,7 +11,7 @@ namespace CuStore.UnitTests.Models
     public class CartTests
     {
         [TestMethod]
-        public void Can_Add_New_Items()
+        public void AddProduct_ValidItems_Added()
         {
             int quantity = 1;
             Product product1 = new Product {Id = 1, Name = "Product1", Price = 10, CategoryId = 3};
@@ -30,7 +30,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void Can_Add_Quantity_For_Existing_Items()
+        public void AddProduct_ExistingItems_QuantityAddedForExisting()
         {
             int quantity = 1;
             Product product1 = new Product { Id = 1, Name = "Product1", Price = 10, CategoryId = 3 };
@@ -50,7 +50,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void Can_Change_Quantity_For_Existing_Items()
+        public void AddProduct_ExistingItems_QuantityChangedForExisting()
         {
             int quantity1 = 1;
             int quantity2 = 5;
@@ -71,7 +71,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void Can_Remove_Item()
+        public void RemoveProduct_CartWithItems_Removes()
         {
             int quantity = 1;
             Product product1 = new Product { Id = 1, Name = "Product1", Price = 10, CategoryId = 3 };
@@ -94,7 +94,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void Calculate_Cart_Total()
+        public void GetValue_ValidCartWithItems_ReturnsTotalValue()
         {
             int quantity = 1;
             Product product1 = new Product { Id = 1, Name = "Product1", Price = 10, CategoryId = 3 };
@@ -113,7 +113,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void Can_Clear_Contents()
+        public void Clear_ValidCartWithItems_Cleared()
         {
             int quantity = 1;
             Product product1 = new Product { Id = 1, Name = "Product1", Price = 10, CategoryId = 3 };

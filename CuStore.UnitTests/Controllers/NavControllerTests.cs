@@ -14,7 +14,7 @@ namespace CuStore.UnitTests.Controllers
     public class NavControllerTests
     {
         [TestMethod]
-        public void Can_Create_Categories()
+        public void CreateMenu_ValidCategories_GeneratesViewModel()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories())
@@ -35,7 +35,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Can_Select_On_Null_Collection()
+        public void Select_NullCollection_Successful()
         {
             var collection1 = new List<Category>
             {
@@ -59,7 +59,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Indicates_Seletected_Category()
+        public void CreateMenu_CategoriesWithSelected_ReturnsViewModelWithSelected()
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.GetCategories())

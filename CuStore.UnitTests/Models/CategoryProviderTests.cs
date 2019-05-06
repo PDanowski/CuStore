@@ -15,7 +15,7 @@ namespace CuStore.UnitTests.Models
     public class CategoryProviderTests
     {
         [TestMethod]
-        public void Create_Categories_SelectList()
+        public void CreateSelectList_ValidCollection_ReturnsSelectList()
         {
             var categories = new List<Category>()
             {
@@ -36,7 +36,7 @@ namespace CuStore.UnitTests.Models
         }
 
         [TestMethod]
-        public void CantCreate_Categories_SelectList()
+        public void CreateSelectList_EmptyCollection_ReturnsSelectList()
         {
             var result = CategroriesProvider.CreateSelectList(new List<Category>());
 

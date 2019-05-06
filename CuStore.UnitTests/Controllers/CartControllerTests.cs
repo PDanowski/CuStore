@@ -17,7 +17,7 @@ namespace CuStore.UnitTests.Controllers
     public class CartControllerTests
     {
         [TestMethod]
-        public void Can_Add_To_Cart()
+        public void AddToCart_Product_ReturnsView()
         {
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICartRepository> mockCart = new Mock<ICartRepository>();
@@ -46,7 +46,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Adding_Product_To_Cart_Goes_Index()
+        public void RemoveFromCart_LastProduct_GoesToIndex()
         {
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICartRepository> mockCart = new Mock<ICartRepository>();
@@ -75,7 +75,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Can_View_Cart_Index()
+        public void Index_ValidCart_ReturnsView()
         {
             Cart cart = new Cart();
 
@@ -88,7 +88,30 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Cannot_Checkout_Empty_Cart()
+        public void Summary_ValidCart_RetrunsPartial()
+        {
+            Cart cart = new Cart();
+
+            CartController controller = new CartController(null, null, null, null, null, null);
+
+            Cart result = (Cart) controller.Summary(cart).Model;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result, cart);
+        }
+
+        [TestMethod]
+        public void Summary_NullCart_RetrunsPartial()
+        {
+            CartController controller = new CartController(null, null, null, null, null, null);
+
+            Cart result = (Cart)controller.Summary(null).Model;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Checkout_EmptyCart_ReturnsInvalidModelState()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
             Mock<IShippingMethodRepository> mockRepo = new Mock<IShippingMethodRepository>();
@@ -116,7 +139,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Cannot_Checkout_Invalid_Address()
+        public void Checkout_InvalidAddress_ReturnsInvalidModelState()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
             Mock<IShippingMethodRepository> mockRepo = new Mock<IShippingMethodRepository>();
@@ -152,7 +175,7 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Can_Checkout_And_Submit_Order()
+        public void Checkout_ValidCart_GenerateOrder()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
             Mock<IOrderRepository> mockOrder = new Mock<IOrderRepository>();
