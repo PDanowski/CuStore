@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,6 @@ namespace CuStore.Domain.Constants
         public string ServerName = "smtp.custore.com";
         public int ServerPort = 587;
         public bool WriteAsFile = true;
-        public string FileLocation = @"C:\CuStore";
+        public string FileLocation = Path.GetTempPath() + @"\CuStoreSmtp";
     }
 }

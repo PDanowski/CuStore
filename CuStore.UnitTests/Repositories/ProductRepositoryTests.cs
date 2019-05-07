@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.Domain.Repositories;
@@ -90,6 +85,20 @@ namespace CuStore.UnitTests.Repositories
 
             Assert.AreEqual(result, 2);
         }
+
+        [TestMethod]
+        public void GetProductsCountByPhrase_EmptyCollection_ReturnsNone()
+        {
+            Mock<IStoreContext> mock = new Mock<IStoreContext>();
+            mock.Setup(m => m.Products).Returns(MockDbSet.GetMockDbSet(new List<Product>()).Object);
+
+            IProductRepository repo = new ProductRepository(mock.Object);
+
+            var result = repo.GetProductsCountByPhrase("ProductName");
+
+            Assert.AreEqual(result, 0);
+        }
+
     }
 }
 
