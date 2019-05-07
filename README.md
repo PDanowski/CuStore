@@ -7,7 +7,7 @@ Used languages, technologies and tools:
 - EntityFramework 6
 - Moq
 - Ninject
-- JavaScript/JQuery
+- JavaScript/JQuery/AJAX
 - Bootstrap 3
 
 3 projects:
