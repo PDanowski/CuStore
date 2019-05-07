@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,26 @@ namespace CuStore.Domain.Repositories
         public UserAddress GetUserAddress(string userId)
         {
             return _context.UserAddresses.FirstOrDefault(u => u.UserId.Equals(userId));
+        }
+
+        public bool SaveUserAddress(UserAddress userAddress)
+        {
+            try
+            {
+                var existingUserAddress = _context.UserAddresses
+                    .SingleOrDefault(u => u.Id == userAddress.Id);
+
+                // Update 
+                _context.Entry(existingUserAddress).CurrentValues.SetValues(userAddress);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
         }
 
         public User GetUserById(string userId)

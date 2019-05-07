@@ -124,7 +124,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AdminControllerTests.cs" />
+    <Compile Include="Controllers\Admin\ManageControllerTests.cs" />
+    <Compile Include="Controllers\ManageControllerTests.cs" />
     <Compile Include="Controllers\ProductControllerTest.cs" />
     <Compile Include="Controllers\NavControllerTests.cs" />
     <Compile Include="Controllers\CartControllerTests.cs" />

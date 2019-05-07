@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.Domain.Entities.Enums;
-using CuStore.WebUI.Areas.Admin.Controllers;
 using CuStore.WebUI.Areas.Admin.ViewModels;
-using CuStore.WebUI.Controllers;
-using CuStore.WebUI.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace CuStore.UnitTests.Controllers
+namespace CuStore.UnitTests.Controllers.Admin
 {
     [TestClass]
-    public class AdminControllerTests
+    public class ManageControllerTests
     {
         [TestMethod]
         public void GetProducts_ValidCollection_ContainsAll()

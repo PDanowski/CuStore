@@ -12,5 +12,6 @@ namespace CuStore.Domain.Abstract
         User GetUserById(string userId);
         UserAddress GetUserAddress(string userId);
         User GetUserByName(string userName);
+        bool SaveUserAddress(UserAddress userAddress);
     }
 }
