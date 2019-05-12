@@ -112,7 +112,7 @@
     </div>
     <div class="form-group">
         <label>Country:</label>
-        @Html.TextBoxFor(x => x.ShippingAddress.Country, new { id = "Country", @class = "form-control" })
+        @Html.DropDownListFor(x => x.ShippingAddress.Country, new SelectList(ViewBag.CountryList), new { @class = "form-control" })
     </div>
 
     <div class="form-group">

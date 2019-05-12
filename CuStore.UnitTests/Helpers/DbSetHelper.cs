@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Moq;
 
-namespace CuStore.UnitTests
+namespace CuStore.UnitTests.Helpers
 {
     internal static class MockDbSet
     {

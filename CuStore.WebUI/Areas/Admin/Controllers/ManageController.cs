@@ -7,6 +7,7 @@ using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Areas.Admin.ViewModels;
 using CuStore.WebUI.Infrastructure.Helpers;
+using CuStore.WebUI.Infrastructure.Implementations;
 using CuStore.WebUI.Models;
 
 namespace CuStore.WebUI.Areas.Admin.Controllers

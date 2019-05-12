@@ -10,13 +10,15 @@ using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Controllers;
+using CuStore.WebUI.Infrastructure.Helpers;
+using CuStore.WebUI.Infrastructure.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace CuStore.UnitTests.Controllers
 {
     [TestClass]
-    public class ManageControllerTests
+    public class UserAddressControllerTests
     {
         [TestMethod]
         public void EditUserAddress_ForExistingAddress_ReturnsAddres()
@@ -38,10 +40,10 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.GetUserAddress(It.IsAny<string>())).Returns(userAddress);
 
             //Set your controller ControllerContext with fake context
-            ManageController controller = new ManageController(null, mock.Object)
+            UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
                 { ControllerContext = controllerContext.Object };
 
-            UserAddress result = (UserAddress)controller.EditUserAddress().ViewData.Model;
+            UserAddress result = (UserAddress)controller.Edit().ViewData.Model;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Id, userAddress.Id);
@@ -70,12 +72,12 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.GetUserAddress(It.IsAny<string>())).Returns((UserAddress)null);
 
             //Set your controller ControllerContext with fake context
-            ManageController controller = new ManageController(null, mock.Object)
+            UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
             {
                 ControllerContext = controllerContext.Object
             };
 
-            var result = controller.EditUserAddress(userAddress);
+            var result = controller.Edit(userAddress);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
@@ -103,13 +105,13 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.GetUserAddress(It.IsAny<string>())).Returns((UserAddress)null);
 
             //Set your controller ControllerContext with fake context
-            ManageController controller = new ManageController(null, mock.Object)
+            UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
             {
                 ControllerContext = controllerContext.Object
             };
             controller.ModelState.AddModelError("error", "error");
 
-            var result = controller.EditUserAddress(userAddress);
+            var result = controller.Edit(userAddress);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -131,10 +133,10 @@ namespace CuStore.UnitTests.Controllers
             mock.Setup(m => m.SaveUserAddress(It.IsAny<UserAddress>())).Returns(true);
 
             //Set your controller ControllerContext with fake context
-            ManageController controller = new ManageController(null, mock.Object)
+            UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
                 { ControllerContext = controllerContext.Object };
 
-            UserAddress result = (UserAddress)controller.EditUserAddress().ViewData.Model;
+            UserAddress result = (UserAddress)controller.Edit().ViewData.Model;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Id, 0);

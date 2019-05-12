@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
-using CuStore.Domain.Repositories;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -20,13 +17,15 @@ namespace CuStore.WebUI.Controllers
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
+        private readonly ICountriesProvider _countriesProvider;
 
         public CartController(IProductRepository productRepository, 
             ICartRepository cartRepository,
             IShippingMethodRepository shippingMethodRepository, 
             IOrderRepository orderRepository,
             IUserRepository userRepository,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICountriesProvider countriesProvider)
         {
             this._productRepository = productRepository;
             this._cartRepository = cartRepository;
@@ -34,6 +33,7 @@ namespace CuStore.WebUI.Controllers
             this._orderRepository = orderRepository;
             this._userRepository = userRepository;
             this._emailSender = emailSender;
+            this._countriesProvider = countriesProvider;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -100,6 +100,8 @@ namespace CuStore.WebUI.Controllers
                 SelectedShippingMethodId = -1
             };
 
+            ViewBag.CountryList = _countriesProvider.FillCountryList();
+
             return View(viewModel);
         }
 
@@ -136,6 +138,8 @@ namespace CuStore.WebUI.Controllers
                 ShippingMethodsProvider.CreateSelectList(_shippingMethodRepository.GetShippingMethods().ToList());
             viewModel.OrderValue = cart.GetValue();
             viewModel.SelectedShippingMethodId = -1;
+
+            ViewBag.CountryList = _countriesProvider.FillCountryList();
 
             return View(viewModel);
         }

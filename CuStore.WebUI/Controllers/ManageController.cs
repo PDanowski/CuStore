@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,24 +21,21 @@ namespace CuStore.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IOrderRepository _orderRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;     
 
-        public ManageController(IOrderRepository orderRepository, IUserRepository userRepository)
+        public ManageController(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
-            _userRepository = userRepository;
+            
         }
 
         public ManageController(ApplicationUserManager userManager, 
             ApplicationSignInManager signInManager, 
-            IOrderRepository orderRepository,
-            IUserRepository userRepository)
+            IOrderRepository orderRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _orderRepository = orderRepository;
-            _userRepository = userRepository;
         }
 
         public ApplicationSignInManager SignInManager
@@ -254,26 +253,6 @@ namespace CuStore.WebUI.Controllers
 
         #endregion
 
-        public ViewResult EditUserAddress()
-        {
-            var userAddress = _userRepository.GetUserAddress(this.User.Identity.GetUserId()) ?? new UserAddress
-            {
-                UserId = User.Identity.GetUserId()
-            };
-            return View(userAddress);
-        }
 
-        [HttpPost]
-        public ActionResult EditUserAddress(UserAddress userAddress)
-        {
-            if (ModelState.IsValid)
-            {
-                _userRepository.SaveUserAddress(userAddress);
-                return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EditAddressSuccess });
-            }
-
-            ModelState.AddModelError("", @"Given address is invalid. Please correct errors.");
-            return View(userAddress);
-        }
     }
 }

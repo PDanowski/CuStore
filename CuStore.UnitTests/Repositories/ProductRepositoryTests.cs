@@ -2,6 +2,7 @@
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.Domain.Repositories;
+using CuStore.UnitTests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

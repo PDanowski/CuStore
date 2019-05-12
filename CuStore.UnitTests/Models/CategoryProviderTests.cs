@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Infrastructure.Helpers;
+using CuStore.WebUI.Infrastructure.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

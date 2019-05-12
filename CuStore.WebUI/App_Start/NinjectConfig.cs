@@ -2,6 +2,9 @@
 using CuStore.Domain.Concrete;
 using CuStore.Domain.Constants;
 using CuStore.Domain.Repositories;
+using CuStore.WebUI.Infrastructure.Abstract;
+using CuStore.WebUI.Infrastructure.Helpers;
+using CuStore.WebUI.Infrastructure.Implementations;
 using Ninject.Modules;
 using Ninject.Web.Common;
 
@@ -28,6 +31,8 @@ namespace CuStore.WebUI
 
             EmailServerConfiguration config = new EmailServerConfiguration();
             Bind<IEmailSender>().To<EmailSender>().WithConstructorArgument("configuration", config);
+            Bind<IPlacesApiClient>().To<GoogleMapsApiClient>().InRequestScope();
+            Bind<ICountriesProvider>().To<CountriesProvider>().InSingletonScope();
         }
     }
 }
