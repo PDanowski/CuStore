@@ -132,6 +132,7 @@
     <Compile Include="Controllers\CartControllerTests.cs" />
     <Compile Include="Controllers\OrderControllerTests.cs" />
     <Compile Include="Helpers\DbSetHelper.cs" />
+    <Compile Include="Helpers\HttpMessageHelper.cs" />
     <Compile Include="Helpers\JsonResponseContent.cs" />
     <Compile Include="Implementations\CountriesProviderTests.cs" />
     <Compile Include="Implementations\GoogleMapsApiClientTests.cs" />

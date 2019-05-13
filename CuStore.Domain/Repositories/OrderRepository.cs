@@ -23,12 +23,14 @@ namespace CuStore.Domain.Repositories
         {
             try
             {
-                var existingCart = _context.Carts
-                    .Where(c => c.Id == order.Cart.Id)
-                    .Include(c => c.CartItems)
-                    .SingleOrDefault();
-                order.Cart.OrderId = order.Id;
-                _context.Entry(existingCart).CurrentValues.SetValues(order.Cart);
+                _context.Orders.Add(order);
+
+                //var existingCart = _context.Carts
+                //    .Where(c => c.Id == order.Cart.Id)
+                //    .Include(c => c.CartItems)
+                //    .SingleOrDefault();
+                //order.Cart.OrderId = order.Id;
+                //_context.Entry(existingCart).CurrentValues.SetValues(order.Cart);
                 _context.SaveChanges();
 
                 return true;

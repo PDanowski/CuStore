@@ -23,15 +23,23 @@ namespace CuStore.Domain.Repositories
             return _context.UserAddresses.FirstOrDefault(u => u.UserId.Equals(userId));
         }
 
-        public bool SaveUserAddress(UserAddress userAddress)
+        public bool AddOrSaveUserAddress(UserAddress userAddress)
         {
             try
             {
-                var existingUserAddress = _context.UserAddresses
-                    .SingleOrDefault(u => u.Id == userAddress.Id);
+                if (userAddress.Id == default(int))
+                {
+                    userAddress.User = GetUserById(userAddress.UserId);
+                    _context.UserAddresses.Add(userAddress);
+                }
+                else
+                {
+                    var existingUserAddress = _context.UserAddresses
+                        .SingleOrDefault(u => u.Id == userAddress.Id);
 
-                // Update 
-                _context.Entry(existingUserAddress).CurrentValues.SetValues(userAddress);
+                    // Update 
+                    _context.Entry(existingUserAddress).CurrentValues.SetValues(userAddress);
+                }
 
                 _context.SaveChanges();
                 return true;

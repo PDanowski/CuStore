@@ -9,37 +9,37 @@
 { 
     <link href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-} 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#City').autocomplete({
-            source: function (request, response) {
-                var country = $('#Country option:selected').text();
-                var autocompleteUrl = '/UserAddress/GetCities' + '?cityPrefix=' + request.term
-                    + '&country=' + country;
-                $.ajax({
-                    url: autocompleteUrl,
-                    type: 'GET',
-                    cache: false,
-                    dataType: 'json',
-                    success: function (json) {
-                        response($(json).each(function (index, data) {
-                            return {
-                                label: data,
-                                value: data
-                            };
-                        }));
-                    },
-                    error: function (xmlHttpRequest, textStatus, errorThrown) {
-                        console.log('Error occured', textStatus, errorThrown);
-                    }
-                });
-            },
-            minLength: 1
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#City').autocomplete({
+                source: function (request, response) {
+                    var country = $('#Country option:selected').text();
+                    var autocompleteUrl = '/UserAddress/GetCities' + '?cityPrefix=' + request.term
+                        + '&country=' + country;
+                    $.ajax({
+                        url: autocompleteUrl,
+                        type: 'GET',
+                        cache: false,
+                        dataType: 'json',
+                        success: function (json) {
+                            response($(json).each(function (index, data) {
+                                return {
+                                    label: data,
+                                    value: data
+                                };
+                            }));
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            console.log('Error occured', textStatus, errorThrown);
+                        }
+                    });
+                },
+                minLength: 1
+            });
         });
-    });
-</script>
+    </script>
+} 
 
 <div class="panel">
     <div class="panel-heading">
@@ -49,6 +49,7 @@
     @using (Html.BeginForm("Edit", "UserAddress", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.UserId)
         @Html.ValidationSummary()
 
         <div class="form-group">

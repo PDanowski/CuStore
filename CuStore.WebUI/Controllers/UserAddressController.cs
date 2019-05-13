@@ -41,8 +41,10 @@ namespace CuStore.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _userRepository.SaveUserAddress(userAddress);
-                return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EditAddressSuccess });
+                if (_userRepository.AddOrSaveUserAddress(userAddress))
+                {
+                    return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EditAddressSuccess });
+                }
             }
 
             ViewBag.CountryList = _countriesProvider.FillCountryList();

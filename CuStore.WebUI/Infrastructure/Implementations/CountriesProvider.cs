@@ -93,6 +93,13 @@ namespace CuStore.WebUI.Infrastructure.Implementations
 
         private bool CheckIfRegionShortcutMatchCountryName(RegionInfo region, string countryName)
         {
+            if (region.EnglishName.Split().Length <= 1 
+                || region.NativeName.Split().Length <= 1 
+                || region.DisplayName?.Split().Length <= 1)
+            {
+                return false;
+            }
+
             if (countryName.Contains(GetCountryShortcut(region.EnglishName))
                  || countryName.Contains(GetCountryShortcut(region.NativeName))
                  || countryName.Contains(GetCountryShortcut(region.DisplayName)))
