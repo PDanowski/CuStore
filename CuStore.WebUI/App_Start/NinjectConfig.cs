@@ -33,6 +33,7 @@ namespace CuStore.WebUI
             Bind<IEmailSender>().To<EmailSender>().WithConstructorArgument("configuration", config);
             Bind<IPlacesApiClient>().To<GoogleMapsApiClient>().InRequestScope();
             Bind<ICountriesProvider>().To<CountriesProvider>().InSingletonScope();
+            Bind<ILogger>().To<FileLogger>().InSingletonScope();
         }
     }
 }

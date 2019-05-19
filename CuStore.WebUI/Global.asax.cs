@@ -16,12 +16,13 @@ namespace CuStore.WebUI
     {
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure();
             NinjectContainer.RegisterModules(new NinjectConfig());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);            
         }
     }
 }

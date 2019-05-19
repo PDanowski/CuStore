@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.Models;
 using CuStore.WebUI.ViewModels;
 
