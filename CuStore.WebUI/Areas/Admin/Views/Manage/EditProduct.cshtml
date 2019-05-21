@@ -5,14 +5,14 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-@helper TextBoxPropertyWithLabelAndValidation(string value, string label)
+@*@helper TextBoxPropertyWithLabelAndValidation(string value, string label)
 {
 <div class="form-group">
     <label>@label</label>
     @Html.TextBoxFor(v => value, new { @class = "form-control" })
     @Html.ValidationMessageFor(v => value)
 </div>
-}
+}*@
 
 <div class="panel">
     <div class="panel-heading">
@@ -28,8 +28,19 @@
             @Html.DisplayFor(x => x.Product.Id, new { @class = "form-control" })
         </div>
 
-        @TextBoxPropertyWithLabelAndValidation(Model.Product.Code, "Code:")
-        @TextBoxPropertyWithLabelAndValidation(Model.Product.Name, "Name:")
+        @*@TextBoxPropertyWithLabelAndValidation(Model.Product.Code, "Code:")
+        @TextBoxPropertyWithLabelAndValidation(Model.Product.Name, "Name:")*@
+        <div class="form-group">
+            <label>Code:</label>
+            @Html.TextBoxFor(x => x.Product.Code, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Product.Code)
+        </div>
+
+        <div class="form-group">
+            <label>Name:</label>
+            @Html.TextBoxFor(x => x.Product.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Product.Name)
+        </div>
 
         <div class="form-group">
             <label>Description:</label>
@@ -63,7 +74,7 @@
                            style="position:absolute;z-index:2;top:0;
                            left:0;filter: alpha(opacity=0); opacity:0;
                            background-color:transparent;color:transparent;"
-                           onchange='$("#upload-file-info").html($(this).val());'>
+                           onchange='$("#upload-file-info").html($(this).val().replace("C:\\fakepath\\", ""));'>
                     <span class='label label-info' id="upload-file-info"></span>
                 </a>
                 @if (@Model.Product.ImageData == null)
