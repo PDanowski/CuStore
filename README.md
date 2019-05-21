@@ -9,6 +9,8 @@ Used languages, technologies and tools:
 - Ninject
 - JavaScript/JQuery/AJAX
 - Bootstrap 3
+- log4net
+- MSTest
 
 3 projects:
 - CuStore.Domain
