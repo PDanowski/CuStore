@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
@@ -11,7 +12,7 @@ namespace CuStore.WebUI.Infrastructure.Implementations
 {
     public class GoogleMapsApiClient : IPlacesApiClient
     {
-        private readonly string _apiKey = "AIzaSyAr_kuboi8vvnQjkPkh4_NLLGF1f4XbQdc";
+        private string _apiKey => ConfigurationManager.AppSettings["GooglePlaceAPIKey"];
         private readonly ICountriesProvider _countriesProvider;
 
         public static Func<HttpClient> ClientFactory = () => new HttpClient();

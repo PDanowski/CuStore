@@ -14,15 +14,13 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Edit address:</dt>
+        <dt>User address:</dt>
         <dd>
-            @Html.ActionLink("Edit user address", "Edit", new { controller = "UserAddress"})
+            @Html.ActionLink("Edit", "Edit", new { controller = "UserAddress"})
         </dd>
         <dt>Password:</dt>
         <dd>
-            [
-            @(Model.HasPassword ? Html.ActionLink("Change your password", "ChangePassword") : Html.ActionLink("Create", "SetPassword"))
-            ]
+            [@(Model.HasPassword ? Html.ActionLink("Change your password", "ChangePassword") : Html.ActionLink("Create", "SetPassword"))]
         </dd>
         <dt>External Logins:</dt>
         <dd>
