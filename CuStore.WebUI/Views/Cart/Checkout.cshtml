@@ -8,7 +8,7 @@
 @helper DisplayProperty(string value)
 {
     <div class="form-group">
-        @Html.DisplayFor(v => value, new { @class = "form-control" })
+        @Html.DisplayFor(v => value, new { @class = "form-control", id = (value + "_user") })
     </div>
 }
 
@@ -77,10 +77,10 @@
         </div>
 
         <div class="well">
-            DisplayProperty(x.Cart.User.UserAddress.Street)
-            DisplayProperty(x.Cart.User.UserAddress.City)
-            DisplayProperty(x.Cart.User.UserAddress.PostalCode)
-            DisplayProperty(x.Cart.User.UserAddress.Country)
+            @DisplayProperty(Model.Cart.User.UserAddress.Street)
+            @DisplayProperty(Model.Cart.User.UserAddress.City)
+            @DisplayProperty(Model.Cart.User.UserAddress.PostalCode)
+            @DisplayProperty(Model.Cart.User.UserAddress.Country)
         </div>
     }
 
@@ -112,7 +112,7 @@
     </div>
     <div class="form-group">
         <label>Country:</label>
-        @Html.DropDownListFor(x => x.ShippingAddress.Country, new SelectList(ViewBag.CountryList), new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.ShippingAddress.Country, new SelectList(ViewBag.CountryList), new { id = "Country", @class = "form-control" })
     </div>
 
     <div class="form-group">

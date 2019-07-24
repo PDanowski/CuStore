@@ -72,7 +72,12 @@ namespace CuStore.WebUI.Controllers
         {
             Product product = _productRepository.GetProductById(productId);
 
-            return product == null ? null : File(product.ImageData, product.ImageMimeType);
+            if (product?.ImageData != null && product?.ImageMimeType != null)
+            {
+                return File(product.ImageData, product.ImageMimeType);
+            }
+
+            return null;
         }
 
         public ViewResult Details(int productId, string returnUrl)
