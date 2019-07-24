@@ -42,8 +42,14 @@ namespace CuStore.WebUI.Controllers
         }
 
         // GET: Product
-        public ViewResult SearchingResultsList(string phrase, int? categoryId, int pageNumber = 1)
+        public ActionResult SearchingResultsList(string phrase, int? categoryId, int pageNumber = 1)
         {
+            if (string.IsNullOrEmpty(phrase))
+            {
+                return List(categoryId, pageNumber);
+                //return RedirectToAction("List");
+            }
+
             ProductsListViewModel viewModel = new ProductsListViewModel
             {
                 Products = _productRepository.GetProductsByPhrase(phrase, _pageSize, pageNumber, categoryId),
