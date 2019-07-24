@@ -69,7 +69,7 @@ namespace CuStore.UnitTests.Controllers
             controllerContext.Setup(t => t.HttpContext).Returns(fakeHttpContext.Object);
 
             Mock<IUserRepository> mock = new Mock<IUserRepository>();
-            mock.Setup(m => m.GetUserAddress(It.IsAny<string>())).Returns((UserAddress)null);
+            mock.Setup(m => m.AddOrSaveUserAddress(It.IsAny<UserAddress>())).Returns(true);
 
             //Set your controller ControllerContext with fake context
             UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
@@ -130,7 +130,7 @@ namespace CuStore.UnitTests.Controllers
             controllerContext.Setup(t => t.HttpContext).Returns(fakeHttpContext.Object);
 
             Mock<IUserRepository> mock = new Mock<IUserRepository>();
-            mock.Setup(m => m.SaveUserAddress(It.IsAny<UserAddress>())).Returns(true);
+            mock.Setup(m => m.AddOrSaveUserAddress(It.IsAny<UserAddress>())).Returns(true);
 
             //Set your controller ControllerContext with fake context
             UserAddressController controller = new UserAddressController(mock.Object, null, new CountriesProvider())
