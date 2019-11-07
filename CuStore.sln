@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuStore.UnitTests", "CuStor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuStore.Domain", "CuStore.Domain\CuStore.Domain.csproj", "{6F44D44B-8625-471D-8154-EF0FB24C4E7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuStore.CRMService", "CuStore.CRMService\CuStore.CRMService.csproj", "{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6F44D44B-8625-471D-8154-EF0FB24C4E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F44D44B-8625-471D-8154-EF0FB24C4E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F44D44B-8625-471D-8154-EF0FB24C4E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
