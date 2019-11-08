@@ -15,7 +15,10 @@ namespace CuStore.CRMService.DataContracts
         int GetPoints(Guid customerId);
 
         [OperationContract]
-        Guid AddCustomer(string externalCode, int bonusPoints);
+        Guid AddCustomer(string externalCode, int bonusPoints = 0);
+
+        [OperationContract]
+        bool AddCustomer(CustomerData customerData);
 
         [OperationContract]
         bool RemoveCustomer(Guid customerId);

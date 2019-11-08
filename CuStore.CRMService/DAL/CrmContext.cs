@@ -11,7 +11,7 @@ namespace CuStore.CRMService.DAL
             Database.SetInitializer(new CreateDatabaseIfNotExists<CrmContext>());
         }
 
-        public DbSet<CustomerData> CustomerData { get; set; }
+        public DbSet<CustomerCrmData> CustomerData { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,1 +1,5 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="CuStore.CRMService.Service1" CodeBehind="CrmService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" 
+    Service="CuStore.CRMService.Services.CrmService" 
+    CodeBehind="CrmService.svc.cs"
+    Factory="Castle.Facilities.WcfIntegration.DefaultServiceHostFactory, Castle.Facilities.WcfIntegration" 
+    %>

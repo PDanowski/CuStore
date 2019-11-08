@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using CuStore.CRMService.DAL.Abstract;
 using CuStore.CRMService.DataContracts;
 using CuStore.CRMService.OperationContracts;
 
@@ -8,29 +11,41 @@ namespace CuStore.CRMService.Services
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class CrmService : ICrmService
     {
+        private readonly ICustomerDataProvider _provider;
+
+        public CrmService(ICustomerDataProvider provider)
+        {
+            _provider = provider;
+        }
+
         public CustomerData GetCustomerData(Guid customerId)
         {
-            throw new NotImplementedException();
+            return _provider.GetCustomerData(customerId);
         }
 
         public int GetPoints(Guid customerId)
         {
-            throw new NotImplementedException();
+            return _provider.GetPoints(customerId);
         }
 
-        public Guid AddCustomer(string externalCode, int bonusPoints)
+        public Guid AddCustomer(string externalCode, int bonusPoints = 0)
         {
-            throw new NotImplementedException();
+            return _provider.AddCustomer(externalCode, bonusPoints);
+        }
+
+        public bool AddCustomer(CustomerData customerData)
+        {
+            return _provider.AddCustomer(customerData);
         }
 
         public bool RemoveCustomer(Guid customerId)
         {
-            throw new NotImplementedException();
+            return _provider.RemoveCustomer(customerId);
         }
 
         public bool AddPointForCustomer(Guid customerId, int points)
         {
-            throw new NotImplementedException();
+            return _provider.AddPointForCustomer(customerId, points);
         }
     }
 }

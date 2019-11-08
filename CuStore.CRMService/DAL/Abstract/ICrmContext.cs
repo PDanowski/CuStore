@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using CuStore.CRMService.DAL.Models;
 
 namespace CuStore.CRMService.DAL.Abstract
 {
     public interface ICrmContext
     {
-        DbSet<CustomerData> CustomerData { get; }
+        DbEntityEntry Entry(object model);
+        DbSet<CustomerCrmData> CustomerData { get; }
         int SaveChanges();
     }
 }
