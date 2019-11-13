@@ -118,6 +118,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -210,6 +212,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\ViewModels\EditProductViewModel.cs" />
+    <Compile Include="Connected Services\CrmService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -224,6 +231,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Abstract\ICountriesProvider.cs" />
+    <Compile Include="Infrastructure\Abstract\ICrmClient.cs" />
     <Compile Include="Infrastructure\Abstract\ILogger.cs" />
     <Compile Include="Infrastructure\Abstract\IPlacesApiClient.cs" />
     <Compile Include="Infrastructure\Attributes\FutureDateAttribute.cs" />
@@ -234,6 +242,7 @@
     <Compile Include="Infrastructure\Filters\ProfileActionAttribute.cs" />
     <Compile Include="Infrastructure\Filters\ProfileResultAttribute.cs" />
     <Compile Include="Infrastructure\Filters\UnhadledExceptionAttribute.cs" />
+    <Compile Include="Infrastructure\Implementations\CrmClient.cs" />
     <Compile Include="Infrastructure\Implementations\FileLogger.cs" />
     <Compile Include="Infrastructure\Implementations\GoogleMapsApiClient.cs" />
     <Compile Include="Infrastructure\Helpers\CategroriesProvider.cs" />
@@ -254,6 +263,16 @@
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\CrmService\CrmService.disco" />
+    <None Include="Connected Services\CrmService\configuration91.svcinfo" />
+    <None Include="Connected Services\CrmService\configuration.svcinfo" />
+    <Content Include="Connected Services\CrmService\CuStore.WebUI.CrmService.CustomerData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\CrmService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -330,6 +349,16 @@
     <Content Include="Areas\Admin\Views\Manage\ManageOrders.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\GetOrders.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\EditOrder.cshtml" />
+    <None Include="Connected Services\CrmService\CrmService.wsdl" />
+    <None Include="Connected Services\CrmService\CrmService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CrmService\CrmService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CrmService\CrmService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -436,6 +465,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CrmService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

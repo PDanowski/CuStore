@@ -35,6 +35,8 @@ namespace CuStore.Domain.Entities
 
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
+
+        public Guid? CrmGuid { get; set; }
         #endregion
 
         public ICollection<Cart> Carts { get; set; }

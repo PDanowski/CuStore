@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CrmService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8106/Services/CrmService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8106/Services/CrmService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8106/Services/CrmService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CuStore.CRMService.OperationContracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICrmService_GetCustomerData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerData" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_GetCustomerData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_GetPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPoints" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_GetPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddCustomerData_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerData" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddCustomerData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_RemoveCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_RemoveCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddPointForCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPointForCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICrmService_AddPointForCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPointForCustomerResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICrmService">
+    <wsdl:operation name="GetCustomerData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/GetCustomerData" message="tns:ICrmService_GetCustomerData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/GetCustomerDataResponse" message="tns:ICrmService_GetCustomerData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/GetPoints" message="tns:ICrmService_GetPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/GetPointsResponse" message="tns:ICrmService_GetPoints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/AddCustomer" message="tns:ICrmService_AddCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/AddCustomerResponse" message="tns:ICrmService_AddCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomerData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/AddCustomerData" message="tns:ICrmService_AddCustomerData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/AddCustomerDataResponse" message="tns:ICrmService_AddCustomerData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/RemoveCustomer" message="tns:ICrmService_RemoveCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/RemoveCustomerResponse" message="tns:ICrmService_RemoveCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPointForCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICrmService/AddPointForCustomer" message="tns:ICrmService_AddPointForCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICrmService/AddPointForCustomerResponse" message="tns:ICrmService_AddPointForCustomer_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICrmService" type="tns:ICrmService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCustomerData">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/GetCustomerData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPoints">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/GetPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomer">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/AddCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomerData">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/AddCustomerData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomer">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/RemoveCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPointForCustomer">
+      <soap:operation soapAction="http://tempuri.org/ICrmService/AddPointForCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CrmService">
+    <wsdl:port name="BasicHttpBinding_ICrmService" binding="tns:BasicHttpBinding_ICrmService">
+      <soap:address location="http://localhost:8106/Services/CrmService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

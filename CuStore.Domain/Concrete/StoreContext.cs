@@ -95,6 +95,7 @@ namespace CuStore.Domain.Concrete
             modelBuilder.Entity<Product>()
                 .HasIndex(p => p.Code)
                 .IsUnique();
+
         }
     }
 }

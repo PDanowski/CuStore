@@ -17,7 +17,7 @@ namespace CuStore.CRMService.DataContracts
         [OperationContract]
         Guid AddCustomer(string externalCode, int bonusPoints = 0);
 
-        [OperationContract]
+        [OperationContract(Name = "AddCustomerData")]
         bool AddCustomer(CustomerData customerData);
 
         [OperationContract]

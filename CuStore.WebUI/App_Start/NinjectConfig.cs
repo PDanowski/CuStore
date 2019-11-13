@@ -34,6 +34,7 @@ namespace CuStore.WebUI
             Bind<IPlacesApiClient>().To<GoogleMapsApiClient>().InRequestScope();
             Bind<ICountriesProvider>().To<CountriesProvider>().InSingletonScope();
             Bind<ILogger>().To<FileLogger>().InSingletonScope();
+            Bind<ICrmClient>().To<CrmClient>().InRequestScope();
         }
     }
 }

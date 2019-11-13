@@ -18,6 +18,7 @@ namespace CuStore.WebUI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
         private readonly ICountriesProvider _countriesProvider;
+        private readonly ICrmClient _crmClient;
 
         public CartController(IProductRepository productRepository, 
             ICartRepository cartRepository,
@@ -25,15 +26,17 @@ namespace CuStore.WebUI.Controllers
             IOrderRepository orderRepository,
             IUserRepository userRepository,
             IEmailSender emailSender,
-            ICountriesProvider countriesProvider)
+            ICountriesProvider countriesProvider,
+            ICrmClient crmClient)
         {
-            this._productRepository = productRepository;
-            this._cartRepository = cartRepository;
-            this._shippingMethodRepository = shippingMethodRepository;
-            this._orderRepository = orderRepository;
-            this._userRepository = userRepository;
-            this._emailSender = emailSender;
-            this._countriesProvider = countriesProvider;
+            _productRepository = productRepository;
+            _cartRepository = cartRepository;
+            _shippingMethodRepository = shippingMethodRepository;
+            _orderRepository = orderRepository;
+            _userRepository = userRepository;
+            _emailSender = emailSender;
+            _countriesProvider = countriesProvider;
+            _crmClient = crmClient;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)

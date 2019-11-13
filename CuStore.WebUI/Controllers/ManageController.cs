@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -21,21 +22,25 @@ namespace CuStore.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IOrderRepository _orderRepository;     
+        private readonly IOrderRepository _orderRepository;
 
-        public ManageController(IOrderRepository orderRepository)
+        private readonly ICrmClient _crmClient;
+
+        public ManageController(IOrderRepository orderRepository, ICrmClient crmClient)
         {
             _orderRepository = orderRepository;
-            
+            _crmClient = crmClient;
         }
 
         public ManageController(ApplicationUserManager userManager, 
             ApplicationSignInManager signInManager, 
-            IOrderRepository orderRepository)
+            IOrderRepository orderRepository,
+            ICrmClient crmClient)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _orderRepository = orderRepository;
+            _crmClient = crmClient;
         }
 
         public ApplicationSignInManager SignInManager

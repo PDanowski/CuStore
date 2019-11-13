@@ -97,6 +97,10 @@
     <Compile Include="Migrations\201904252002186_Migration4.Designer.cs">
       <DependentUpon>201904252002186_Migration4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911132102222_Migration5.cs" />
+    <Compile Include="Migrations\201911132102222_Migration5.designer.cs">
+      <DependentUpon>201911132102222_Migration5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -156,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904252002186_Migration4.resx">
       <DependentUpon>201904252002186_Migration4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911132102222_Migration5.resx">
+      <DependentUpon>201911132102222_Migration5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

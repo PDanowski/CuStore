@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuStore.WebUI", "CuStore.WebUI\CuStore.WebUI.csproj", "{E59B62F8-E296-4283-89B1-5199A94BADEC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9} = {ECA1A8CB-B35B-4914-B8D8-034C4D0AF4F9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuStore.UnitTests", "CuStore.UnitTests\CuStore.UnitTests.csproj", "{5B45D1F1-15B2-4A22-BEF8-3CC5A4312508}"
 EndProject
