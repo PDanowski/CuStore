@@ -1,8 +1,9 @@
 # CuStore
-Simple e-commerce ASP.NET MVC 5 webite
+Simple e-commerce ASP.NET MVC 5 webite with additional CRM implemented as WCF serivce. 
 
 Used languages, technologies and tools:
 - ASP.NET MVC 5 
+- WCF
 - C#
 - EntityFramework 6
 - Moq
@@ -12,7 +13,8 @@ Used languages, technologies and tools:
 - log4net
 - MSTest
 
-3 projects:
+4 projects:
 - CuStore.Domain
 - CuStore.WebUI
 - CuStore.UnitTests
+- CuStore.CRMService
