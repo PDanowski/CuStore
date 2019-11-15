@@ -13,5 +13,9 @@ namespace CuStore.Domain.Abstract
         UserAddress GetUserAddress(string userId);
         User GetUserByName(string userName);
         bool AddOrSaveUserAddress(UserAddress userAddress);
+        int GetUsersCount();
+        IEnumerable<User> GetUsers(int pageSize, int pageNumber);
+        IEnumerable<User> GetUsersWithoutCrm();
+        bool UpdateUsers(IEnumerable<User> users);
     }
 }

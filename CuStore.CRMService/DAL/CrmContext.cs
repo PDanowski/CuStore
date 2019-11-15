@@ -18,7 +18,7 @@ namespace CuStore.CRMService.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            Database.SetInitializer<CrmContext>(null);
+            Database.SetInitializer<CrmContext>(new CreateDatabaseIfNotExists<CrmContext>());
         }
     }
 }

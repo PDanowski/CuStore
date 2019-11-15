@@ -8,24 +8,29 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Your orders:</h4>
-    @Html.Partial("OrdersList", Model.Orders)
+  <h4>Your orders:</h4>
+  @Html.Partial("OrdersList", Model.Orders)
 
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>User address:</dt>
-        <dd>
-            @Html.ActionLink("Edit", "Edit", new { controller = "UserAddress"})
-        </dd>
-        <dt>Password:</dt>
-        <dd>
-            [@(Model.HasPassword ? Html.ActionLink("Change your password", "ChangePassword") : Html.ActionLink("Create", "SetPassword"))]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage logins", "ManageLogins") ]
-        </dd>
-    </dl>
+  <hr />
+  <h4>Loyalty points: @(ViewData["crmPoints"] ?? 0)</h4>
+
+  <hr />
+
+  <h4>Change your account settings</h4>
+  <hr />
+  <dl class="dl-horizontal">
+    <dt>User address:</dt>
+    <dd>
+      @Html.ActionLink("Edit", "Edit", new { controller = "UserAddress" })
+    </dd>
+    <dt>Password:</dt>
+    <dd>
+      [@(Model.HasPassword ? Html.ActionLink("Change your password", "ChangePassword") : Html.ActionLink("Create", "SetPassword"))]
+    </dd>
+    <dt>External Logins:</dt>
+    <dd>
+      @Model.Logins.Count [
+      @Html.ActionLink("Manage logins", "ManageLogins") ]
+    </dd>
+  </dl>
 </div>

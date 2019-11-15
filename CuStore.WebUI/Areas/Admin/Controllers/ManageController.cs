@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Areas.Admin.ViewModels;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.Infrastructure.Implementations;
 using CuStore.WebUI.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CuStore.WebUI.Areas.Admin.Controllers
 {
@@ -18,13 +20,24 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
+
+        private readonly ICrmClientAdapter _crmClientAdapter;
+
         private int _pageSize = 10;
 
-        public ManageController(IProductRepository productRepository, ICategoryRepository categoryRepository, IOrderRepository orderRepository)
+        public ManageController(IProductRepository productRepository, 
+            ICategoryRepository categoryRepository, 
+            IOrderRepository orderRepository,
+            IUserRepository userRepository,
+            ICrmClientAdapter crmClientAdapter)
         {
-            this._productRepository = productRepository;
-            this._categoryRepository = categoryRepository;
-            this._orderRepository = orderRepository;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+            _orderRepository = orderRepository;
+            _userRepository = userRepository;
+
+            _crmClientAdapter = crmClientAdapter;
         }
 
         [Authorize(Roles = "Admin")]
@@ -313,6 +326,53 @@ namespace CuStore.WebUI.Areas.Admin.Controllers
             bool isUnique = _productRepository.IsProductCodeUnique(code);
 
             return Json(isUnique, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ViewResult ManageUsers(int pageNumber = 1, string message = null)
+        {
+            TempData["message"] = message;
+            return View(new PagingInfo
+            {
+                CurrentPage = pageNumber,
+                ItemsPerPage = _pageSize,
+                TotalItems = _userRepository.GetUsersCount()
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [ChildActionOnly]
+        public PartialViewResult GetUsers(int pageNumber = 1)
+        {
+            return PartialView(_userRepository.GetUsers(_pageSize, pageNumber));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateCrmData()
+        {
+            var usersWithoutCrm = _userRepository.GetUsersWithoutCrm().ToList();
+            string updateMessage = "";
+
+            if (usersWithoutCrm.Any())
+            {
+                var isSuccess = _crmClientAdapter.CreateDataForCustomers(usersWithoutCrm);
+
+                if (isSuccess)
+                {
+                    _userRepository.UpdateUsers(usersWithoutCrm);
+                    updateMessage = "Lacking CRM data created";
+                }
+                else
+                {
+                    updateMessage = "Error during updating CRM data";
+                }
+            }
+            else
+            {
+                updateMessage = "All users already have CRM data";
+            }
+
+            return RedirectToAction("ManageUsers", new { message = updateMessage });
         }
     }
 }

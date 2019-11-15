@@ -38,7 +38,14 @@ namespace CuStore.UnitTests.Controllers
 
             //Set your controller ControllerContext with fake context
             CartController controller =
-                new CartController(mockProd.Object, mockCart.Object, null, null, null, null, null)
+                new CartController(mockProd.Object, 
+                        mockCart.Object, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null,
+                        null)
                     { ControllerContext = controllerContext.Object };
 
             controller.AddToCart(cart, 1, null);
@@ -67,7 +74,14 @@ namespace CuStore.UnitTests.Controllers
 
             //Set your controller ControllerContext with fake context
             CartController controller =
-                new CartController(mockProd.Object, mockCart.Object, null, null, null, null, null)
+                new CartController(mockProd.Object, 
+                        mockCart.Object, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null,
+                        null)
                     { ControllerContext = controllerContext.Object};   
 
             RedirectToRouteResult result = controller.RemoveFromCart(cart, 1, "returnUrl");
@@ -81,7 +95,15 @@ namespace CuStore.UnitTests.Controllers
         {
             Cart cart = new Cart();
 
-            CartController controller = new CartController(null, null, null, null, null, null, null);
+            CartController controller = new CartController(
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null,
+                null);
 
             CartIndexViewModel result = (CartIndexViewModel)controller.Index(cart, "returnUrl").Model;
 
@@ -94,7 +116,15 @@ namespace CuStore.UnitTests.Controllers
         {
             Cart cart = new Cart();
 
-            CartController controller = new CartController(null, null, null, null, null, null, null);
+            CartController controller = new CartController(
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null,
+                null);
 
             Cart result = (Cart) controller.Summary(cart).Model;
 
@@ -105,7 +135,15 @@ namespace CuStore.UnitTests.Controllers
         [TestMethod]
         public void Summary_NullCart_RetrunsPartial()
         {
-            CartController controller = new CartController(null, null, null, null, null, null, null);
+            CartController controller = new CartController(
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null,
+                null);
 
             Cart result = (Cart)controller.Summary(null).Model;
 
@@ -130,7 +168,15 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(null, null, mockRepo.Object, null, null, mock.Object, new CountriesProvider());
+            CartController controller = new CartController(
+                null, 
+                null, 
+                mockRepo.Object, 
+                null, 
+                null, 
+                mock.Object, 
+                new CountriesProvider(),
+                null);
 
             ViewResult result = controller.Checkout(viewModel, cart);
 
@@ -165,7 +211,15 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(null, null, mockRepo.Object, null, null, mock.Object, new CountriesProvider());
+            CartController controller = new CartController(
+                null, 
+                null, 
+                mockRepo.Object, 
+                null, 
+                null, 
+                mock.Object, 
+                new CountriesProvider(),
+                null);
             controller.ModelState.AddModelError("error", @"error");
 
             ViewResult result = controller.Checkout(viewModel, cart);
@@ -202,7 +256,15 @@ namespace CuStore.UnitTests.Controllers
                 ShippingMethods = null
             };
 
-            CartController controller = new CartController(null, null, mockShip.Object, mockOrder.Object, null, mock.Object, null);
+            CartController controller = new CartController(
+                null, 
+                null, 
+                mockShip.Object, 
+                mockOrder.Object, 
+                null, 
+                mock.Object, 
+                null,
+                null);
 
             ViewResult result = controller.Checkout(viewModel, cart);
 

@@ -27,7 +27,8 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Product {Id = 5, Name = "Product5", Price = 20, CategoryId = 2}
             });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null, null, null);
 
             Product[] result = ((IEnumerable<Product>) controller.GetProducts().ViewData.Model).ToArray();
 
@@ -49,7 +50,9 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Category {Id = 5, Name = "Category5", ParentCategoryId = 1}
             });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller =
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
+            ;
 
             Category[] result = ((IEnumerable<Category>)controller.ManageCategories().ViewData.Model).ToArray();
 
@@ -71,7 +74,8 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Order {Id = 5, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted}
             });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             Order[] result = ((IEnumerable<Order>)controller.GetOrders().ViewData.Model).ToArray();
 
@@ -91,7 +95,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             mock.Setup(m => m.GetCategoryById(3))
                 .Returns(new Category { Id = 3, Name = "Category3", ParentCategoryId = 1 });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
 
             Category c1 = (controller.EditCategory(1).ViewData.Model as EditCategoryViewModel)?.Category;
             Category c2 = (controller.EditCategory(2).ViewData.Model as EditCategoryViewModel)?.Category;
@@ -115,7 +120,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             mockProd.Setup(m => m.GetProductById(3))
                 .Returns(new Product { Id = 3, Name = "Product3", Price = 30, CategoryId = 3 });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null, null, null);
 
             Product p1 = (controller.EditProduct(1).ViewData.Model as EditProductViewModel)?.Product;
             Product p2 = (controller.EditProduct(2).ViewData.Model as EditProductViewModel)?.Product;
@@ -137,7 +143,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             mock.Setup(m => m.GetOrderById(3))
                 .Returns(new Order { Id = 3, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Realized });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             Order o1 = (controller.EditOrder(1).ViewData.Model as Order);
             Order o2 = (controller.EditOrder(2).ViewData.Model as Order);
@@ -159,7 +166,8 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Category {Id = 3, Name = "Product3", ParentCategoryId = 1}
             });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
 
             Category c1 = controller.EditCategory(8).ViewData.Model as Category;
 
@@ -179,7 +187,8 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Product {Id = 3, Name = "Product3", Price = 30, CategoryId = 3}
             });
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null, null, null);
 
             Product p1 = controller.EditProduct(8).ViewData.Model as Product;
 
@@ -194,7 +203,8 @@ namespace CuStore.UnitTests.Controllers.Admin
                 new Order {Id = 1, OrderDate = DateTime.Now, Cart = new Cart(), Status = OrderStatus.Accepted}
             );
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             Order o1 = controller.EditOrder(8).ViewData.Model as Order;
 
@@ -207,7 +217,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.SaveProduct(It.IsAny<Product>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null, null, null);
 
             Product p1 = new Product
             {
@@ -231,7 +242,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.SaveCategory(It.IsAny<Category>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
 
             Category c1 = new Category
             {
@@ -255,7 +267,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.SaveOrder(It.IsAny<Order>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             Order o1 = new Order
             {
@@ -277,7 +290,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<IProductRepository> mockProd = new Mock<IProductRepository>();
             Mock<ICategoryRepository> mockCat = new Mock<ICategoryRepository>();
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mockProd.Object, mockCat.Object, null, null, null);
 
             Product p1 = new Product
             {
@@ -302,7 +316,8 @@ namespace CuStore.UnitTests.Controllers.Admin
         {
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
 
             Category c1 = new Category
             {
@@ -327,7 +342,8 @@ namespace CuStore.UnitTests.Controllers.Admin
         {
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             Order o1 = new Order
             {
@@ -351,7 +367,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.RemoveProduct(It.IsAny<int>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(mock.Object, null, null, null, null);
 
             controller.ModelState.AddModelError("error", "error");
 
@@ -366,7 +383,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
             mock.Setup(m => m.RemoveCategory(It.IsAny<int>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, mock.Object, null, null, null);
 
             controller.ModelState.AddModelError("error", "error");
 
@@ -381,7 +399,8 @@ namespace CuStore.UnitTests.Controllers.Admin
             Mock<IOrderRepository> mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.RemoveOrder(It.IsAny<int>())).Returns(true);
 
-            WebUI.Areas.Admin.Controllers.ManageController controller = new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object);
+            WebUI.Areas.Admin.Controllers.ManageController controller = 
+                new WebUI.Areas.Admin.Controllers.ManageController(null, null, mock.Object, null, null);
 
             controller.ModelState.AddModelError("error", "error");
 

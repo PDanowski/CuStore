@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CuStore.Domain.Entities;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,14 +20,18 @@ namespace CuStore.WebUI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        private readonly ICrmClient _crmClient;
+
+        public AccountController(ICrmClient crmClient)
         {
+            _crmClient = crmClient;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ICrmClient crmClient)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _crmClient = crmClient;
         }
 
         public ApplicationSignInManager SignInManager
@@ -103,6 +108,9 @@ namespace CuStore.WebUI.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    user.CrmGuid = _crmClient.CreateCustomerData(user.UserName, 0);
+                    await UserManager.UpdateAsync(user);
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

@@ -17,9 +17,9 @@ namespace CuStore.CRMService
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<ICrmService, CrmService>(),
+                Component.For<ICrmContext, CrmContext>(),
                 Component.For<ICustomerDataProvider, CustomerDataProvider>(),
-                Component.For<ICrmContext, CrmContext>());
+                Component.For<ICrmService, CrmService>());
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CuStore.Domain.Entities.User>
+
+
+@foreach (var item in Model)
+{
+<tr>
+  <td>@item.Id</td>
+  <td>@item.UserName</td>
+  <td>@(item.FirstName + " " + item.LastName)</td>
+  <td>@item.Email</td>
+  <td>@item.BirthDate.ToShortDateString()</td>
+  <td>
+    @if (item.CrmGuid.HasValue)
+    {
+      <p class="green-text">OK</p>
+    }
+    else
+    {
+      <p class="red-text">Not exists</p>
+    }
+  </td>
+</tr>
+}
+
+
+<style>
+  .red-text {
+    color: red;
+  }
+
+  .green-text {
+    color: green;
+  }
+</style>

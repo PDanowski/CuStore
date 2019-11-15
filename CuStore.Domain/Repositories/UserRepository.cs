@@ -60,5 +60,43 @@ namespace CuStore.Domain.Repositories
         {
             return _context.Users.FirstOrDefault(u => u.UserName.Equals(userName));
         }
+
+        public int GetUsersCount()
+        {
+            return _context.Users.Count();
+        }
+
+        public IEnumerable<User> GetUsers(int pageSize, int pageNumber)
+        {
+            return _context.Users.OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public IEnumerable<User> GetUsersWithoutCrm()
+        {
+            return _context.Users.Where(u => !u.CrmGuid.HasValue);
+        }
+
+        public bool UpdateUsers(IEnumerable<User> users)
+        {
+            try
+            {
+                foreach (var user in users)
+                {
+                    var existingUser = _context.Users
+                            .SingleOrDefault(u => u.Id == user.Id);
+                        // Update 
+                        _context.Entry(existingUser).CurrentValues.SetValues(user);
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Message);
+                return false;
+            }
+
+        }
     }
 }

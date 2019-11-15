@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CuStore.Domain.Abstract;
 using CuStore.Domain.Concrete;
 using CuStore.Domain.Entities;
 using Microsoft.AspNet.Identity;
@@ -9,8 +10,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Owin;
 
 
 namespace CuStore.WebUI
@@ -23,6 +22,7 @@ namespace CuStore.WebUI
             : base(store)
         {
         }
+
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {

@@ -232,6 +232,7 @@
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\Abstract\ICountriesProvider.cs" />
     <Compile Include="Infrastructure\Abstract\ICrmClient.cs" />
+    <Compile Include="Infrastructure\Abstract\ICrmClientAdapter.cs" />
     <Compile Include="Infrastructure\Abstract\ILogger.cs" />
     <Compile Include="Infrastructure\Abstract\IPlacesApiClient.cs" />
     <Compile Include="Infrastructure\Attributes\FutureDateAttribute.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Infrastructure\Filters\ProfileResultAttribute.cs" />
     <Compile Include="Infrastructure\Filters\UnhadledExceptionAttribute.cs" />
     <Compile Include="Infrastructure\Implementations\CrmClient.cs" />
+    <Compile Include="Infrastructure\Implementations\CrmClientAdapter.cs" />
     <Compile Include="Infrastructure\Implementations\FileLogger.cs" />
     <Compile Include="Infrastructure\Implementations\GoogleMapsApiClient.cs" />
     <Compile Include="Infrastructure\Helpers\CategroriesProvider.cs" />
@@ -263,6 +265,8 @@
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\Manage\ManageUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\GetUsers.cshtml" />
     <None Include="Connected Services\CrmService\CrmService.disco" />
     <None Include="Connected Services\CrmService\configuration91.svcinfo" />
     <None Include="Connected Services\CrmService\configuration.svcinfo" />

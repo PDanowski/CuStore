@@ -76,6 +76,14 @@ namespace CuStore.WebUI.Controllers
             };
             model.Orders = _orderRepository.GetOrdersByUser(User.Identity.GetUserId());
 
+            var crmGuid = UserManager.Users
+                .FirstOrDefault(u => u.Id == userId)?.CrmGuid;
+
+            if (crmGuid.HasValue)
+            {
+                ViewData["crmPoints"] = _crmClient.GetPointsForCustomer(crmGuid.Value);
+            }
+
             return View(model);
         }
 

@@ -35,6 +35,7 @@ namespace CuStore.WebUI
             Bind<ICountriesProvider>().To<CountriesProvider>().InSingletonScope();
             Bind<ILogger>().To<FileLogger>().InSingletonScope();
             Bind<ICrmClient>().To<CrmClient>().InRequestScope();
+            Bind<ICrmClientAdapter>().To<CrmClientAdapter>().InRequestScope();
         }
     }
 }

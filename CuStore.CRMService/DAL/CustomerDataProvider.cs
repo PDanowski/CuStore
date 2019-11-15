@@ -106,6 +106,9 @@ namespace CuStore.CRMService.DAL
 
         public bool AddPointForCustomer(Guid customerId, int points)
         {
+            var context = _context as CrmContext;
+            context?.Database.Connection.Open();
+
             var customerData = _context.CustomerData.FirstOrDefault(cd => cd.Id == customerId);
 
             if (customerData == null)
