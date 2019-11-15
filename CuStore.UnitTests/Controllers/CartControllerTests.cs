@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
 using CuStore.WebUI.Controllers;
+using CuStore.WebUI.Infrastructure.Abstract;
 using CuStore.WebUI.Infrastructure.Helpers;
 using CuStore.WebUI.Infrastructure.Implementations;
 using CuStore.WebUI.ViewModels;
@@ -231,13 +232,22 @@ namespace CuStore.UnitTests.Controllers
         }
 
         [TestMethod]
-        public void Checkout_ValidCart_GenerateOrder()
+        public void Checkout_ValidCart_GenerateOrderAndNotAddCrmPoints()
         {
             Mock<IEmailSender> mock = new Mock<IEmailSender>();
             Mock<IOrderRepository> mockOrder = new Mock<IOrderRepository>();
+            Mock<IUserRepository> mockUser = new Mock<IUserRepository>();
             Mock<IShippingMethodRepository> mockShip = new Mock<IShippingMethodRepository>();
 
             mockOrder.Setup(m => m.AddOrder(It.IsAny<Order>())).Returns(true);
+
+            User user = new User
+            {
+                Id = "123456",
+                UserName = "user1@custore.com",
+                CrmGuid = null
+            };
+            mockUser.Setup(m => m.GetUserById(It.IsAny<string>())).Returns(user);
 
             Cart cart = new Cart();
             cart.AddProduct(new Product
@@ -260,11 +270,67 @@ namespace CuStore.UnitTests.Controllers
                 null, 
                 null, 
                 mockShip.Object, 
-                mockOrder.Object, 
-                null, 
+                mockOrder.Object,
+                mockUser.Object, 
                 mock.Object, 
                 null,
                 null);
+
+            ViewResult result = controller.Checkout(viewModel, cart);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Order>()), Times.Once);
+
+            Assert.AreEqual("Completed", result.ViewName);
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Checkout_ValidCart_GenerateOrderAndAddCrmPoints()
+        {
+            Mock<IEmailSender> mock = new Mock<IEmailSender>();
+            Mock<IOrderRepository> mockOrder = new Mock<IOrderRepository>();
+            Mock<IUserRepository> mockUser = new Mock<IUserRepository>();
+            Mock<ICrmClient> mockCrm = new Mock<ICrmClient>();
+            Mock<IShippingMethodRepository> mockShip = new Mock<IShippingMethodRepository>();
+
+            mockOrder.Setup(m => m.AddOrder(It.IsAny<Order>())).Returns(true);
+
+            User user = new User
+            {
+                Id = "123456",
+                UserName = "user1@custore.com",
+                CrmGuid = Guid.NewGuid()
+            };
+            mockUser.Setup(m => m.GetUserById(It.IsAny<string>())).Returns(user);
+
+            mockCrm.Setup(m => m.AddPointsForCustomer(user.CrmGuid.Value, It.IsAny<int>())).Returns(true);
+
+            Cart cart = new Cart();
+            cart.AddProduct(new Product
+            {
+                CategoryId = 1,
+                Id = 1,
+                Name = "test",
+                Price = 1.89M
+            }, 1);
+
+            CheckoutViewModel viewModel = new CheckoutViewModel
+            {
+                Cart = cart,
+                OrderValue = 0.00M,
+                SelectedShippingMethodId = 0,
+                ShippingMethods = null
+            };
+
+            CartController controller = new CartController(
+                null,
+                null,
+                mockShip.Object,
+                mockOrder.Object,
+                mockUser.Object,
+                mock.Object,
+                null,
+                mockCrm.Object);
 
             ViewResult result = controller.Checkout(viewModel, cart);
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using CuStore.Domain.Abstract;
 using CuStore.Domain.Entities;
@@ -129,11 +130,18 @@ namespace CuStore.WebUI.Controllers
 
                 order.ShippingMethod = _shippingMethodRepository.GetShippingMethodById(order.ShippingMethodId);
 
-                _orderRepository.AddOrder(order);
+                if (_orderRepository.AddOrder(order))
+                {
+                    var crmGuid = _userRepository.GetUserById(cart.UserId).CrmGuid;
 
-                _emailSender.ProcessOrder(order);
-
-                return View("Completed");
+                    if (crmGuid.HasValue && crmGuid.Value != Guid.Empty)
+                    {
+                        _crmClient.AddPointsForCustomer(crmGuid.Value, (int)order.GetTotalValue());
+                    }
+  
+                    _emailSender.ProcessOrder(order);
+                    return View("Completed");
+                }
             }
 
             viewModel.Cart = cart;

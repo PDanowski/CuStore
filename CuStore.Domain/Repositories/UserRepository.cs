@@ -74,7 +74,7 @@ namespace CuStore.Domain.Repositories
 
         public IEnumerable<User> GetUsersWithoutCrm()
         {
-            return _context.Users.Where(u => !u.CrmGuid.HasValue);
+            return _context.Users.Where(u => !u.CrmGuid.HasValue || u.CrmGuid.Value == Guid.Empty);
         }
 
         public bool UpdateUsers(IEnumerable<User> users)
