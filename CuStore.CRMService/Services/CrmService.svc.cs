@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.ServiceModel;
 using CuStore.CRMService.DAL.Abstract;
 using CuStore.CRMService.DataContracts;
+using CuStore.CRMService.FaultExceptions;
 using CuStore.CRMService.OperationContracts;
 
 namespace CuStore.CRMService.Services
@@ -20,32 +22,75 @@ namespace CuStore.CRMService.Services
 
         public CustomerData GetCustomerData(Guid customerId)
         {
-            return _provider.GetCustomerData(customerId);
+            try
+            {
+                return _provider.GetCustomerData(customerId);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
         }
 
         public int GetPoints(Guid customerId)
-        {
-            return _provider.GetPoints(customerId);
+        {           
+            try
+            {
+                return _provider.GetPoints(customerId);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
         }
 
         public Guid AddCustomer(string externalCode, int bonusPoints = 0)
-        {
-            return _provider.AddCustomer(externalCode, bonusPoints);
+        {    
+            try
+            {
+                return _provider.AddCustomer(externalCode, bonusPoints);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
         }
 
         public bool AddCustomer(CustomerData customerData)
-        {
-            return _provider.AddCustomer(customerData);
+        {           
+            try
+            {
+                return _provider.AddCustomer(customerData);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
+
         }
 
         public bool RemoveCustomer(Guid customerId)
-        {
-            return _provider.RemoveCustomer(customerId);
+        {       
+            try
+            {
+                return _provider.RemoveCustomer(customerId);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
         }
 
         public bool AddPointForCustomer(Guid customerId, int points)
-        {
-            return _provider.AddPointForCustomer(customerId, points);
+        {           
+            try
+            {
+                return _provider.AddPointForCustomer(customerId, points);
+            }
+            catch (Exception ex)
+            {
+                throw new CrmInternalFaultException(ex.Message);
+            }
         }
     }
 }
