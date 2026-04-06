@@ -1,8 +1,8 @@
 using CuStore.Core.Abstractions;
-using CuStore.WebApi.Contracts;
+using CuStore.Api.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CuStore.WebApi.Controllers;
+namespace CuStore.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

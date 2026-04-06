@@ -2,7 +2,7 @@ using CuStore.Crm;
 using CuStore.Core.Abstractions;
 using CuStore.Infrastructure;
 using CuStore.Infrastructure.Data;
-using CuStore.WebApi.Services;
+using CuStore.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

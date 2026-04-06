@@ -1,4 +1,4 @@
-namespace CuStore.WebApi.Contracts;
+namespace CuStore.Api.Contracts;
 
 public sealed record ProductListResponse(
     IReadOnlyList<ProductSummaryResponse> Items,

@@ -1,7 +1,7 @@
 using CuStore.Crm;
 using CuStore.Core.Abstractions;
 
-namespace CuStore.WebApi.Services;
+namespace CuStore.Api.Services;
 
 public class GrpcCrmClient(CrmApi.CrmApiClient client) : ICrmClient
 {

@@ -1,6 +1,0 @@
-@CuStore.WebApi_HostAddress = http://localhost:5123
-
-GET {{CuStore.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

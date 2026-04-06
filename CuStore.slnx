@@ -4,6 +4,6 @@
   <Project Path="CuStore.Crm.GrpcService/CuStore.Crm.GrpcService.csproj" />
   <Project Path="CuStore.Infrastructure/CuStore.Infrastructure.csproj" />
   <Project Path="CuStore.UnitTests/CuStore.UnitTests.csproj" />
-  <Project Path="CuStore.WebApi/CuStore.WebApi.csproj" />
+  <Project Path="CuStore.Api/CuStore.Api.csproj" />
   <Project Path="CuStore.WebUI/CuStore.WebUI.csproj" />
 </Solution>
