@@ -34,7 +34,7 @@ public class CheckoutController(IOrderCheckoutService checkoutService, IUserRepo
             userRepository.UpdateUsers(new[] { user });
         }
 
-        return Ok(user);
+        return Ok(new RegisterResponse(user.Id, user.UserName, user.Email, user.CrmGuid));
     }
 
     [HttpPost("checkout")]
@@ -62,6 +62,15 @@ public class CheckoutController(IOrderCheckoutService checkoutService, IUserRepo
             shippingAddress,
             cancellationToken);
 
-        return order is null ? BadRequest("Unable to checkout: empty cart or invalid state.") : Ok(order);
+        if (order is null)
+        {
+            return BadRequest("Unable to checkout: empty cart or invalid state.");
+        }
+
+        return Ok(new CheckoutResponse(
+            order.Id,
+            order.OrderDate,
+            order.Status.ToString(),
+            order.GetTotalValue()));
     }
 }

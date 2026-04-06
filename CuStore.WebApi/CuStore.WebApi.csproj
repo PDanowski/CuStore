@@ -7,19 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.32.0" />
-    <PackageReference Include="Grpc.Core.Api" Version="2.71.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.71.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.71.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Include="..\CuStore.Crm.Contracts\Protos\crm.proto" GrpcServices="Client" Link="Protos\crm.proto" />
   </ItemGroup>
 
   <ItemGroup>

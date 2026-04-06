@@ -1,4 +1,5 @@
 using CuStore.Core.Abstractions;
+using CuStore.WebApi.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CuStore.WebApi.Controllers;
@@ -10,9 +11,18 @@ public class ProductsController(IProductRepository productRepository) : Controll
     [HttpGet]
     public IActionResult List([FromQuery] int? categoryId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var products = productRepository.GetProductsByCategory(pageSize, pageNumber, categoryId);
+        var products = productRepository
+            .GetProductsByCategory(pageSize, pageNumber, categoryId)
+            .Select(p => new ProductSummaryResponse(
+                p.Id,
+                p.Name,
+                p.Description,
+                p.Price))
+            .ToList();
+
         var total = productRepository.GetProductsCount(categoryId);
-        return Ok(new { items = products, total, pageNumber, pageSize });
+
+        return Ok(new ProductListResponse(products, total, pageNumber, pageSize));
     }
 
     [HttpGet("{id:int}")]

@@ -13,7 +13,7 @@ public class CartController(ICartRepository cartRepository, IProductRepository p
     public IActionResult GetCart(string userId)
     {
         var cart = cartRepository.GetActiveCartWithItemsForUser(userId) ?? new Cart { UserId = userId };
-        return Ok(cart);
+        return Ok(MapCart(cart));
     }
 
     [HttpPost("items")]
@@ -36,7 +36,7 @@ public class CartController(ICartRepository cartRepository, IProductRepository p
         cart.AddProduct(product, Math.Max(1, request.Quantity));
         var saved = cartRepository.SaveCart(cart);
 
-        return saved ? Ok(cart) : StatusCode(500, "Failed to save cart.");
+        return saved ? Ok(MapCart(cart)) : StatusCode(500, "Failed to save cart.");
     }
 
     [HttpDelete("items/{productId:int}")]
@@ -57,6 +57,21 @@ public class CartController(ICartRepository cartRepository, IProductRepository p
         }
 
         var saved = cartRepository.SaveCart(cart);
-        return saved ? Ok(cart) : StatusCode(500, "Failed to save cart.");
+        return saved ? Ok(MapCart(cart)) : StatusCode(500, "Failed to save cart.");
+    }
+
+    private static CartResponse MapCart(Cart cart)
+    {
+        var items = cart.CartItems
+            .Select(item => new CartItemResponse(
+                item.ProductId,
+                item.Product?.Name ?? string.Empty,
+                item.Quantity,
+                item.Product?.Price ?? 0m))
+            .ToList();
+
+        var subtotal = items.Sum(i => i.Quantity * i.Price);
+
+        return new CartResponse(items, subtotal);
     }
 }

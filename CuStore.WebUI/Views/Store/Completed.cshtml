@@ -1,0 +1,11 @@
+@model int
+@{
+    ViewData["Title"] = "Completed";
+}
+
+<div class="alert alert-success">
+    <h4>Order completed</h4>
+    <p>Your order id: <strong>#@Model</strong></p>
+</div>
+
+<a asp-controller="Store" asp-action="Index" class="btn btn-primary">Back to store</a>

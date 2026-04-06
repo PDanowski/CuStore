@@ -1,0 +1,79 @@
+@model CuStore.WebUI.Models.CartViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Cart</h2>
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger">@err</div>
+}
+
+@if (!Model.Items.Any())
+{
+    <p>Your cart is empty.</p>
+    <a asp-controller="Store" asp-action="Index" class="btn btn-primary">Back to products</a>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.LineTotal.ToString("C")</td>
+                <td>
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <form asp-action="Cart" method="get" class="row g-2 align-items-end mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Shipping method</label>
+            <select class="form-select" name="shippingMethodId" onchange="this.form.submit()">
+                @foreach (var sm in Model.ShippingMethods)
+                {
+                    if (sm.Id == Model.SelectedShippingMethodId)
+                    {
+                        <option value="@sm.Id" selected>@sm.Name (@sm.Price.ToString("C"))</option>
+                    }
+                    else
+                    {
+                        <option value="@sm.Id">@sm.Name (@sm.Price.ToString("C"))</option>
+                    }
+                }
+            </select>
+        </div>
+    </form>
+
+    <div class="mb-3">
+        <div>Subtotal: <strong>@Model.Subtotal.ToString("C")</strong></div>
+        <div>Shipping: <strong>@Model.ShippingPrice.ToString("C")</strong></div>
+        <div>Total: <strong>@Model.Total.ToString("C")</strong></div>
+    </div>
+
+    <form asp-action="Checkout" method="post">
+        <input type="hidden" name="shippingMethodId" value="@Model.SelectedShippingMethodId" />
+        <button type="submit" class="btn btn-success">Checkout</button>
+        <a asp-controller="Store" asp-action="Index" class="btn btn-outline-primary">Continue shopping</a>
+    </form>
+}
