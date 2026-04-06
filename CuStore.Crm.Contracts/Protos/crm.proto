@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option csharp_namespace = "CuStore.Crm";
+
+package crm;
+
+service CrmApi {
+  rpc GetCustomerData (GetCustomerDataRequest) returns (CustomerDataReply);
+  rpc GetPoints (GetPointsRequest) returns (GetPointsReply);
+  rpc AddCustomer (AddCustomerRequest) returns (AddCustomerReply);
+  rpc AddCustomerData (AddCustomerDataRequest) returns (BoolReply);
+  rpc RemoveCustomer (RemoveCustomerRequest) returns (BoolReply);
+  rpc AddPointForCustomer (AddPointForCustomerRequest) returns (BoolReply);
+}
+
+message GetCustomerDataRequest {
+  string customer_id = 1;
+}
+
+message GetPointsRequest {
+  string customer_id = 1;
+}
+
+message GetPointsReply {
+  int32 points = 1;
+}
+
+message AddCustomerRequest {
+  string external_code = 1;
+  int32 bonus_points = 2;
+}
+
+message AddCustomerReply {
+  string customer_id = 1;
+}
+
+message AddCustomerDataRequest {
+  string id = 1;
+  string external_code = 2;
+  int32 points = 3;
+  double ratio = 4;
+}
+
+message RemoveCustomerRequest {
+  string customer_id = 1;
+}
+
+message AddPointForCustomerRequest {
+  string customer_id = 1;
+  int32 points = 2;
+}
+
+message CustomerDataReply {
+  string id = 1;
+  string external_code = 2;
+  int32 points = 3;
+  double ratio = 4;
+}
+
+message BoolReply {
+  bool success = 1;
+}

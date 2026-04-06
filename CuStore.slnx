@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="CuStore.Core/CuStore.Core.csproj" />
+  <Project Path="CuStore.Crm.Contracts/CuStore.Crm.Contracts.csproj" />
+  <Project Path="CuStore.Crm.GrpcService/CuStore.Crm.GrpcService.csproj" />
+  <Project Path="CuStore.Infrastructure/CuStore.Infrastructure.csproj" />
+  <Project Path="CuStore.UnitTests/CuStore.UnitTests.csproj" />
+  <Project Path="CuStore.WebApi/CuStore.WebApi.csproj" />
+</Solution>
